@@ -59,6 +59,14 @@ fun Template(
                             navigateUpTo(navController, Screen.C)
                             closeDrawer()
                         })
+
+                    NavigationDrawerItem(
+                        label = { Text(stringResource(id = R.string.nav_label_about_us)) },
+                        selected = false,
+                        onClick = {
+                            navigateUpTo(navController, Screen.AboutUs)
+                            closeDrawer()
+                        })
                 }
             }
         }
