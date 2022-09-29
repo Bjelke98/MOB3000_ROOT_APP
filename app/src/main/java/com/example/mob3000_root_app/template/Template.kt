@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Template(
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: String = Screen.Home.route
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -99,6 +100,6 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController, startDestination) }
     }
 }
