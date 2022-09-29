@@ -1,9 +1,6 @@
-package com.example.mob3000_root_app.components.template
+package com.example.mob3000_root_app.template
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
@@ -11,15 +8,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.Article
-import com.example.mob3000_root_app.ArticleData
-import com.example.mob3000_root_app.navigation.AppNavHost
-import com.example.mob3000_root_app.navigation.Screen
-import com.example.mob3000_root_app.navigation.navigateUpTo
-import kotlinx.coroutines.CoroutineScope
+import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.AppNavHost
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,12 +28,6 @@ fun Template(
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
-    val drawerList = listOf(
-        "Hjem",
-        "Artikkel",
-        "Event",
-        "Om oss"
-    )
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -46,10 +36,10 @@ fun Template(
             ){
                 Column {
                     //Title
-                    Text(text = "Root", modifier = Modifier.padding(16.dp))
+                    Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp))
                     //content
                     NavigationDrawerItem(
-                        label = { Text(text = "Home") },
+                        label = { Text(text = stringResource(id = R.string.nav_label_home)) },
                         selected = true,
                         onClick = {
                             navigateUpTo(navController, Screen.Home)
@@ -69,12 +59,6 @@ fun Template(
                             navigateUpTo(navController, Screen.C)
                             closeDrawer()
                         })
-//                    for(item in drawerList){
-//                        NavigationDrawerItem(
-//                            label = { Text(text = item) },
-//                            selected = false,
-//                            onClick = { /*TODO*/ })
-//                    }
                 }
             }
         }
@@ -92,7 +76,7 @@ fun Template(
                     ),
                     title = {
                         Text(
-                            "Root",
+                            stringResource(id = R.string.company_name),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )

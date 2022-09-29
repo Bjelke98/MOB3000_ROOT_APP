@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.navigation
+package com.example.mob3000_root_app.components.navigation
 
 sealed class Screen(val route: String) {
     object Home: Screen(route = "home_screen")

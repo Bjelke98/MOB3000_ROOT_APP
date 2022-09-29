@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MOB3000_ROOT_APP</string>
+    <string name="app_name" translatable="false">MOB3000_ROOT_APP</string>
+    <string name="nav_label_home">Hjem</string>
+    <string name="company_name" translatable="false">/root</string>
 </resources>

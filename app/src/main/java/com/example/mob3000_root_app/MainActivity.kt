@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.mob3000_root_app.components.template.Template
+import com.example.mob3000_root_app.template.Template
 import com.example.mob3000_root_app.ui.theme.MOB3000_ROOT_APPTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -45,35 +45,6 @@ fun App(navController: NavHostController) {
             color = MaterialTheme.colorScheme.background
         ) {
             Template(navController = navController)
-        }
-    }
-}
-
-data class ArticleData(val title: String)
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Article(title: String) {
-    Card(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-    ) {
-        Box(modifier = Modifier.fillMaxSize(), Alignment.Center){
-            Column {
-                Text(text = title, style = MaterialTheme.typography.headlineMedium)
-                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )) {
-                    Text(text = title)
-                }
-            }
         }
     }
 }

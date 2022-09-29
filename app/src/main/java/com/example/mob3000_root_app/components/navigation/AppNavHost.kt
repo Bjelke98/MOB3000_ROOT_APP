@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.navigation
+package com.example.mob3000_root_app.components.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
