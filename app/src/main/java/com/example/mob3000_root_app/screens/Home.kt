@@ -12,28 +12,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.Article
+import com.example.mob3000_root_app.components.cards.ArticleOld
 import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.data.ArticleTestdata
 
 @Composable
 fun Home(navController: NavHostController) {
+
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
-        val articleList = listOf(
-            ArticleData("Title1"),
-            ArticleData("title2"),
-            ArticleData("title3"),
-            ArticleData("title4"),
-            ArticleData("title5"),
-        )
+        val articleList = ArticleTestdata().dataList
         Column(Modifier.padding(10.dp)) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleList){ gjenstand ->
-                    Article(title = gjenstand.title)
+                items(items = articleList){ article ->
+                    Article(data = article)
                 }
             }
         }
