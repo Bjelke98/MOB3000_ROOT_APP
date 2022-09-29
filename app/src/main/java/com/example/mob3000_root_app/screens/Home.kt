@@ -26,6 +26,7 @@ fun Home(navController: NavHostController) {
             ArticleData("title2"),
             ArticleData("title3"),
             ArticleData("title4"),
+            ArticleData("title5"),
         )
         Column(Modifier.padding(10.dp)) {
             LazyColumn(
