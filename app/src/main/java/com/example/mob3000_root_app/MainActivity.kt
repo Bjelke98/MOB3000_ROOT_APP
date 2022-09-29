@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.template.Template
 import com.example.mob3000_root_app.ui.theme.MOB3000_ROOT_APPTheme
 import kotlinx.coroutines.CoroutineScope

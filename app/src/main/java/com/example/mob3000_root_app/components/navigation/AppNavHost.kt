@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.screens.Home
+import com.example.mob3000_root_app.screens.Login
 
 @Composable
 fun AppNavHost(
@@ -20,6 +21,7 @@ fun AppNavHost(
         startDestination = startDestination
     ){
         composable( route = Screen.Home.route ){ Home(navController) }
+        composable( route = Screen.Login.route ){ Login(navController) }
         composable( route = Screen.B.route ){ TestText("A") }
         composable( route = Screen.C.route ){ TestText("B") }
     }

@@ -21,8 +21,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Template(
-    navController: NavHostController,
-    startDestination: String = Screen.Home.route
+    navController: NavHostController
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -91,7 +90,7 @@ fun Template(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /* doSomething() */ }) {
+                        IconButton(onClick = { navigateUpTo(navController, Screen.Login) }) {
                             Icon(
                                 imageVector = Icons.Filled.AccountCircle,
                                 contentDescription = "Localized description"
@@ -100,6 +99,6 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController, startDestination) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController) }
     }
 }
