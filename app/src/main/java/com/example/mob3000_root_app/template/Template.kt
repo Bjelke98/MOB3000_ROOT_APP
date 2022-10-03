@@ -29,11 +29,14 @@ fun Template(
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
-    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-        DropdownMenuItem(text = {Text(text = "Login")},
-            onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
-        DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)){
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(text = {Text(text = "Login")},
+                onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+            DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+        }
     }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
