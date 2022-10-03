@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.Article
 import com.example.mob3000_root_app.data.ArticleTestdata
+import com.example.mob3000_root_app.data.ArticleType
 
 @Composable
 fun Articles(navController: NavHostController) {
@@ -28,7 +29,7 @@ fun Articles(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleList){ article ->
-                    Article(data = article)
+                    Article(data = article, ArticleType.VERTICAL_ARTICLE)
                 }
             }
         }

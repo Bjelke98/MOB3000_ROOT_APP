@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.components.cards
 
-import android.view.Display
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -13,32 +12,33 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.data.ArticleType
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun Article(data :ArticleData) {
+fun Article(data :ArticleData, type: ArticleType) {
 
     val title = data.title
     val image = data.image
     val  imageDescription = data.imageDescription
 
     val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background);
+        containerColor = MaterialTheme.colorScheme.background)
 
     val configuration = LocalConfiguration.current
     val contentHeight60per = (configuration.screenHeightDp.dp/3)*2
+    val contentWidth80per = (configuration.screenWidthDp.dp/10)*8
 
+    val horizontalColMods = Modifier.width(contentWidth80per)
+    val verticalColMods = Modifier.fillMaxWidth()
     Card(
         Modifier
             .fillMaxWidth()
-            .height(contentHeight60per), colors = testColors){
+            .height(contentHeight60per)
+        , colors = testColors){
         Box(Modifier.fillMaxSize()) {
-            Column(Modifier.fillMaxWidth()) {
-                Text(text = "Hello $title!",
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp), style = MaterialTheme.typography.headlineSmall
-                )
+            Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+
                 Image(
                     painterResource(image), imageDescription,
                     Modifier
@@ -52,6 +52,11 @@ fun Article(data :ArticleData) {
                         .fillMaxHeight(.75f)
                         .padding(5.dp)
                 ) {
+                    Text(text = "Hello $title!",
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp), style = MaterialTheme.typography.headlineSmall
+                    )
 
                     Text(text = "Subheader",
                         Modifier

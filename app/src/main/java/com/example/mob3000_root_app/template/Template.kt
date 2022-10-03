@@ -46,6 +46,13 @@ fun Template(
                             closeDrawer()
                         })
                     NavigationDrawerItem(
+                        label = { Text(text = stringResource(id = R.string.nav_label_home)+"2") },
+                        selected = true,
+                        onClick = {
+                            navigateUpTo(navController, Screen.Home2)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
                         label = { Text(text = "TestLogin") },
                         selected = false,
                         onClick = {
