@@ -5,8 +5,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,10 +23,16 @@ import kotlinx.coroutines.launch
 fun Template(
     navController: NavHostController
 ) {
+    var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     fun closeDrawer(){
         scope.launch { drawerState.close() }
+    }
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        DropdownMenuItem(text = {Text(text = "Login")},
+            onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+        DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
     }
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -50,20 +56,6 @@ fun Template(
                         selected = true,
                         onClick = {
                             navigateUpTo(navController, Screen.Home2)
-                            closeDrawer()
-                        })
-                    NavigationDrawerItem(
-                        label = { Text(text = "TestLogin") },
-                        selected = false,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Login)
-                            closeDrawer()
-                        })
-                    NavigationDrawerItem(
-                        label = { Text(text = "TestRegister") },
-                        selected = false,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Register)
                             closeDrawer()
                         })
                     NavigationDrawerItem(
@@ -104,7 +96,7 @@ fun Template(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { navigateUpTo(navController, Screen.Login) }) { // Login
+                        IconButton(onClick = {  expanded = true }) { // Login og registrer
                             Icon(
                                 imageVector = Icons.Filled.AccountCircle,
                                 contentDescription = "Localized description"
