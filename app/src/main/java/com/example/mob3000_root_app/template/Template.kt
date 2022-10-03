@@ -46,17 +46,17 @@ fun Template(
                             closeDrawer()
                         })
                     NavigationDrawerItem(
-                        label = { Text(text = "B") },
+                        label = { Text(text = "TestLogin") },
                         selected = false,
                         onClick = {
-                            navigateUpTo(navController, Screen.B)
+                            navigateUpTo(navController, Screen.Login)
                             closeDrawer()
                         })
                     NavigationDrawerItem(
-                        label = { Text(text = "C") },
+                        label = { Text(text = "TestRegister") },
                         selected = false,
                         onClick = {
-                            navigateUpTo(navController, Screen.C)
+                            navigateUpTo(navController, Screen.Register)
                             closeDrawer()
                         })
                 }
@@ -90,7 +90,7 @@ fun Template(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { navigateUpTo(navController, Screen.Login) }) {
+                        IconButton(onClick = { navigateUpTo(navController, Screen.Login) }) { // Login
                             Icon(
                                 imageVector = Icons.Filled.AccountCircle,
                                 contentDescription = "Localized description"
