@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -17,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.App
-import com.example.mob3000_root_app.components.navigation.Screen
 
 
 
@@ -26,54 +26,68 @@ import com.example.mob3000_root_app.components.navigation.Screen
 fun Login(navController: NavHostController) {
     var epost by remember{ mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+    val testColors: CardColors = CardDefaults.cardColors(
+        containerColor = MaterialTheme.colorScheme.background);
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+    ){
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        OutlinedTextField(
-            value=epost,
-            leadingIcon={Icon(imageVector= Icons.Default.Person,contentDescription=null)},
-            modifier= Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            label={Text(text="Epost")},
-            placeholder={Text(text="example@hotmail.com")},
-            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Text),
-            onValueChange={
-                epost=it
-            }
-        )
-
-        OutlinedTextField(
-            value=password,
-            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-            modifier= Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            label={Text(text="Password")},
-            placeholder={Text(text="Pepsi > Cola")},
-            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-            visualTransformation= PasswordVisualTransformation(),
-            onValueChange={
-                password=it }
-        )
-
-        Row(
-            modifier = Modifier.padding(vertical = 24.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            TextButton(onClick = {}) {
-                Text("Create new user")
-            }
-            Button(
-                onClick = {},
+        Card(modifier = Modifier.padding(10.dp),colors = testColors) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(6.dp)
             ) {
-                Text("Login")
-            }
+                Text(text = "Login", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
+                OutlinedTextField(
+                    value=epost,
+                    leadingIcon={Icon(imageVector= Icons.Default.Person,contentDescription=null)},
+                    modifier= Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label={Text(text="Epost")},
+                    placeholder={Text(text="example@hotmail.com")},
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Text),
+                    onValueChange={
+                        epost=it
+                    }
+                )
 
+                OutlinedTextField(
+                    value=password,
+                    leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
+                    modifier= Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label={Text(text="Password")},
+                    placeholder={Text(text="Pepsi > Cola")},
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+                    visualTransformation= PasswordVisualTransformation(),
+                    onValueChange={
+                        password=it }
+                )
+
+                Row(
+                    modifier = Modifier.padding(vertical = 24.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextButton(onClick = {}) {
+                        Text("Create new user")
+                    }
+                    Button(
+                        onClick = {},
+                    ) {
+                        Text("Login")
+                    }
+
+                }
+            }
         }
+
     }
+
 }
 
 @Preview(showBackground = true, widthDp = 400, heightDp = 65)
@@ -82,7 +96,7 @@ fun LoginNavPreview() {
     App(rememberNavController())
 }
 
-@Preview(showBackground = true, widthDp = 400, heightDp = 400)
+@Preview(showBackground = true, widthDp = 400, heightDp = 600)
 @Composable
 fun LoginPreview() {
     Login(navController = rememberNavController())
