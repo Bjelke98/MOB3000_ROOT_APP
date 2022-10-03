@@ -46,6 +46,13 @@ fun Template(
                             closeDrawer()
                         })
                     NavigationDrawerItem(
+                        label = { Text(text = "Articles") },
+                        selected = false,
+                        onClick = {
+                            navigateUpTo(navController, Screen.Articles)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
                         label = { Text(text = "B") },
                         selected = false,
                         onClick = {
