@@ -36,7 +36,7 @@ fun Template(
             ){
                 Column {
                     //Title
-                    Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp))
+                    Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp), fontSize = MaterialTheme.typography.headlineMedium.fontSize)
                     //content
                     NavigationDrawerItem(
                         label = { Text(text = stringResource(id = R.string.nav_label_home)) },
