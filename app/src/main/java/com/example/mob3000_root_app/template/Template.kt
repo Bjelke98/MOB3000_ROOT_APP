@@ -29,7 +29,7 @@ fun Template(
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
-    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)){
+    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd).offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(text = {Text(text = "Login")},
                 onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
