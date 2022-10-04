@@ -40,6 +40,7 @@ fun Register(navController: NavHostController) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(6.dp)
             ) {
                 Text(text = "Registrer", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
                 OutlinedTextField(
