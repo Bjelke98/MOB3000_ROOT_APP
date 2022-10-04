@@ -42,7 +42,7 @@ fun Home2(navController: NavHostController) {
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleList){ article ->
-                    Article(data = article, ArticleType.HORIZONTAL_ARTICLE)
+                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
                 }
             }
 
@@ -55,7 +55,7 @@ fun Home2(navController: NavHostController) {
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleList){ article ->
-                    Article(data = article, ArticleType.HORIZONTAL_ARTICLE)
+                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
                 }
             }
         }

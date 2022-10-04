@@ -11,12 +11,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 
 
 @Composable
-fun Article(data :ArticleData, type: ArticleType) {
+fun Article(navController: NavHostController, data :ArticleData, type: ArticleType) {
 
     val title = data.title
     val image = data.image
@@ -31,6 +34,7 @@ fun Article(data :ArticleData, type: ArticleType) {
 
     val horizontalColMods = Modifier.width(contentWidth80per)
     val verticalColMods = Modifier.fillMaxWidth()
+
     Card(
         Modifier
             .fillMaxWidth()
@@ -58,11 +62,6 @@ fun Article(data :ArticleData, type: ArticleType) {
                             .padding(5.dp), style = MaterialTheme.typography.headlineSmall
                     )
 
-                    Text(text = "Subheader",
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp), style = MaterialTheme.typography.titleMedium
-                    )
                     Text(text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                         Modifier
                             .fillMaxWidth()
@@ -75,7 +74,10 @@ fun Article(data :ArticleData, type: ArticleType) {
                     Modifier
                         .padding(5.dp)
                         .align(Alignment.End)){
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = {
+                        navigateUpTo(navController, Screen.ArticleFull)
+
+                    }) {
                         Text(text = "Learn More")
                     }
                 }

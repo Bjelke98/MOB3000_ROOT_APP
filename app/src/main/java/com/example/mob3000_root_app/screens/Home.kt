@@ -35,7 +35,7 @@ fun Home(navController: NavHostController) {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(20.dp))
             {
                 items(items = articleList){ article ->
-                    Article(data = article, ArticleType.VERTICAL_ARTICLE)
+                    Article(navController, data = article, ArticleType.VERTICAL_ARTICLE)
                 }
             }
         }
