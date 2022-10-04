@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.App
-
+import com.example.mob3000_root_app.components.navigation.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,6 +28,7 @@ fun Login(navController: NavHostController) {
     var password by remember { mutableStateOf(TextFieldValue("")) }
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +74,10 @@ fun Login(navController: NavHostController) {
                     modifier = Modifier.padding(vertical = 24.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = {
+                        navController.navigate("register_screen"){
+                        }
+                    }) {
                         Text("Create new user")
                     }
                     Button(
