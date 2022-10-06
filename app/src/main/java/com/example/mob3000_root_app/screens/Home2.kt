@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.Article
+import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
+import com.example.mob3000_root_app.data.EventItem
 
 @Composable
 fun Home2(navController: NavHostController) {
@@ -55,7 +58,8 @@ fun Home2(navController: NavHostController) {
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleList){ article ->
-                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
+//                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
+                    EventCard(event = EventItem("januar", 3, "Test Title", R.drawable.wow))
                 }
             }
         }
