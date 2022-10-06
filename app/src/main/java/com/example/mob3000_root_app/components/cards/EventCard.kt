@@ -5,9 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,13 +19,18 @@ import androidx.compose.ui.unit.sp
 import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 
 @Composable
 fun EventCard(event: EventItem) {
+    val testColors: CardColors = CardDefaults.cardColors(
+        containerColor = MaterialTheme.colorScheme.background)
+
     Card(
         modifier = Modifier
             .padding(5.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        colors = testColors
     ) {
         Box(modifier = Modifier.height(200.dp)) {
             Image(painter = painterResource(id = event.image), "Dog",
@@ -52,7 +54,8 @@ fun EventCard(event: EventItem) {
 
                     style = TextStyle(
                         fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
                     ),
                     text = event.day.toString(),
                     textAlign = TextAlign.Center
@@ -61,10 +64,10 @@ fun EventCard(event: EventItem) {
                 Text(
                     modifier = Modifier
                         .padding(1.dp),
-                    color = Color.Blue,
+                    color = Color.Red,
                     style = TextStyle(fontSize = 15.sp),
                     textAlign = TextAlign.Center,
-                    text = event.month
+                    text = event.month+"."
                 )
 
             }
@@ -74,10 +77,11 @@ fun EventCard(event: EventItem) {
         Column() {
 
             Text(modifier = Modifier
-                .padding(5.dp)
+                .padding(12.dp)
                 .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = event.title)
+                text = event.title,
+                style = MaterialTheme.typography.headlineMedium)
         }
 
         Row() {
@@ -100,25 +104,26 @@ fun EventCard(event: EventItem) {
 
                 }
 
-                Box(modifier = Modifier
-                    .padding(5.dp)
-                    .align(Alignment.CenterEnd)
-                ) {
 
-                    Row() {
-                        Text(modifier = Modifier
-                            .padding(horizontal = 5.dp),
-                            textAlign = TextAlign.Start,
-                            text = 5.toString())
-                        Text(
-                            text = "are going")
-
-                        Icon(Icons.Filled.ToggleOn, "menu")
-                    }
-
-                }
 
             }
+        }
+        Box(modifier = Modifier
+            .padding(5.dp)
+//            .align(Alignment.CenterEnd)
+        ) {
+
+            Row() {
+                Text(modifier = Modifier
+                    .padding(horizontal = 12.dp),
+                    textAlign = TextAlign.Start,
+                    text = 5.toString())
+                Text(
+                    text = "are going")
+
+                Icon(Icons.Filled.ToggleOn, "menu")
+            }
+
         }
 
 
