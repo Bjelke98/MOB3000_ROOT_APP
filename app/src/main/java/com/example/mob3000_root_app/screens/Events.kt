@@ -1,8 +1,10 @@
 package com.example.mob3000_root_app.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +22,8 @@ fun Events() {
         EventItem("Oct",5,"MOB3000 Presentasjon", R.drawable.testing),
     )
 
-    LazyColumn() {
+    LazyColumn(modifier = Modifier
+        .background(MaterialTheme.colorScheme.surfaceVariant)) {
         item { Text(modifier = Modifier
             .padding(5.dp),
             text = "Events")
