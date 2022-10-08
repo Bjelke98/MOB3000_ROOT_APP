@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,11 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.ArticleTestdata
 
@@ -21,7 +23,7 @@ fun ArticleFull(
     navController: NavHostController
 ) {
     val data = ArticleTestdata().dataList[2]
-    Box() {
+    Box {
         Surface(Modifier.background(MaterialTheme.colorScheme.background)) {
             Column(Modifier.fillMaxHeight().padding(top = 5.dp), verticalArrangement = Arrangement.SpaceBetween) {
 
@@ -37,13 +39,25 @@ fun ArticleFull(
                 }
 
 
-                Image(
-                    painterResource(data.image), data.imageDescription,
-                    Modifier
-                        .fillMaxWidth()
+//                Image(
+//                    rememberImagePainter(data.image), data.imageDescription,
+//                    Modifier
+//                        .fillMaxWidth()
+//                        .fillMaxHeight(.5f)
+//                        .padding(bottom = 20.dp)
+//                    , contentScale = ContentScale.Crop
+//                )
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(data.image)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.sauce),
+                    contentDescription = (data.imageDescription),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth()
                         .fillMaxHeight(.5f)
                         .padding(bottom = 20.dp)
-                    , contentScale = ContentScale.Crop
                 )
 
                 Text(text = ArticleTestdata().loremIpsum,

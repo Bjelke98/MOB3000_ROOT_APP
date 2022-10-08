@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.components.cards
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -8,10 +7,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.ArticleData
@@ -19,11 +22,15 @@ import com.example.mob3000_root_app.data.ArticleType
 
 
 @Composable
-fun Article(navController: NavHostController, data :ArticleData, type: ArticleType) {
+fun Article(navController: NavHostController, data : ArticleData, type: ArticleType) {
+
+//    val title = data.json.get("title")
+//    val image = data.json.get("image") as Int
+//    val  imageDescription = data.json.get("imageDescription") as String?
 
     val title = data.title
     val image = data.image
-    val  imageDescription = data.imageDescription
+    val imageDescription = data.imageDescription
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -43,12 +50,17 @@ fun Article(navController: NavHostController, data :ArticleData, type: ArticleTy
         Box(Modifier.fillMaxSize()) {
             Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
 
-                Image(
-                    painterResource(image), imageDescription,
-                    Modifier
+                   AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(image)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.sauce),
+                    contentDescription = (imageDescription),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(.5f)
-                    , contentScale = ContentScale.Crop
                 )
 
                 Column(
