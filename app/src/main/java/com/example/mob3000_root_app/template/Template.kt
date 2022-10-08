@@ -70,6 +70,20 @@ fun Template(
                             navigateUpTo(navController, Screen.Articles)
                             closeDrawer()
                         })
+                    NavigationDrawerItem(
+                        label = { Text(text = "Events") },
+                        selected = navBackStackEntry?.destination?.route==Screen.Events.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.Events)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
+                        label = { Text(text = "About Us") },
+                        selected = navBackStackEntry?.destination?.route==Screen.About.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.About)
+                            closeDrawer()
+                        })
                 }
             }
         }

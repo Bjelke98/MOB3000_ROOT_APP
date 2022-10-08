@@ -27,6 +27,8 @@ fun AppNavHost(
         composable( route = Screen.C.route ){ TestText("B") }
         composable( route = Screen.Articles.route ){ Articles(navController) }
         composable( route = Screen.ArticleFull.route ){ ArticleFull(navController) }
+        composable( route = Screen.About.route ){ About() }
+        composable( route = Screen.Events.route ){ Events() }
     }
 }
 
