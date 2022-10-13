@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.mob3000_root_app.App
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.ArticleTestdata
 
@@ -73,8 +75,8 @@ fun CommentSection(){
     Text(text = "Comments")
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun ArticlePreview(){
-//    ArticleFull()
+fun ArticlePreview() {
+    ArticleFull(rememberNavController())
 }
