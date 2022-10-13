@@ -67,7 +67,7 @@ fun ArticleFull(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { /*TODO*/ },
+                IconButton(onClick = { navController.popBackStack() },
                     Modifier.padding(5.dp).align( CenterHorizontally).weight(1f,false))
                 {
                     Icon(
