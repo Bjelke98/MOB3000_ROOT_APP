@@ -8,11 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import androidx.navigation.compose.rememberNavController
+import com.example.mob3000_root_app.App
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.ArticleTestdata
 
@@ -21,7 +26,7 @@ fun ArticleFull(
     navController: NavHostController
 ) {
     val data = ArticleTestdata().dataList[2]
-    Box() {
+    Box {
         Surface(Modifier.background(MaterialTheme.colorScheme.background)) {
             Column(Modifier.fillMaxHeight().padding(top = 5.dp), verticalArrangement = Arrangement.SpaceBetween) {
 
@@ -37,13 +42,25 @@ fun ArticleFull(
                 }
 
 
-                Image(
-                    painterResource(data.image), data.imageDescription,
-                    Modifier
-                        .fillMaxWidth()
+//                Image(
+//                    rememberImagePainter(data.image), data.imageDescription,
+//                    Modifier
+//                        .fillMaxWidth()
+//                        .fillMaxHeight(.5f)
+//                        .padding(bottom = 20.dp)
+//                    , contentScale = ContentScale.Crop
+//                )
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(data.image)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.sauce),
+                    contentDescription = (data.imageDescription),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth()
                         .fillMaxHeight(.5f)
                         .padding(bottom = 20.dp)
-                    , contentScale = ContentScale.Crop
                 )
 
                 Text(text = ArticleTestdata().loremIpsum,
@@ -53,7 +70,7 @@ fun ArticleFull(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { /*TODO*/ },
+                IconButton(onClick = { navController.popBackStack() },
                     Modifier.padding(5.dp).align( CenterHorizontally).weight(1f,false))
                 {
                     Icon(
@@ -73,8 +90,8 @@ fun CommentSection(){
     Text(text = "Comments")
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun ArticlePreview(){
-//    ArticleFull()
+fun ArticlePreview() {
+    ArticleFull(rememberNavController())
 }
