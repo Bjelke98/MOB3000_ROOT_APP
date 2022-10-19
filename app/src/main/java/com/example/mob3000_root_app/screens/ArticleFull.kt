@@ -95,6 +95,10 @@ fun ArticleFull(
 
 }
 
+ fun getAllArticles(){
+
+}
+
  fun getEvents(){
 
 //    val liveData = ArticleAPI.retrofitService.getAllArticles()
