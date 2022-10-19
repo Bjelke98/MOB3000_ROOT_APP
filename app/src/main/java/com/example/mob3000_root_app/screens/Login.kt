@@ -50,7 +50,7 @@ fun Login(navController: NavHostController) {
                         .fillMaxWidth(),
                     label={Text(text="Epost")},
                     placeholder={Text(text="example@hotmail.com")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Text),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email),
                     onValueChange={
                         epost=it
                     }
@@ -67,7 +67,8 @@ fun Login(navController: NavHostController) {
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                     visualTransformation= PasswordVisualTransformation(),
                     onValueChange={
-                        password=it }
+                        password=it
+                    }
                 )
 
                 Row(
@@ -85,13 +86,10 @@ fun Login(navController: NavHostController) {
                     ) {
                         Text("Login")
                     }
-
                 }
             }
         }
-
     }
-
 }
 
 @Preview(showBackground = true, widthDp = 400, heightDp = 65)
