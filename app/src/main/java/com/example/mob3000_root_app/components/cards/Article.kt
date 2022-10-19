@@ -3,6 +3,7 @@ package com.example.mob3000_root_app.components.cards
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,10 +16,13 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.ArticleApiService.ArticleAPI
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.navigation.navigateUpToFullArticle
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -30,7 +34,7 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
 
     val title = data.title
     val image = data.image
-    val imageDescription = data.imageDescription
+    val imageDescription = data.description
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -41,6 +45,8 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
 
     val horizontalColMods = Modifier.width(contentWidth80per)
     val verticalColMods = Modifier.fillMaxWidth()
+
+    val coroutineScope = rememberCoroutineScope()
 
     Card(
         Modifier
@@ -87,7 +93,9 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-                        navigateUpTo(navController, Screen.ArticleFull)
+//                        coroutineScope.launch { val data = ArticleAPI.retrofitService.getAllArticles() }
+                        navigateUpToFullArticle(navController, Screen.ArticleFull, data)
+
 
                     }) {
                         Text(text = "Learn More")

@@ -9,7 +9,7 @@ fun navigateUpTo(navController: NavHostController, screen: Screen){
     }
 }
 
-fun navigateUpToArticle(navController: NavHostController, screen: Screen, articleData: ArticleData){
+fun navigateUpToFullArticle(navController: NavHostController, screen: Screen, articleData: ArticleData){
     navController.navigate(screen.route){
         popUpTo(screen.route)
     }
