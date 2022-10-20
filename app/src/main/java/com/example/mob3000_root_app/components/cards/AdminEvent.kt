@@ -20,6 +20,8 @@ import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import com.example.mob3000_root_app.components.buttons.EndreArtikkel
+import com.example.mob3000_root_app.components.buttons.SlettArtikkel
 import com.example.mob3000_root_app.components.buttons.SlettEvent
 
 @Composable
@@ -45,7 +47,6 @@ fun AdminEventCard(event: EventItem) {
                     .width(50.dp)
                     .background(Color.White),
 
-
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Text(
@@ -70,10 +71,7 @@ fun AdminEventCard(event: EventItem) {
                     textAlign = TextAlign.Center,
                     text = event.month+"."
                 )
-
             }
-
-
         }
         Column() {
 
@@ -102,7 +100,6 @@ fun AdminEventCard(event: EventItem) {
                             text = "Gullbringvegen 36"
                         )
                     }
-
                 }
             }
         }
@@ -123,9 +120,12 @@ fun AdminEventCard(event: EventItem) {
             }
 
         }
-
-
-
-
+        Row(
+            Modifier
+                .padding(5.dp)
+                .align(Alignment.End)){
+            SlettArtikkel()
+            EndreArtikkel()
+        }
     }
 }

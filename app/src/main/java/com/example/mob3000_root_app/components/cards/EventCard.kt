@@ -20,6 +20,8 @@ import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import com.example.mob3000_root_app.components.buttons.EndreArtikkel
+import com.example.mob3000_root_app.components.buttons.SlettArtikkel
 
 @Composable
 fun EventCard(event: EventItem) {
@@ -72,7 +74,6 @@ fun EventCard(event: EventItem) {
 
             }
 
-
         }
         Column() {
 
@@ -103,9 +104,6 @@ fun EventCard(event: EventItem) {
                     }
 
                 }
-
-
-
             }
         }
         Box(modifier = Modifier
@@ -125,9 +123,5 @@ fun EventCard(event: EventItem) {
             }
 
         }
-
-
-
-
     }
 }

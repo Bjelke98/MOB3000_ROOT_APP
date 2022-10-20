@@ -15,11 +15,6 @@ fun SlettArtikkel() {
         }) {
         Text("Slett")
     }
-    Button(
-        colors = ButtonDefaults.buttonColors(Color.Red),
-
-        onClick = { /*TODO*/ }) {
-    }
 }
 private fun slett(){
 

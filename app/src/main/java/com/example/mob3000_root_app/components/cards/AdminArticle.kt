@@ -88,13 +88,8 @@ fun AdminArticle(navController: NavHostController, data : ArticleData, type: Art
                     Modifier
                         .padding(5.dp)
                         .align(Alignment.End)){
-                    Button(onClick = {
-                        navigateUpTo(navController, Screen.ArticleFull)
-
-                    }) {
                         SlettArtikkel()
                         EndreArtikkel()
-                    }
                 }
             }
         }
