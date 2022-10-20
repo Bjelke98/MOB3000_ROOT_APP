@@ -35,44 +35,7 @@ fun AdminEventCard(event: EventItem) {
             .fillMaxWidth(),
         colors = testColors
     ) {
-        Box(modifier = Modifier.height(200.dp)) {
-            Image(painter = painterResource(id = event.image), "Dog",
-                Modifier
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Crop
-            )
-            Column(
-                Modifier
-                    .padding(15.dp)
-                    .width(50.dp)
-                    .background(Color.White),
 
-                horizontalAlignment = Alignment.CenterHorizontally) {
-
-                Text(
-                    modifier = Modifier
-                        .background(Color.White)
-                        .padding(0.dp),
-
-                    style = TextStyle(
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    ),
-                    text = event.day.toString(),
-                    textAlign = TextAlign.Center
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(1.dp),
-                    color = Color.Red,
-                    style = TextStyle(fontSize = 15.sp),
-                    textAlign = TextAlign.Center,
-                    text = event.month+"."
-                )
-            }
-        }
         Column() {
 
             Text(modifier = Modifier
@@ -83,43 +46,6 @@ fun AdminEventCard(event: EventItem) {
                 style = MaterialTheme.typography.headlineMedium)
         }
 
-        Row() {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 5.dp)) {
-
-                Box(modifier = Modifier
-                    .padding(5.dp)
-                    .align(Alignment.CenterStart)
-                ) {
-
-                    Row() {
-                        Icon(Icons.Filled.LocationOn, "menu")
-                        Text(
-                            textAlign = TextAlign.Start,
-                            text = "Gullbringvegen 36"
-                        )
-                    }
-                }
-            }
-        }
-        Box(modifier = Modifier
-            .padding(5.dp)
-//            .align(Alignment.CenterEnd)
-        ) {
-
-            Row {
-                Text(modifier = Modifier
-                    .padding(horizontal = 12.dp),
-                    textAlign = TextAlign.Start,
-                    text = 5.toString())
-                Text(
-                    text = "are going")
-                SlettEvent()
-                Icon(Icons.Filled.ToggleOn, "menu")
-            }
-
-        }
         Row(
             Modifier
                 .padding(5.dp)
