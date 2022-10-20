@@ -9,7 +9,7 @@ import com.example.mob3000_root_app.components.cards.EditEvent
 @Composable
 fun EditEventBtn() {
     TextButton(
-        onClick = { EditEvent()
+        onClick = {
         }) {
         Text("Endre")
     }

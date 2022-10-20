@@ -20,12 +20,19 @@ import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.buttons.EndreArtikkel
 import com.example.mob3000_root_app.components.buttons.SlettArtikkel
-import com.example.mob3000_root_app.components.buttons.SlettEvent
+import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.data.EventData
+import com.example.mob3000_root_app.data.EventType
 
 @Composable
-fun AdminEventCard(event: EventItem) {
+fun AdminEventCard(navController: NavHostController, data: EventData, type: EventType) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
 
@@ -35,16 +42,6 @@ fun AdminEventCard(event: EventItem) {
             .fillMaxWidth(),
         colors = testColors
     ) {
-
-        Column() {
-
-            Text(modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = event.title,
-                style = MaterialTheme.typography.headlineMedium)
-        }
 
         Row(
             Modifier
