@@ -5,13 +5,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.AppNavHost
 import com.example.mob3000_root_app.components.navigation.Screen
@@ -23,40 +24,64 @@ import kotlinx.coroutines.launch
 fun Template(
     navController: NavHostController
 ) {
+    var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
+    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd).offset(0.dp, 65.dp)){
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(text = {Text(text = "Login")},
+                onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+            DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp),
             ){
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
                 Column {
                     //Title
-                    Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp))
+                    Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp), fontSize = MaterialTheme.typography.headlineMedium.fontSize)
                     //content
                     NavigationDrawerItem(
                         label = { Text(text = stringResource(id = R.string.nav_label_home)) },
-                        selected = true,
+                        selected = navBackStackEntry?.destination?.route==Screen.Home.route,
                         onClick = {
                             navigateUpTo(navController, Screen.Home)
                             closeDrawer()
                         })
                     NavigationDrawerItem(
-                        label = { Text(text = "B") },
-                        selected = false,
+                        label = { Text(text = stringResource(id = R.string.nav_label_home)+"2") },
+                        selected = navBackStackEntry?.destination?.route==Screen.Home2.route,
                         onClick = {
-                            navigateUpTo(navController, Screen.B)
+                            navigateUpTo(navController, Screen.Home2)
                             closeDrawer()
                         })
                     NavigationDrawerItem(
-                        label = { Text(text = "C") },
-                        selected = false,
+                        label = { Text(text = "Articles") },
+                        selected = navBackStackEntry?.destination?.route==Screen.Articles.route,
                         onClick = {
-                            navigateUpTo(navController, Screen.C)
+                            navigateUpTo(navController, Screen.Articles)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
+                        label = { Text(text = "Events") },
+                        selected = navBackStackEntry?.destination?.route==Screen.Events.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.Events)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
+                        label = { Text(text = "About Us") },
+                        selected = navBackStackEntry?.destination?.route==Screen.About.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.About)
                             closeDrawer()
                         })
 
@@ -98,7 +123,7 @@ fun Template(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /* doSomething() */ }) {
+                        IconButton(onClick = {  expanded = true }) { // Login og registrer
                             Icon(
                                 imageVector = Icons.Filled.AccountCircle,
                                 contentDescription = "Localized description"
@@ -107,6 +132,6 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController) }
     }
 }
