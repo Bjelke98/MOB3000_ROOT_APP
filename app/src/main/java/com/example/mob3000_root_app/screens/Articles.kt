@@ -20,15 +20,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.Article
+import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.data.ArticleData
-import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
 import kotlinx.coroutines.launch
 
 class ArticlesModel : ViewModel() {
     var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
-
     var errorMessage: String by mutableStateOf("")
+    var currentArticle by mutableStateOf<ArticleData?>(null)
+        private set
 
     fun getArticleList() {
         viewModelScope.launch {
@@ -36,16 +37,19 @@ class ArticlesModel : ViewModel() {
             try {
                 val articleList = apiService.getArticles()
                 articleListResponse = articleList
-                Log.i("data", articleList.get(0).image)
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
         }
     }
+
+    fun focusArticle(focusArticle: ArticleData){
+        currentArticle = focusArticle
+    }
 }
 
 @Composable
-fun Articles(navController: NavHostController, articleList: List<ArticleData>) {
+fun Articles(navController: NavHostController, articleModel: ArticlesModel, focusedArticleModel: FocusedArticleModel) {
 
     Box(
         modifier = Modifier
@@ -56,10 +60,16 @@ fun Articles(navController: NavHostController, articleList: List<ArticleData>) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleList){ article ->
-                    Article(navController ,data = article, ArticleType.VERTICAL_ARTICLE)
+                items(items = articleModel.articleListResponse){ article ->
+                    Article(
+                        navController,
+                        articleData = article, ArticleType.VERTICAL_ARTICLE,
+                        focusedArticleModel
+                    )
                 }
             }
         }
     }
 }
+
+

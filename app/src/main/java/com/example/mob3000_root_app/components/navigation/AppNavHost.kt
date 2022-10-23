@@ -4,12 +4,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
-import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.screens.*
 
 @Composable
@@ -19,55 +16,49 @@ fun AppNavHost(
     startDestination: String = Screen.Home.route,
 ) {
 
-    var articles: ArticlesModel = ArticlesModel()
-    var events: EventsModel = EventsModel();
+    var articlesModel = ArticlesModel()
+    var eventsModel = EventsModel();
+    var focusedArticleModel = FocusedArticleModel()
 
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination,
     ){
-        composable( route = Screen.Home.route ){ Home(navController) }
-
-        composable( route = Screen.Home2.route ){
-            Home2(
+//        composable( route = Screen.HomeOld.route ){ Home(navController) }
+        composable( route = Screen.Home.route ){
+            Home(
                 navController,
-                articleList = articles.articleListResponse,
-                eventList = events.eventListResponse
+                articleModel = articlesModel,
+                eventsModel = eventsModel,
+                focusedArticleModel
             )
-            articles.getArticleList()
-            events.getEventList()
+            articlesModel.getArticleList()
+            eventsModel.getEventList()
         }
         composable( route = Screen.Login.route ){ Login(navController) }
         composable( route = Screen.Register.route ){ Register(navController) }
         composable( route = Screen.B.route ){ TestText("A") }
         composable( route = Screen.C.route ){ TestText("B") }
 
-        composable(
-            route = Screen.Articles.route,
-            arguments = listOf(
-            navArgument("article"){type = NavType.ParcelableType(ArticleData::class.java)},
-
-            )
-        ) {
-            Articles(navController, articleList = articles.articleListResponse)
-            articles.getArticleList()
+        composable( route = Screen.Articles.route ) {
+            Articles(navController, articleModel = articlesModel, focusedArticleModel = focusedArticleModel)
+            articlesModel.getArticleList()
         }
 
-        composable(
-            route = Screen.ArticleFull.route,
-//            arguments = listOf(
-//                navArgument("article"){type = NavType.ParcelableType(ArticleData::class.java)},
-//
-//                )
-        ) {
-//            navController.currentBackStackEntry?.arguments?.get("data")?.let { data ->
-            ArticleFull(navController/*, articleData = data*/)
-//        }
-            articles.getArticleList()
+        composable( route = Screen.ArticleFull.route ) {
+//            val articleData = navController.previousBackStackEntry?.savedStateHandle?.get<ArticleData>("article")
+//            LaunchedEffect(key1 = it ) {
+//                Log.d("ArticleFull", "${articleData?.title}")
+//            }
+//            if (articleData != null) {
+//                ArticleFull(navController, articleData = articleData)
+//            }
+            ArticleFull(navController, focusedArticleModel)
+            articlesModel.getArticleList()
         }
         composable( route = Screen.About.route ){ About() }
-        composable( route = Screen.Events.route ){ Events( eventList = events.eventListResponse); events.getEventList()}
+        composable( route = Screen.Events.route ){ Events( eventList = eventsModel.eventListResponse); eventsModel.getEventList()}
     }
 }
 

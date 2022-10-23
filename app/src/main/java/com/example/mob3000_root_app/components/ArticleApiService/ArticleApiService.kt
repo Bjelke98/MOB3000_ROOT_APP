@@ -11,9 +11,6 @@ interface ArticleApiService {
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-    @GET("article")
-    suspend fun getTop5Articles(): List<ArticleData>
-
     companion object {
         var rootService: ArticleApiService? = null
         fun getInstance() : ArticleApiService {

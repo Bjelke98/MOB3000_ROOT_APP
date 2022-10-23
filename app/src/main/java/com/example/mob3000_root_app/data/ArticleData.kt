@@ -1,6 +1,10 @@
 package com.example.mob3000_root_app.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 //data class ArticleData(val title: String, val image: String, val description: String, val _id: Int, val comments: List<Comment>)
+@Parcelize
 data class ArticleData(
     val __v: Int,
     val _id: String,
@@ -9,6 +13,6 @@ data class ArticleData(
     val image: String,
     val postedAt: String,
     val title: String
-)
+): Parcelable
 
 enum class ArticleType{    VERTICAL_ARTICLE, HORIZONTAL_ARTICLE     }

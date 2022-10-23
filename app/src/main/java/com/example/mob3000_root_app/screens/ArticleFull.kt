@@ -1,11 +1,7 @@
 package com.example.mob3000_root_app.screens
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,34 +11,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.PackageManagerCompat.LOG_TAG
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.CommentSection
-import com.example.mob3000_root_app.components.cards.conditional
+import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleTestdata
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 enum class ArticleAPIStatus { LOADING, ERROR, DONE }
 
@@ -50,18 +33,17 @@ enum class ArticleAPIStatus { LOADING, ERROR, DONE }
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ArticleFull(
-    navController: NavHostController/*, articleData: ArticleData*/
+    navController: NavHostController, focusedArticleModel: FocusedArticleModel
 ) {
-
-
-
     var isCommenting by remember{ mutableStateOf(false) }
-    val data = ArticleTestdata().dataList[2]
     val interactionSource = remember { MutableInteractionSource() }
 
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val articleData = focusedArticleModel.focusedArticle!!
+
+    Log.d("FullArticle", articleData.title)
 
     Box(
         Modifier
@@ -85,17 +67,17 @@ fun ArticleFull(
                     }
 
                     Text(
-                        text = data.title, Modifier.fillMaxWidth(),
+                        text = articleData.title, Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.headlineLarge,
                     )
                 }
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(data.image)
+                        .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.sauce),
-                    contentDescription = (data.description),
+                    contentDescription = (articleData.description),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
