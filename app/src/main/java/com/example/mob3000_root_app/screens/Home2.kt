@@ -19,27 +19,18 @@ import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.Article
 import com.example.mob3000_root_app.components.cards.EventCard
-import com.example.mob3000_root_app.data.ArticleData
-import com.example.mob3000_root_app.data.ArticleTestdata
-import com.example.mob3000_root_app.data.ArticleType
-import com.example.mob3000_root_app.data.EventItem
+import com.example.mob3000_root_app.data.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Home2(navController: NavHostController, articleAPI: ArticleApiService) {
-
-    val coroutineScope = rememberCoroutineScope()
-
-    var articles: List<ArticleData> = ArticleTestdata().dataList
-    coroutineScope.launch(Dispatchers.IO) { }
+fun Home2(navController: NavHostController, articleList: List<ArticleData>, eventList: List<EventData>) {
 
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
-        val articleList = ArticleTestdata().dataList
         Column(
             Modifier
                 .padding(10.dp)
@@ -56,15 +47,8 @@ fun Home2(navController: NavHostController, articleAPI: ArticleApiService) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-
-                coroutineScope.launch(Dispatchers.IO) {
-
-
-
-                    items(items = articles){ article ->
-                        Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
-                    }
-
+                items(items = articleList){ article ->
+                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
                 }
             }
 
@@ -76,9 +60,8 @@ fun Home2(navController: NavHostController, articleAPI: ArticleApiService) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleList){ article ->
-//                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
-                    EventCard(event = EventItem("januar", 3, "Test Title", R.drawable.wow))
+                items(items = eventList){ event ->
+                    EventCard(event)
                 }
             }
         }

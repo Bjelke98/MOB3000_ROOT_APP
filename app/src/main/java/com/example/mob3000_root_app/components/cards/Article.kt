@@ -27,11 +27,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun Article(navController: NavHostController, data : ArticleData, type: ArticleType) {
 
-
-    val title = data.title
-    val image = data.image
-    val imageDescription = data.description
-
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
 
@@ -52,11 +47,11 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
 
                    AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://linrik.herokuapp.com/api/resources/$image")
+                        .data("https://linrik.herokuapp.com/api/resources/" + data.image)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.sauce),
-                    contentDescription = (imageDescription),
+                    contentDescription = ("Image could not load"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,13 +63,13 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
                         .fillMaxHeight(.75f)
                         .padding(5.dp)
                 ) {
-                    Text(text = "Hello $title!",
+                    Text(text = data.title,
                         Modifier
                             .fillMaxWidth()
                             .padding(5.dp), style = MaterialTheme.typography.headlineSmall
                     )
 
-                    Text(text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                    Text(text = data.description,
                         Modifier
                             .fillMaxWidth()
                             .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
@@ -89,7 +84,6 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
                     Button(onClick = {
 //                        coroutineScope.launch { val data = ArticleAPI.retrofitService.getAllArticles() }
                         navigateUpToFullArticle(navController, Screen.ArticleFull, data)
-
 
                     }) {
                         Text(text = "Learn More")

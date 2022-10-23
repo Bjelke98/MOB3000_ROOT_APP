@@ -20,9 +20,14 @@ import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.data.EventData
 
 @Composable
-fun EventCard(event: EventItem) {
+fun EventCard(event: EventData) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
 
@@ -33,10 +38,17 @@ fun EventCard(event: EventItem) {
         colors = testColors
     ) {
         Box(modifier = Modifier.height(200.dp)) {
-            Image(painter = painterResource(id = event.image), "Dog",
-                Modifier
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Crop
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data("https://linrik.herokuapp.com/api/resources/" + event.image)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.sauce),
+                contentDescription = (event.title),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
+                    .fillMaxHeight(.5f)
+                    .padding(bottom = 20.dp)
             )
             Column(
                 Modifier
@@ -47,6 +59,28 @@ fun EventCard(event: EventItem) {
 
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
+//                Text(
+//                    modifier = Modifier
+//                        .background(Color.White)
+//                        .padding(0.dp),
+//
+//                    style = TextStyle(
+//                        fontSize = 25.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.Black
+//                    ),
+//                    text = event.day.toString(),
+//                    textAlign = TextAlign.Center
+//                )
+//
+//                Text(
+//                    modifier = Modifier
+//                        .padding(1.dp),
+//                    color = Color.Red,
+//                    style = TextStyle(fontSize = 15.sp),
+//                    textAlign = TextAlign.Center,
+//                    text = event.month+"."
+//                )
                 Text(
                     modifier = Modifier
                         .background(Color.White)
@@ -57,7 +91,7 @@ fun EventCard(event: EventItem) {
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     ),
-                    text = event.day.toString(),
+                    text = event.dateFrom,
                     textAlign = TextAlign.Center
                 )
 
@@ -67,7 +101,7 @@ fun EventCard(event: EventItem) {
                     color = Color.Red,
                     style = TextStyle(fontSize = 15.sp),
                     textAlign = TextAlign.Center,
-                    text = event.month+"."
+                    text = event.dateTo+"."
                 )
 
             }

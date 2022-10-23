@@ -1,31 +1,25 @@
-package com.example.mob3000_root_app.components.ArticleApiService
+package com.example.mob3000_root_app.data
 
-import com.example.mob3000_root_app.data.ArticleData
 import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-
-interface ArticleApiService {
-    @GET("article")
-    suspend fun getArticles(): List<ArticleData>
-
-    @GET("article")
-    suspend fun getTop5Articles(): List<ArticleData>
+interface RootService {
+    @GET("event")
+    suspend fun getEvents(): List<EventData>
 
     companion object {
-        var rootService: ArticleApiService? = null
-        fun getInstance() : ArticleApiService {
+        var rootService: RootService? = null
+        fun getInstance() : RootService {
             if (rootService == null){
                 val moshi: Moshi = Moshi.Builder().build()
                 rootService = Retrofit.Builder()
                     .baseUrl("https://linrik.herokuapp.com/api/")
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
-                    .build().create(ArticleApiService::class.java)
+                    .build().create(RootService::class.java)
             }
             return  rootService!!
         }
     }
-
 }

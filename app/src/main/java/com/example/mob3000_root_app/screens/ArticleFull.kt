@@ -50,7 +50,7 @@ enum class ArticleAPIStatus { LOADING, ERROR, DONE }
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ArticleFull(
-    navController: NavHostController/*, articleData: ArticleData*/, articleAPI: ArticleApiService
+    navController: NavHostController/*, articleData: ArticleData*/
 ) {
 
 
@@ -134,26 +134,6 @@ fun ArticleFull(
             }
         }
     }
-
-}
-
-
-
-// suspend fun getAllArticles(_status : ArticleAPIStatus, _articles:List<ArticleData>){
-//
-//     _status = ArticleAPIStatus.LOADING
-//     try {
-//         _articles = ArticleAPI.retrofitService.getAllArticles()
-//         _status = ArticleAPIStatus.DONE
-//     } catch (e: Exception) {
-//         _status  = ArticleAPIStatus.ERROR
-//         _articles = listOf()
-//     }
-//}
-
- fun getEvents(){
-
-//    val liveData = ArticleAPI.retrofitService.getAllArticles()
 
 }
 

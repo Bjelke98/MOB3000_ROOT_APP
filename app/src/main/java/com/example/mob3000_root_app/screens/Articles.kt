@@ -25,6 +25,25 @@ import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
 import kotlinx.coroutines.launch
 
+class ArticlesModel : ViewModel() {
+    var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
+
+    var errorMessage: String by mutableStateOf("")
+
+    fun getArticleList() {
+        viewModelScope.launch {
+            val apiService = ArticleApiService.getInstance()
+            try {
+                val articleList = apiService.getArticles()
+                articleListResponse = articleList
+                Log.i("data", articleList.get(0).image)
+            } catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+        }
+    }
+}
+
 @Composable
 fun Articles(navController: NavHostController, articleList: List<ArticleData>) {
 
@@ -40,25 +59,6 @@ fun Articles(navController: NavHostController, articleList: List<ArticleData>) {
                 items(items = articleList){ article ->
                     Article(navController ,data = article, ArticleType.VERTICAL_ARTICLE)
                 }
-            }
-        }
-    }
-}
-
-class ArticlesModel : ViewModel() {
-    var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
-
-    var errorMessage: String by mutableStateOf("")
-
-    fun getArticleList() {
-        viewModelScope.launch {
-            val apiService = ArticleApiService.getInstance()
-            try {
-                val articleList = apiService.getArticles()
-                articleListResponse = articleList
-                Log.i("data", articleList.get(0).image)
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
             }
         }
     }
