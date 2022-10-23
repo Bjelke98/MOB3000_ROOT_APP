@@ -18,12 +18,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.Article
 import com.example.mob3000_root_app.components.cards.EventCard
-import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.data.*
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Home(navController: NavHostController, articleModel: ArticlesModel, eventsModel: EventsModel, focusedArticleModel: FocusedArticleModel) {
+fun Home(
+    navController: NavHostController,
+    articleModel: ArticlesModel,
+    eventsModel: EventsModel
+//, focusedArticleModel: FocusedArticleModel
+) {
 
     Box(
         modifier = Modifier
@@ -46,7 +50,7 @@ fun Home(navController: NavHostController, articleModel: ArticlesModel, eventsMo
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleModel.articleListResponse){ article ->
-                    Article(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, focusedArticleModel)
+                    Article(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleModel.focusArticle(article) })
                 }
             }
 

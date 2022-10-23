@@ -23,17 +23,14 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
-import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleTestdata
-
-enum class ArticleAPIStatus { LOADING, ERROR, DONE }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ArticleFull(
-    navController: NavHostController, focusedArticleModel: FocusedArticleModel
+    navController: NavHostController, in_articleData: ArticleData?
 ) {
     var isCommenting by remember{ mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -41,7 +38,9 @@ fun ArticleFull(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val articleData = focusedArticleModel.focusedArticle!!
+    val articleData = in_articleData!!
+
+//    val articleData = focusedArticleModel.focusedArticle!!
 
     Log.d("FullArticle", articleData.title)
 

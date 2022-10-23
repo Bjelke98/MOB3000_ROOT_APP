@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.screens.*
 
 @Composable
@@ -17,8 +16,8 @@ fun AppNavHost(
 ) {
 
     var articlesModel = ArticlesModel()
-    var eventsModel = EventsModel();
-    var focusedArticleModel = FocusedArticleModel()
+    var eventsModel = EventsModel()
+//    var focusedArticleModel = FocusedArticleModel()
 
     NavHost(
         modifier = modifier,
@@ -30,8 +29,7 @@ fun AppNavHost(
             Home(
                 navController,
                 articleModel = articlesModel,
-                eventsModel = eventsModel,
-                focusedArticleModel
+                eventsModel = eventsModel
             )
             articlesModel.getArticleList()
             eventsModel.getEventList()
@@ -42,7 +40,7 @@ fun AppNavHost(
         composable( route = Screen.C.route ){ TestText("B") }
 
         composable( route = Screen.Articles.route ) {
-            Articles(navController, articleModel = articlesModel, focusedArticleModel = focusedArticleModel)
+            Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()
         }
 
@@ -54,7 +52,7 @@ fun AppNavHost(
 //            if (articleData != null) {
 //                ArticleFull(navController, articleData = articleData)
 //            }
-            ArticleFull(navController, focusedArticleModel)
+            ArticleFull(navController, articlesModel.currentArticle)
             articlesModel.getArticleList()
         }
         composable( route = Screen.About.route ){ About() }

@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.Article
-import com.example.mob3000_root_app.components.cards.FocusedArticleModel
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 import kotlinx.coroutines.launch
@@ -49,7 +47,11 @@ class ArticlesModel : ViewModel() {
 }
 
 @Composable
-fun Articles(navController: NavHostController, articleModel: ArticlesModel, focusedArticleModel: FocusedArticleModel) {
+fun Articles(
+    navController: NavHostController,
+    articleModel: ArticlesModel,
+//    focusedArticleModel: FocusedArticleModel
+) {
 
     Box(
         modifier = Modifier
@@ -64,7 +66,8 @@ fun Articles(navController: NavHostController, articleModel: ArticlesModel, focu
                     Article(
                         navController,
                         articleData = article, ArticleType.VERTICAL_ARTICLE,
-                        focusedArticleModel
+//                        focusedArticleModel
+                        { articleModel.focusArticle(article) }
                     )
                 }
             }
