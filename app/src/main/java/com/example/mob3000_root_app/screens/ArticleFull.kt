@@ -1,5 +1,11 @@
 package com.example.mob3000_root_app.screens
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.util.Log
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -10,6 +16,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -18,26 +25,54 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.PackageManagerCompat.LOG_TAG
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.CommentSection
 import com.example.mob3000_root_app.components.cards.conditional
+import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleTestdata
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+enum class ArticleAPIStatus { LOADING, ERROR, DONE }
 
 @OptIn(ExperimentalComposeUiApi::class)
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ArticleFull(
-    navController: NavHostController/*, articleData: ArticleData*/
+    navController: NavHostController/*, articleData: ArticleData*/, articleAPI: ArticleApiService
 ) {
+
+
 
     var isCommenting by remember{ mutableStateOf(false) }
     val data = ArticleTestdata().dataList[2]
     val interactionSource = remember { MutableInteractionSource() }
 
-    Box {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+
+    Box(
+        Modifier
+        .clickable(
+            interactionSource = interactionSource,
+            indication = null    // this gets rid of the ripple effect
+        ) {
+            focusManager.clearFocus(true)
+            keyboardController?.hide()
+        }
+    ) {
         Surface(Modifier.background(MaterialTheme.colorScheme.background)) {
             Column(
                 Modifier
@@ -87,7 +122,14 @@ fun ArticleFull(
                     )
                 }
 
-                CommentSection(comments = ArticleTestdata().comments, isCommenting = isCommenting, onCommentingChanged = {isCommenting = !isCommenting})
+                if (keyboardController != null) {
+                    CommentSection(
+                        comments = ArticleTestdata().comments,
+                        isCommenting = isCommenting,
+                        onCommentingChanged = {isCommenting = !isCommenting},
+                        keyboardController = keyboardController
+                    )
+                }
 
             }
         }
@@ -95,9 +137,19 @@ fun ArticleFull(
 
 }
 
- fun getAllArticles(){
 
-}
+
+// suspend fun getAllArticles(_status : ArticleAPIStatus, _articles:List<ArticleData>){
+//
+//     _status = ArticleAPIStatus.LOADING
+//     try {
+//         _articles = ArticleAPI.retrofitService.getAllArticles()
+//         _status = ArticleAPIStatus.DONE
+//     } catch (e: Exception) {
+//         _status  = ArticleAPIStatus.ERROR
+//         _articles = listOf()
+//     }
+//}
 
  fun getEvents(){
 
@@ -108,5 +160,5 @@ fun ArticleFull(
 @Preview(showBackground = true)
 @Composable
 fun ArticlePreview() {
-    ArticleFull(rememberNavController()/*,ArticleTestdata().dataList[1]*/)
+//    ArticleFull(rememberNavController()/*,ArticleTestdata().dataList[1]*/, )
 }

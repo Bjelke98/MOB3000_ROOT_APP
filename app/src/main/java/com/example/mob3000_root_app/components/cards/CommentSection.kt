@@ -13,13 +13,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,12 +26,13 @@ import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.Comment
 import com.example.mob3000_root_app.ui.theme.Underlined
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingChanged: () -> Unit){
+fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingChanged: () -> Unit, keyboardController: SoftwareKeyboardController){
     var comment by remember{ mutableStateOf(TextFieldValue("")) }
     val focusRequester = remember { FocusRequester() }
     var height = if(!isCommenting) 150.dp else 50.dp
+//    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column {
 
@@ -54,7 +53,7 @@ fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingCh
         ){
             OutlinedTextField(
                 value = comment,
-                readOnly = !isCommenting,
+//                readOnly = !isCommenting,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Comment,
@@ -66,8 +65,12 @@ fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingCh
                     .fillMaxWidth()
                     .conditional( isCommenting, ifTrue = {fillMaxHeight()} )
                     .height(height)
-                    .onFocusChanged { onCommentingChanged() }
-                    .focusRequester(focusRequester),
+                    .onFocusChanged {
+                        if(isCommenting) keyboardController.hide()
+                        onCommentingChanged()
+                    }
+                    .onFocusEvent { keyboardController.show() },
+//                    .focusRequester(focusRequester),
                 placeholder = { Text(text = "Write what's on your mind") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 onValueChange = {
@@ -85,7 +88,7 @@ fun Comment(comment:Comment){
             .fillMaxWidth()
             .padding(5.dp),
             shape = MaterialTheme.shapes.small){
-        Text(text = comment.user.firstName + " " + comment.user.lastName,
+        Text(text = comment.user.firstname + " " + comment.user.lastname,
             Modifier.padding(5.dp),
             style = Underlined
         )
@@ -111,5 +114,5 @@ fun Modifier.conditional(
 @Preview
 @Composable
 fun MyPreview(){
-    CommentSection(comments = ArticleTestdata().comments, true, {})
+//    CommentSection(comments = ArticleTestdata().comments, true, {})
 }

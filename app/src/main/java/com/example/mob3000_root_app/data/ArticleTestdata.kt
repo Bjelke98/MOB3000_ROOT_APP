@@ -3,17 +3,20 @@ package com.example.mob3000_root_app.data
 import org.json.JSONObject
 
 class ArticleTestdata {
+    val list = listOf<String>("HEi", "Du", "FUck")
+
     val comments = listOf<Comment>(
-        Comment(User("Jonas","Almaas"),"Hei du"),
-        Comment(User("Nils","Patric"),"Heisan"),
-        Comment(User("Hefalump","Petroliun"),"Stein")
+        Comment(1, "id_1","Hei du", "01/01/00", list , User("id1","Nils","Almaas")),
+        Comment(2, "id_2","Heisan", "01/01/00", list , User("id2","Jonas","Patric")),
+        Comment(3, "id_3","Stein", "01/01/00", list , User("id3","Hefalump","Petroliun")),
+        Comment(4, "id_4","Argnif Muldrulag", "01/01/00", list , User("id4","Heldrun","Biderulder")),
     )
-    val dataList: List<ArticleData> = listOf(
-        ArticleData("Title1", "https://img-9gag-fun.9cache.com/photo/aDWEjK9_700bwp.webp", "Gaming Mouse",1,comments),
-        ArticleData("LinrikLink", "https://linrik.herokuapp.com/api/resources/image-1654869276879.png", "Gaming Mouse", 2, comments),
-        ArticleData("Title2", "https://img-9gag-fun.9cache.com/photo/aKEPP3W_460swp.webp", "Gaming Mouse", 3, comments),
-        ArticleData("Title3", "https://img-9gag-fun.9cache.com/photo/aKEPP93_460swp.webp", "Gaming Mouse",4, comments),
-        ArticleData("Title4", "https://img-9gag-fun.9cache.com/photo/aDWEjK9_700bwp.webp", "Gaming Mouse",5 , comments),
+    var dataList: List<ArticleData> = listOf(
+        ArticleData(1,"Title1", comments, "Gaming Mouse","https://img-9gag-fun.9cache.com/photo/aDWEjK9_700bwp.webp","01/01/00", "Title1"),
+        ArticleData(2,"LinrikLink",comments,  "Gaming Mouse","https://linrik.herokuapp.com/api/resources/image-1654869276879.png", "01/01/00", "Title2"),
+        ArticleData(3,"Title2", comments,  "Gaming Mouse","https://img-9gag-fun.9cache.com/photo/aKEPP3W_460swp.webp", "01/01/00", "Title3"),
+        ArticleData(4,"Title3", comments, "Gaming Mouse","https://img-9gag-fun.9cache.com/photo/aKEPP93_460swp.webp","01/01/00", "Title4"),
+        ArticleData(5,"Title4", comments, "Gaming Mouse","https://img-9gag-fun.9cache.com/photo/aDWEjK9_700bwp.webp","01/01/00" , "Title5"),
     )
 
 //    val jsonDataList: List<ArticleJsonData> = listOf(

@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -9,19 +10,30 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.Article
 import com.example.mob3000_root_app.components.cards.EventCard
+import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.EventItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Home2(navController: NavHostController) {
+fun Home2(navController: NavHostController, articleAPI: ArticleApiService) {
+
+    val coroutineScope = rememberCoroutineScope()
+
+    var articles: List<ArticleData> = ArticleTestdata().dataList
+    coroutineScope.launch(Dispatchers.IO) { }
 
     Box(
         modifier = Modifier
@@ -44,8 +56,15 @@ fun Home2(navController: NavHostController) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleList){ article ->
-                    Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
+
+                coroutineScope.launch(Dispatchers.IO) {
+
+
+
+                    items(items = articles){ article ->
+                        Article(navController, data = article, ArticleType.HORIZONTAL_ARTICLE)
+                    }
+
                 }
             }
 

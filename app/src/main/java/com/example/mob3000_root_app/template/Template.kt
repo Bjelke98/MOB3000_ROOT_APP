@@ -14,10 +14,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.navigation.AppNavHost
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.data.ArticleData
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +34,20 @@ fun Template(
     var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    val BASE_URL = "https://linrik.herokuapp.com/api/"
+
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .baseUrl(BASE_URL).build()
+
+    val retrofitService: ArticleApiService by lazy{
+        retrofit.create(ArticleApiService::class.java)
+    }
+
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
@@ -124,6 +145,6 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController, articleAPI = retrofitService) }
     }
 }

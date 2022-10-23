@@ -6,27 +6,35 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.screens.*
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = Screen.Home.route
+    startDestination: String = Screen.Home.route,
+    articleAPI: ArticleApiService
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ){
         composable( route = Screen.Home.route ){ Home(navController) }
-        composable( route = Screen.Home2.route ){ Home2(navController) }
+        composable( route = Screen.Home2.route ){ Home2(navController, articleAPI) }
         composable( route = Screen.Login.route ){ Login(navController) }
         composable( route = Screen.Register.route ){ Register(navController) }
         composable( route = Screen.B.route ){ TestText("A") }
         composable( route = Screen.C.route ){ TestText("B") }
-        composable( route = Screen.Articles.route ){ Articles(navController) }
-        composable( route = Screen.ArticleFull.route ){ ArticleFull(navController) }
+
+        var articles: ArticlesModel = ArticlesModel()
+        composable( route = Screen.Articles.route ){
+            Articles(navController, articleList = articles.articleListResponse)
+            articles.getArticleList()
+        }
+
+        composable( route = Screen.ArticleFull.route ){ ArticleFull(navController, articleAPI) }
         composable( route = Screen.About.route ){ About() }
         composable( route = Screen.Events.route ){ Events() }
     }

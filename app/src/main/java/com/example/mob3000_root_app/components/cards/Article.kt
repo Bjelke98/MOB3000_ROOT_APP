@@ -16,7 +16,6 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.ArticleApiService.ArticleAPI
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.navigation.navigateUpToFullArticle
@@ -28,9 +27,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun Article(navController: NavHostController, data : ArticleData, type: ArticleType) {
 
-//    val title = data.json.get("title")
-//    val image = data.json.get("image") as Int
-//    val  imageDescription = data.json.get("imageDescription") as String?
 
     val title = data.title
     val image = data.image
@@ -46,8 +42,6 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
     val horizontalColMods = Modifier.width(contentWidth80per)
     val verticalColMods = Modifier.fillMaxWidth()
 
-    val coroutineScope = rememberCoroutineScope()
-
     Card(
         Modifier
             .fillMaxWidth()
@@ -58,7 +52,7 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
 
                    AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(image)
+                        .data("https://linrik.herokuapp.com/api/resources/$image")
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.sauce),
