@@ -39,7 +39,7 @@ fun AppNavHost(
         composable( route = Screen.Register.route ){ Register(navController) }
         composable( route = Screen.B.route ){ TestText("A") }
         composable( route = Screen.C.route ){ TestText("B") }
-
+        composable( route = Screen.Profile.route ) { Profile(navController = navController)}
         composable( route = Screen.Articles.route ) {
             Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()

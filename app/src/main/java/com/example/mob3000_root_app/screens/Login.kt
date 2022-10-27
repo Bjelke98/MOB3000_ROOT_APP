@@ -64,7 +64,7 @@ fun Login(navController: NavHostController) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label={Text(text="Password")},
-                    placeholder={Text(text="Pepsi > Cola")},
+                    placeholder={Text(text="********")},
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                     visualTransformation= PasswordVisualTransformation(),
                     onValueChange={

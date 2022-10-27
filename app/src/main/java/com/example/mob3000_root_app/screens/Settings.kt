@@ -32,7 +32,9 @@ fun Settings(navController: NavHostController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceVariant),
     ){
-        Card(modifier = Modifier.padding(10.dp),colors = testColors
+        Card(modifier = Modifier.padding(10.dp)
+            .fillMaxWidth()
+            ,colors = testColors
         ) {
             Column(
                 //verticalArrangement = Arrangement.Center,
