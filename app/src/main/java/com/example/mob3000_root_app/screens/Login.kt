@@ -26,6 +26,7 @@ import com.example.mob3000_root_app.components.navigation.Screen
 fun Login(navController: NavHostController) {
     var epost by remember{ mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
 
