@@ -15,10 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.data.EventData
-import com.example.mob3000_root_app.data.EventItem
 import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
 

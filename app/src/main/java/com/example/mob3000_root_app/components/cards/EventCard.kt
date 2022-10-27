@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.components.cards
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -16,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mob3000_root_app.data.EventItem
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
