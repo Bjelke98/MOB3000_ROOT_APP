@@ -40,12 +40,6 @@ class EventsModel : ViewModel(){
 
 @Composable
 fun Events(eventList: List<EventData>) {
-//    val eventList = listOf(
-//        EventItem("Feb",5,"Hackathon", R.drawable.summer),
-//        EventItem("May",17,"17. mai frokost",R.drawable.summer),
-//        EventItem("Jun",5,"Summerfestivals", R.drawable.testing),
-//        EventItem("Oct",5,"MOB3000 Presentasjon", R.drawable.testing),
-//    )
 
     LazyColumn(modifier = Modifier
         .background(MaterialTheme.colorScheme.surfaceVariant)) {

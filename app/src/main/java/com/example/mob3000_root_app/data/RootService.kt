@@ -6,6 +6,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 interface RootService {
+
+    @GET("article")
+    suspend fun getArticles(): List<ArticleData>
+
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
