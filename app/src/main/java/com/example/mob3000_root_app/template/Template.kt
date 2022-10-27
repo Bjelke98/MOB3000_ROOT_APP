@@ -27,6 +27,8 @@ fun Template(
     var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
@@ -53,18 +55,18 @@ fun Template(
                     //Title
                     Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp), fontSize = MaterialTheme.typography.headlineMedium.fontSize)
                     //content
+//                    NavigationDrawerItem(
+//                        label = { Text(text = stringResource(id = R.string.nav_label_home)) },
+//                        selected = navBackStackEntry?.destination?.route==Screen.Home.route,
+//                        onClick = {
+//                            navigateUpTo(navController, Screen.Home)
+//                            closeDrawer()
+//                        })
                     NavigationDrawerItem(
                         label = { Text(text = stringResource(id = R.string.nav_label_home)) },
                         selected = navBackStackEntry?.destination?.route==Screen.Home.route,
                         onClick = {
                             navigateUpTo(navController, Screen.Home)
-                            closeDrawer()
-                        })
-                    NavigationDrawerItem(
-                        label = { Text(text = stringResource(id = R.string.nav_label_home)+"2") },
-                        selected = navBackStackEntry?.destination?.route==Screen.Home2.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Home2)
                             closeDrawer()
                         })
                     NavigationDrawerItem(
