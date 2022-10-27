@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class ArticlesModel : ViewModel() {
     var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
     var errorMessage: String by mutableStateOf("")
-    var currentArticle by mutableStateOf<ArticleData?>(null)
+    var focusedArticle by mutableStateOf<ArticleData?>(null)
         private set
 
     fun getArticleList() {
@@ -42,7 +42,7 @@ class ArticlesModel : ViewModel() {
     }
 
     fun focusArticle(focusArticle: ArticleData){
-        currentArticle = focusArticle
+        focusedArticle = focusArticle
     }
 }
 

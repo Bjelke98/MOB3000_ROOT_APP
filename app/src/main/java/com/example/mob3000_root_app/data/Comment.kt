@@ -10,6 +10,6 @@ data class Comment(
     val _id: String,
     val comment: String,
     val postedAt: String,
-    val reply: List<String>,
+    val reply: List<Comment>,
     val user: User
 ): Parcelable

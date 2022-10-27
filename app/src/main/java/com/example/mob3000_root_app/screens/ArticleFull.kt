@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -84,12 +85,12 @@ fun ArticleFull(
                         .padding(bottom = 20.dp)
                 )
 
-//                Text(text = ArticleTestdata().loremIpsum,
-//                    Modifier
-//                        .fillMaxWidth()
-//                        .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
-//                    overflow = TextOverflow.Ellipsis
-//                )
+                Text(text = articleData.description,
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
+                    overflow = TextOverflow.Ellipsis
+                )
 
                 IconButton(onClick = { /*navController.popBackStack()*/ },
                     Modifier
@@ -105,7 +106,7 @@ fun ArticleFull(
 
                 if (keyboardController != null) {
                     CommentSection(
-                        comments = ArticleTestdata().comments,
+                        comments = articleData.comments,
                         isCommenting = isCommenting,
                         onCommentingChanged = {isCommenting = !isCommenting},
                         keyboardController = keyboardController

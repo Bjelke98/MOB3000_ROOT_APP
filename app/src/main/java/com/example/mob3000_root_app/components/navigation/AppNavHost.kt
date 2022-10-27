@@ -52,7 +52,7 @@ fun AppNavHost(
 //            if (articleData != null) {
 //                ArticleFull(navController, articleData = articleData)
 //            }
-            ArticleFull(navController, articlesModel.currentArticle)
+            ArticleFull(navController, articlesModel.focusedArticle)
             articlesModel.getArticleList()
         }
         composable( route = Screen.About.route ){ About() }

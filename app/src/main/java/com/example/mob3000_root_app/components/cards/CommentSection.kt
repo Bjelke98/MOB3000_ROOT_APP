@@ -31,13 +31,13 @@ import com.example.mob3000_root_app.ui.theme.Underlined
 fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingChanged: () -> Unit, keyboardController: SoftwareKeyboardController){
     var comment by remember{ mutableStateOf(TextFieldValue("")) }
     val focusRequester = remember { FocusRequester() }
-    var height = if(!isCommenting) 150.dp else 50.dp
+    var height = if(isCommenting) 150.dp else 50.dp
 //    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column {
 
         LazyColumn(
-            Modifier.conditional(isCommenting, ifTrue = { fillMaxHeight( .5f)}, ifFalse = {fillMaxHeight(.7f)})
+            Modifier.conditional(isCommenting, ifTrue = { fillMaxHeight( .7f)}, ifFalse = {fillMaxHeight(.5f)})
         ){
             items(items = comments){ item->
                 run {
@@ -60,10 +60,11 @@ fun CommentSection(comments:List<Comment>, isCommenting: Boolean, onCommentingCh
                         contentDescription = null
                     )
                 },
+                maxLines = 3,
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
-                    .conditional( isCommenting, ifTrue = {fillMaxHeight()} )
+//                    .conditional( isCommenting, ifTrue = {fillMaxHeight()} )
                     .height(height)
                     .onFocusChanged {
                         if(isCommenting) keyboardController.hide()
@@ -92,8 +93,10 @@ fun Comment(comment:Comment){
             Modifier.padding(5.dp),
             style = Underlined
         )
-        Text(text = comment.comment,
-        Modifier.padding(start = 5.dp, bottom = 5.dp))
+        Text(
+            text = comment.comment,
+            Modifier.padding(start = 5.dp, bottom = 5.dp)
+        )
     }
 }
 
