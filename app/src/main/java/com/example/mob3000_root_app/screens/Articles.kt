@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.ArticleApiService.ArticleApiService
 import com.example.mob3000_root_app.components.cards.Article
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
+import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
 
 class ArticlesModel : ViewModel() {
@@ -31,7 +31,7 @@ class ArticlesModel : ViewModel() {
 
     fun getArticleList() {
         viewModelScope.launch {
-            val apiService = ArticleApiService.getInstance()
+            val apiService = RootService.getInstance()
             try {
                 val articleList = apiService.getArticles()
                 articleListResponse = articleList

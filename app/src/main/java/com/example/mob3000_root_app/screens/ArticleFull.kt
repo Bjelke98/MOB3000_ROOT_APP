@@ -25,7 +25,7 @@ import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
 import com.example.mob3000_root_app.data.ArticleData
-import com.example.mob3000_root_app.data.ArticleTestdata
+import com.example.mob3000_root_app.testData.ArticleTestdata
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint("CoroutineCreationDuringComposition")

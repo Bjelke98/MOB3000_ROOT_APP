@@ -45,6 +45,7 @@ fun AppNavHost(
         }
 
         composable( route = Screen.ArticleFull.route ) {
+//            --- Annen måte å sende data til andre views ---
 //            val articleData = navController.previousBackStackEntry?.savedStateHandle?.get<ArticleData>("article")
 //            LaunchedEffect(key1 = it ) {
 //                Log.d("ArticleFull", "${articleData?.title}")
