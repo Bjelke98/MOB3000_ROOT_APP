@@ -41,7 +41,7 @@ fun EventCard(event: EventData) {
                     .data("https://linrik.herokuapp.com/api/resources/" + event.image)
                     .crossfade(true)
                     .build(),
-                placeholder = painterResource(R.drawable.sauce),
+                placeholder = painterResource(R.drawable.testing),
                 contentDescription = (event.title),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()

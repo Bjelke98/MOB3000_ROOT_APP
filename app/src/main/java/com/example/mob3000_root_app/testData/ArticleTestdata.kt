@@ -5,7 +5,7 @@ import com.example.mob3000_root_app.data.Comment
 import com.example.mob3000_root_app.data.User
 
 class ArticleTestdata {
-    val list = listOf<String>("HEi", "Du", "FUck")
+    val list = listOf<Comment>()
 
     val comments = listOf<Comment>(
         Comment(1, "id_1","Hei du", "01/01/00", list , User("id1","Nils","Almaas")),
