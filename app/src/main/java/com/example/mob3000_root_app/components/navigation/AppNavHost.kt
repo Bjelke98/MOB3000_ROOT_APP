@@ -24,7 +24,6 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination,
     ){
-//        composable( route = Screen.HomeOld.route ){ Home(navController) }
         composable( route = Screen.Home.route ){
             Home(
                 navController,
@@ -36,15 +35,18 @@ fun AppNavHost(
         }
         composable( route = Screen.Login.route ){ Login(navController) }
         composable( route = Screen.Register.route ){ Register(navController) }
-        composable( route = Screen.B.route ){ TestText("A") }
-        composable( route = Screen.C.route ){ TestText("B") }
 
+        composable( route = Screen.Profile.route ) { Profile(navController = navController)}
+        composable( route = Screen.ArticleAdmin.route ){ ArticleAdmin(navController) }
+        composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
+        composable( route = Screen.Settings.route ){ Settings(navController) }
         composable( route = Screen.Articles.route ) {
             Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()
         }
 
         composable( route = Screen.ArticleFull.route ) {
+//            --- Annen måte å sende data til andre views ---
 //            val articleData = navController.previousBackStackEntry?.savedStateHandle?.get<ArticleData>("article")
 //            LaunchedEffect(key1 = it ) {
 //                Log.d("ArticleFull", "${articleData?.title}")
@@ -52,7 +54,7 @@ fun AppNavHost(
 //            if (articleData != null) {
 //                ArticleFull(navController, articleData = articleData)
 //            }
-            ArticleFull(navController, articlesModel.currentArticle)
+            ArticleFull(navController, articlesModel.focusedArticle)
             articlesModel.getArticleList()
         }
         composable( route = Screen.About.route ){ About() }

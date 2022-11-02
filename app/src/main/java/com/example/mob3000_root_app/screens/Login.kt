@@ -26,6 +26,7 @@ import com.example.mob3000_root_app.components.navigation.Screen
 fun Login(navController: NavHostController) {
     var epost by remember{ mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
 
@@ -50,7 +51,7 @@ fun Login(navController: NavHostController) {
                         .fillMaxWidth(),
                     label={Text(text="Epost")},
                     placeholder={Text(text="example@hotmail.com")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Text),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email),
                     onValueChange={
                         epost=it
                     }
@@ -63,11 +64,12 @@ fun Login(navController: NavHostController) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label={Text(text="Password")},
-                    placeholder={Text(text="Pepsi > Cola")},
+                    placeholder={Text(text="********")},
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                     visualTransformation= PasswordVisualTransformation(),
                     onValueChange={
-                        password=it }
+                        password=it
+                    }
                 )
 
                 Row(
@@ -85,13 +87,10 @@ fun Login(navController: NavHostController) {
                     ) {
                         Text("Login")
                     }
-
                 }
             }
         }
-
     }
-
 }
 
 @Preview(showBackground = true, widthDp = 400, heightDp = 65)

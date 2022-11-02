@@ -94,7 +94,7 @@ fun Register(navController: NavHostController) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label = { Text(text = "Epost*") },
-                    placeholder = { Text(text = "example@hotmail.com") },
+                    placeholder = { Text(text = "eksempel@hotmail.com") },
                     onValueChange = {
                         epost = it
                     },
@@ -113,7 +113,7 @@ fun Register(navController: NavHostController) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label = { Text(text = "Passord*") },
-                    placeholder = { Text(text = "Example") },
+                    placeholder = { Text(text = "Eksempel") },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
                         passord = it
@@ -133,7 +133,7 @@ fun Register(navController: NavHostController) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label = { Text(text = "Gjenta passord*") },
-                    placeholder = { Text(text = "Example") },
+                    placeholder = { Text(text = "Eksempel") },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
                         gjentaPassord = it

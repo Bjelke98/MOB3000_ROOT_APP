@@ -32,11 +32,15 @@ fun Template(
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
-    Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd).offset(0.dp, 65.dp)){
+    Box(modifier = Modifier
+        .wrapContentSize(Alignment.TopEnd)
+        .offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
             DropdownMenuItem(text = {Text(text = "Login")},
                 onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
             DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+            DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
         }
     }
 
@@ -84,6 +88,20 @@ fun Template(
                         selected = navBackStackEntry?.destination?.route==Screen.About.route,
                         onClick = {
                             navigateUpTo(navController, Screen.About)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
+                        label = { Text(text = "ArticleAdmin") },
+                        selected = navBackStackEntry?.destination?.route==Screen.ArticleAdmin.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.ArticleAdmin)
+                            closeDrawer()
+                        })
+                    NavigationDrawerItem(
+                        label = { Text(text = "EventAdmin") },
+                        selected = navBackStackEntry?.destination?.route==Screen.EventAdmin.route,
+                        onClick = {
+                            navigateUpTo(navController, Screen.EventAdmin)
                             closeDrawer()
                         })
                 }

@@ -14,5 +14,3 @@ data class ArticleData(
     val postedAt: String,
     val title: String
 ): Parcelable
-
-enum class ArticleType{    VERTICAL_ARTICLE, HORIZONTAL_ARTICLE     }

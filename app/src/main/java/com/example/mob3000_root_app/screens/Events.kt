@@ -15,10 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.data.EventData
-import com.example.mob3000_root_app.data.EventItem
 import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
 
@@ -42,12 +40,6 @@ class EventsModel : ViewModel(){
 
 @Composable
 fun Events(eventList: List<EventData>) {
-//    val eventList = listOf(
-//        EventItem("Feb",5,"Hackathon", R.drawable.summer),
-//        EventItem("May",17,"17. mai frokost",R.drawable.summer),
-//        EventItem("Jun",5,"Summerfestivals", R.drawable.testing),
-//        EventItem("Oct",5,"MOB3000 Presentasjon", R.drawable.testing),
-//    )
 
     LazyColumn(modifier = Modifier
         .background(MaterialTheme.colorScheme.surfaceVariant)) {
