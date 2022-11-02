@@ -58,8 +58,11 @@ fun EventCard(event: EventData) {
                 placeholder = painterResource(R.drawable.testing),
                 contentDescription = (event.title),
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 20.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+
+                    .padding(bottom = 5.dp)
+
             )
             Column(
                 Modifier
@@ -104,7 +107,7 @@ fun EventCard(event: EventData) {
             Text(modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth(),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Left,
                 text = event.title,
                 style = MaterialTheme.typography.headlineMedium)
         }
