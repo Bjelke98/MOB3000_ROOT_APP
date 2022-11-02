@@ -24,7 +24,6 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination,
     ){
-//        composable( route = Screen.HomeOld.route ){ Home(navController) }
         composable( route = Screen.Home.route ){
             Home(
                 navController,
@@ -55,7 +54,7 @@ fun AppNavHost(
 //            if (articleData != null) {
 //                ArticleFull(navController, articleData = articleData)
 //            }
-            ArticleFull(navController, articlesModel.currentArticle)
+            ArticleFull(navController, articlesModel.focusedArticle)
             articlesModel.getArticleList()
         }
         composable( route = Screen.About.route ){ About() }

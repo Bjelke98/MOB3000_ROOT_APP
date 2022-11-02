@@ -3,4 +3,5 @@
     <string name="nav_label_home">Hjem</string>
     <string name="company_name" translatable="false">/root</string>
     <string name="nav_label_about_us">Om oss</string>
+    <string name="whats_on_your_mind" translatable="false">Write what\'s on your mind!</string>
 </resources>

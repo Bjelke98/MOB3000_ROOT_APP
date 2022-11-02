@@ -62,7 +62,7 @@ fun Article(
                         .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
                         .crossfade(true)
                         .build(),
-                    placeholder = painterResource(R.drawable.sauce),
+                    placeholder = painterResource(R.drawable.testing),
                     contentDescription = ("Image could not load"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
