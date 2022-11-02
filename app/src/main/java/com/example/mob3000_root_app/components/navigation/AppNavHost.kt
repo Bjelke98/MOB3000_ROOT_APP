@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.components.navigation
 
-import android.provider.ContactsContract
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,9 +36,11 @@ fun AppNavHost(
         }
         composable( route = Screen.Login.route ){ Login(navController) }
         composable( route = Screen.Register.route ){ Register(navController) }
-        composable( route = Screen.B.route ){ TestText("A") }
-        composable( route = Screen.C.route ){ TestText("B") }
+
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
+        composable( route = Screen.ArticleAdmin.route ){ ArticleAdmin(navController) }
+        composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
+
         composable( route = Screen.Articles.route ) {
             Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()
@@ -59,7 +60,6 @@ fun AppNavHost(
         }
         composable( route = Screen.About.route ){ About() }
         composable( route = Screen.Events.route ){ Events( eventList = eventsModel.eventListResponse); eventsModel.getEventList()}
-        composable( route = Screen.Settings.route){ Settings(navController) }
     }
 }
 
