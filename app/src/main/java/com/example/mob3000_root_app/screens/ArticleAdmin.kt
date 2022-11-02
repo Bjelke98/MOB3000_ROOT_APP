@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
 
 @Composable
@@ -21,15 +20,15 @@ fun ArticleAdmin (navController: NavHostController) {
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
-        val articleList = ArticleTestdata().dataList
-        Column(Modifier.padding(10.dp)) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-            ) {
-                items(items = articleList){ article ->
-                    AdminArticle(navController ,data = article, ArticleType.VERTICAL_ARTICLE)
-                }
-            }
-        }
+//        val articleList = ArticleTestdata().dataList
+//        Column(Modifier.padding(10.dp)) {
+//            LazyColumn(
+//                verticalArrangement = Arrangement.spacedBy(20.dp),
+//            ) {
+//                items(items = articleList){ article ->
+//                    AdminArticle(navController ,data = article, ArticleType.VERTICAL_ARTICLE)
+//                }
+//            }
+//        }
     }
 }
