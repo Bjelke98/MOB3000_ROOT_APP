@@ -32,8 +32,9 @@ fun Settings(navController: NavHostController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceVariant),
     ){
-        Card(modifier = Modifier.padding(10.dp)
-            .fillMaxWidth()
+        Card(modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(1f)
             ,colors = testColors
         ) {
             Column(
