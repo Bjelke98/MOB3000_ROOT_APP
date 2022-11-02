@@ -18,10 +18,15 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.EventData
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -32,9 +37,11 @@ import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun EventCard(event: EventData) {
-    val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background)
+fun EventCard(
+    event: EventData,
+    type: ArticleType
+    )
+{
 
     val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
     val dateTimeTo = ZonedDateTime.parse(event.dateTo)
@@ -43,6 +50,129 @@ fun EventCard(event: EventData) {
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
     val dateFormatFull = DateTimeFormatter.ofPattern("dd-mm-yyyy")
 
+    val testColors: CardColors = CardDefaults.cardColors(
+        containerColor = MaterialTheme.colorScheme.background)
+
+    val configuration = LocalConfiguration.current
+    val contentHeight60per = (configuration.screenHeightDp.dp/2)
+    val contentWidth80per = (configuration.screenWidthDp.dp/10)*8
+
+    val horizontalColMods = Modifier.width(contentWidth80per)
+    val verticalColMods = Modifier.fillMaxWidth()
+
+    Card(
+        Modifier
+            .fillMaxWidth()
+            .height(contentHeight60per)
+        , colors = testColors){
+        Box(Modifier.fillMaxSize()) {
+            Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+                Box() {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://linrik.herokuapp.com/api/resources/" + event.image)
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.testing),
+                        contentDescription = ("Image could not load"),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(.5f)
+                    )
+
+                    Column(
+                        Modifier
+                            .padding(15.dp)
+                            .width(50.dp)
+                            .background(Color.White),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+
+
+                        Text(
+                            modifier = Modifier
+                                .background(Color.White)
+                                .padding(0.dp),
+
+                            style = TextStyle(
+                                fontSize = 25.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black
+                            ),
+                            text = dateTimeFrom.format(dateFormatDay),
+                            textAlign = TextAlign.Center
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .padding(1.dp),
+                            color = Color.Red,
+                            style = TextStyle(fontSize = 15.sp),
+                            textAlign = TextAlign.Center,
+                            text =  dateTimeFrom.format(dateFormatMonth)
+                        )
+
+                    }
+                }
+
+                Column(
+                    Modifier
+                        .fillMaxHeight(.75f)
+                        .padding(5.dp)
+                ) {
+                    Text(text = event.title,
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp), style = MaterialTheme.typography.headlineSmall
+                    )
+                    Row() {
+                        Icon(Icons.Filled.LocationOn, "menu")
+                        Text(
+                            textAlign = TextAlign.Start,
+                            text = "Gullbringvegen 36"
+                        )
+                    }
+
+                    Row(Modifier
+                        .padding(vertical = 5.dp)) {
+                        Text(modifier = Modifier
+                            .padding(horizontal = 12.dp),
+                            textAlign = TextAlign.Start,
+                            text = 5.toString())
+                        Text(
+                            text = "are going")
+
+                        Icon(Icons.Filled.ToggleOn, "menu")
+                    }
+
+                }
+
+//              Bli med og kart-greie
+
+
+
+
+//              Button
+                Row(
+                    Modifier
+                        .padding(5.dp)
+                        .align(Alignment.End)){
+                    Button(onClick = {
+/*                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
+                        focusArticle()
+                        navigateUpTo(navController, Screen.ArticleFull)
+*/
+
+                    }) {
+                        Text(text = "Learn More")
+                    }
+                }
+
+            }
+
+        }
+    }
+    /*
     Card(
         modifier = Modifier
             .padding(5.dp)
@@ -158,4 +288,6 @@ fun EventCard(event: EventData) {
 
 
     }
+
+     */
 }

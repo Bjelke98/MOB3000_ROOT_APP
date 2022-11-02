@@ -63,7 +63,7 @@ fun Home(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = eventsModel.eventListResponse){ event ->
-                    EventCard(event)
+                    EventCard(event, ArticleType.HORIZONTAL_ARTICLE)
                 }
             }
         }

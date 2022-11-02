@@ -2,6 +2,9 @@ package com.example.mob3000_root_app.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.components.cards.EventCard
+import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.EventData
 import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
@@ -40,16 +44,27 @@ class EventsModel : ViewModel(){
 
 @Composable
 fun Events(eventList: List<EventData>) {
-
-    LazyColumn(modifier = Modifier
+    Box(Modifier
         .background(MaterialTheme.colorScheme.surfaceVariant)) {
-        item { Text(modifier = Modifier
-            .padding(5.dp),
-            text = "Events")
-        }
+        Column(Modifier.padding(10.dp)) {
 
-        items(items = eventList) {
-                event -> EventCard(event)
+            LazyColumn(
+
+
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(5.dp),
+                        text = "Events"
+                    )
+                }
+
+                items(items = eventList) { event ->
+                    EventCard(event, ArticleType.VERTICAL_ARTICLE)
+                }
+            }
         }
     }
 }
