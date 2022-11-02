@@ -90,14 +90,6 @@ fun Template(
                             navigateUpTo(navController, Screen.About)
                             closeDrawer()
                         })
-
-                    NavigationDrawerItem(
-                        label = { Text(stringResource(id = R.string.nav_label_about_us)) },
-                        selected = false,
-                        onClick = {
-                            navigateUpTo(navController, Screen.AboutUs)
-                            closeDrawer()
-                        })
                     NavigationDrawerItem(
                         label = { Text(text = "ArticleAdmin") },
                         selected = navBackStackEntry?.destination?.route==Screen.ArticleAdmin.route,

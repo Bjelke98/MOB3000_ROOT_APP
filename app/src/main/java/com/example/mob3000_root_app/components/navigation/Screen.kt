@@ -11,10 +11,6 @@ sealed class Screen(val route: String) {
     object About: Screen(route = "about_screen")
     object Events: Screen(route = "events_screen")
     object ArticleFull: Screen(route = "article_full_screen")
-    object B: Screen(route = "b_screen")
-    object C: Screen(route = "c_screen")
-    object D: Screen(route = "d_screen")
-    object AboutUs: Screen(route = "about_us_screen")
     object ArticleAdmin:Screen(route="article_admin")
     object EventAdmin:Screen(route="event_admin")
 }

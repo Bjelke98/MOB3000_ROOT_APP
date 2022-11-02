@@ -40,7 +40,7 @@ fun AppNavHost(
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
         composable( route = Screen.ArticleAdmin.route ){ ArticleAdmin(navController) }
         composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
-
+        composable( route = Screen.Settings.route ){ Settings(navController) }
         composable( route = Screen.Articles.route ) {
             Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()
