@@ -25,11 +25,25 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.EventData
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+
 
 @Composable
 fun EventCard(event: EventData) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
+
+    val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
+    val dateTimeTo = ZonedDateTime.parse(event.dateTo)
+
+    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
+    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
+    val dateFormatFull = DateTimeFormatter.ofPattern("dd-mm-yyyy")
 
     Card(
         modifier = Modifier
@@ -47,7 +61,6 @@ fun EventCard(event: EventData) {
                 contentDescription = (event.title),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
-                    .fillMaxHeight(.5f)
                     .padding(bottom = 20.dp)
             )
             Column(
@@ -59,28 +72,8 @@ fun EventCard(event: EventData) {
 
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
-//                Text(
-//                    modifier = Modifier
-//                        .background(Color.White)
-//                        .padding(0.dp),
-//
-//                    style = TextStyle(
-//                        fontSize = 25.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        color = Color.Black
-//                    ),
-//                    text = event.day.toString(),
-//                    textAlign = TextAlign.Center
-//                )
-//
-//                Text(
-//                    modifier = Modifier
-//                        .padding(1.dp),
-//                    color = Color.Red,
-//                    style = TextStyle(fontSize = 15.sp),
-//                    textAlign = TextAlign.Center,
-//                    text = event.month+"."
-//                )
+
+
                 Text(
                     modifier = Modifier
                         .background(Color.White)
@@ -91,7 +84,7 @@ fun EventCard(event: EventData) {
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     ),
-                    text = event.dateFrom,
+                    text = dateTimeFrom.format(dateFormatDay),
                     textAlign = TextAlign.Center
                 )
 
@@ -101,7 +94,7 @@ fun EventCard(event: EventData) {
                     color = Color.Red,
                     style = TextStyle(fontSize = 15.sp),
                     textAlign = TextAlign.Center,
-                    text = event.dateTo+"."
+                    text =  dateTimeFrom.format(dateFormatMonth)
                 )
 
             }
