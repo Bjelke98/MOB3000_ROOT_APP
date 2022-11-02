@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.components.cards
+package com.example.mob3000_root_app.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

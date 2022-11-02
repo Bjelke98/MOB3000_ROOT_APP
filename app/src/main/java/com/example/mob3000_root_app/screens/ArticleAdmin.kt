@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.cards.AdminArticle
 import com.example.mob3000_root_app.data.ArticleTestdata
 import com.example.mob3000_root_app.data.ArticleType
 

@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.components.cards
+package com.example.mob3000_root_app.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -32,7 +32,7 @@ fun AdminArticle(navController: NavHostController, data : ArticleData, type: Art
 
     val title = data.title
     val image = data.image
-    val imageDescription = data.imageDescription
+    val imageDescription = "Image loading"
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
