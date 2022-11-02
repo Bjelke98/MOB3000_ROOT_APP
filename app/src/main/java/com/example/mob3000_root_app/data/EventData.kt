@@ -1,10 +1,14 @@
 package com.example.mob3000_root_app.data
 
-import org.json.JSONObject
-
-data class EventData(val title: String, val date: String, val attendants:Int, val image: String, val imageDescription: String)
-enum class EventType{
-    VERTICAL_Event, HORIZONTAL_Event
-}
-
-data class EventJsonData(val json: JSONObject)
+data class EventData(
+    val __v: Int,
+    val _id: String,
+    val comments: List<Any>,
+    val dateFrom: String,
+    val dateTo: String,
+    val description: String,
+    val image: String,
+    val participants: List<Participant>,
+    val postedAt: String,
+    val title: String
+)

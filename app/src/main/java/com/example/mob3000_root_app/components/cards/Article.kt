@@ -21,16 +21,23 @@ import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 
 
+//class FocusedArticleModel : ViewModel() {
+//    var focusedArticle by mutableStateOf<ArticleData?>(null)
+//        private set
+//
+//    fun focusArticle(focusArticle: ArticleData){
+//        focusedArticle = focusArticle
+//    }
+//}
+
 @Composable
-fun Article(navController: NavHostController, data : ArticleData, type: ArticleType) {
-
-//    val title = data.json.get("title")
-//    val image = data.json.get("image") as Int
-//    val  imageDescription = data.json.get("imageDescription") as String?
-
-    val title = data.title
-    val image = data.image
-    val imageDescription = data.imageDescription
+fun Article(
+    navController: NavHostController,
+    articleData: ArticleData,
+    type: ArticleType,
+//    focuedArticle: FocusedArticleModel
+    focusArticle: () -> Unit
+) {
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -52,11 +59,11 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
 
                    AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(image)
+                        .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.sauce),
-                    contentDescription = (imageDescription),
+                    contentDescription = ("Image could not load"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,13 +75,13 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
                         .fillMaxHeight(.75f)
                         .padding(5.dp)
                 ) {
-                    Text(text = "Hello $title!",
+                    Text(text = articleData.title,
                         Modifier
                             .fillMaxWidth()
                             .padding(5.dp), style = MaterialTheme.typography.headlineSmall
                     )
 
-                    Text(text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                    Text(text = articleData.description,
                         Modifier
                             .fillMaxWidth()
                             .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
@@ -87,7 +94,10 @@ fun Article(navController: NavHostController, data : ArticleData, type: ArticleT
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
+//                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
+                        focusArticle()
                         navigateUpTo(navController, Screen.ArticleFull)
+
 
                     }) {
                         Text(text = "Learn More")
