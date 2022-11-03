@@ -43,6 +43,8 @@ fun EventCard(
     )
 {
 
+    val address: String = if (event.address == null)  "Adresse" else event.address
+
     val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
     val dateTimeTo = ZonedDateTime.parse(event.dateTo)
 
@@ -129,7 +131,7 @@ fun EventCard(
                         Icon(Icons.Filled.LocationOn, "menu")
                         Text(
                             textAlign = TextAlign.Start,
-                            text = "Gullbringvegen 36"
+                            text = address
                         )
                     }
 

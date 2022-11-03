@@ -6,6 +6,7 @@ data class EventData(
     val comments: List<Any>,
     val dateFrom: String,
     val dateTo: String,
+    val address: String?,
     val description: String,
     val image: String,
     val participants: List<Participant>,
