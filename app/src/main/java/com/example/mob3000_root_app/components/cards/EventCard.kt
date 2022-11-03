@@ -130,9 +130,12 @@ fun EventCard(
                         .padding(5.dp)
                 ) {
                     Text(text = event.title,
-                        Modifier
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp), style = MaterialTheme.typography.headlineSmall
+                            .padding(5.dp),
+                        style = MaterialTheme.typography.headlineSmall
                     )
                     Row(
                         Modifier
