@@ -78,7 +78,8 @@ fun Article(
                     Text(text = articleData.title,
                         Modifier
                             .fillMaxWidth()
-                            .padding(5.dp), style = MaterialTheme.typography.headlineSmall
+                            .padding(5.dp),
+                        style = MaterialTheme.typography.headlineSmall
                     )
 
                     Text(text = articleData.description,

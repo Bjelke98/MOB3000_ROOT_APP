@@ -17,7 +17,6 @@ fun AppNavHost(
 
     var articlesModel = ArticlesModel()
     var eventsModel = EventsModel()
-//    var focusedArticleModel = FocusedArticleModel()
 
     NavHost(
         modifier = modifier,
@@ -37,13 +36,17 @@ fun AppNavHost(
         composable( route = Screen.Register.route ){ Register(navController) }
 
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
-        composable( route = Screen.ArticleAdmin.route ){ ArticleAdmin(navController) }
-        composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
         composable( route = Screen.Settings.route ){ Settings(navController) }
+
         composable( route = Screen.Articles.route ) {
             Articles(navController, articleModel = articlesModel)
             articlesModel.getArticleList()
         }
+        composable( route = Screen.EditArticles.route ) {
+            ArticleAdmin(navController, articleModel = articlesModel)
+            articlesModel.getArticleList()
+        }
+        composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
 
         composable( route = Screen.ArticleFull.route ) {
 //            --- Annen måte å sende data til andre views ---

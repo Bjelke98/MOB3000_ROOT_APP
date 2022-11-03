@@ -61,49 +61,49 @@ fun Template(
 //                        onClick = {
 //                            navigateUpTo(navController, Screen.Home)
 //                            closeDrawer()
-//                        })
+//                    })
                     NavigationDrawerItem(
                         label = { Text(text = stringResource(id = R.string.nav_label_home)) },
                         selected = navBackStackEntry?.destination?.route==Screen.Home.route,
                         onClick = {
                             navigateUpTo(navController, Screen.Home)
                             closeDrawer()
-                        })
+                    })
                     NavigationDrawerItem(
                         label = { Text(text = "Articles") },
                         selected = navBackStackEntry?.destination?.route==Screen.Articles.route,
                         onClick = {
                             navigateUpTo(navController, Screen.Articles)
                             closeDrawer()
-                        })
+                    })
                     NavigationDrawerItem(
                         label = { Text(text = "Events") },
                         selected = navBackStackEntry?.destination?.route==Screen.Events.route,
                         onClick = {
                             navigateUpTo(navController, Screen.Events)
                             closeDrawer()
-                        })
+                    })
                     NavigationDrawerItem(
                         label = { Text(text = "About Us") },
                         selected = navBackStackEntry?.destination?.route==Screen.About.route,
                         onClick = {
                             navigateUpTo(navController, Screen.About)
                             closeDrawer()
-                        })
+                    })
                     NavigationDrawerItem(
-                        label = { Text(text = "ArticleAdmin") },
+                        label = { Text(text = "Manage Articles") },
                         selected = navBackStackEntry?.destination?.route==Screen.ArticleAdmin.route,
                         onClick = {
-                            navigateUpTo(navController, Screen.ArticleAdmin)
+                            navigateUpTo(navController, Screen.EditArticles)
                             closeDrawer()
-                        })
+                    })
                     NavigationDrawerItem(
-                        label = { Text(text = "EventAdmin") },
+                        label = { Text(text = "Manage Events") },
                         selected = navBackStackEntry?.destination?.route==Screen.EventAdmin.route,
                         onClick = {
                             navigateUpTo(navController, Screen.EventAdmin)
                             closeDrawer()
-                        })
+                    })
                 }
             }
         }

@@ -13,4 +13,6 @@ sealed class Screen(val route: String) {
     object ArticleFull: Screen(route = "article_full_screen")
     object ArticleAdmin:Screen(route="article_admin")
     object EventAdmin:Screen(route="event_admin")
+    object EditArticles:Screen(route="edit_article")
+    object EditEvents:Screen(route="edit_event")
 }

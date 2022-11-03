@@ -18,7 +18,7 @@ interface RootService {
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-
+    suspend fun postComment(@Body commentData:Comment) : Call<Comment>
 
     // Event API
     @GET("event")
@@ -46,6 +46,7 @@ interface RootService {
 
     @PUT("newpassword")
     suspend fun newPassword(@Body userData: User): Call<User> // trenger passord og nytt passord
+
 
 
     companion object {

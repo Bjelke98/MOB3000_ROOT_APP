@@ -26,10 +26,6 @@ import com.example.mob3000_root_app.data.ArticleType
 @Composable
 fun AdminArticle(navController: NavHostController, data : ArticleData, type: ArticleType) {
 
-//    val title = data.json.get("title")
-//    val image = data.json.get("image") as Int
-//    val  imageDescription = data.json.get("imageDescription") as String?
-
     val title = data.title
     val image = data.image
     val imageDescription = "Image loading"

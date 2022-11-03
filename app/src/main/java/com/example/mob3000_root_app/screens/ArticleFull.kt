@@ -87,7 +87,7 @@ fun ArticleFull(
                     text = articleData.title,
                     Modifier
                         .fillMaxWidth(),
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineLarge
                 )
             }
 
