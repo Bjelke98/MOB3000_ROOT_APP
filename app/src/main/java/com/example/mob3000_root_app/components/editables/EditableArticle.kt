@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.HorizontalAlignmentLine
@@ -31,7 +32,9 @@ fun EditableArticle(
             Modifier
                 .padding(10.dp)
                 .height(100.dp)
-                .fillMaxWidth()) {
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Box(Modifier.sizeIn(0.dp,0.dp,100.dp,100.dp)) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -46,16 +49,19 @@ fun EditableArticle(
                 )
             }
 
-            Text(text  = articleData.title, Modifier.widthIn(0.dp,200.dp) , overflow = TextOverflow.Ellipsis)
+            Text(
+                text  = articleData.title,
+                Modifier.widthIn(0.dp,200.dp).padding(10.dp) ,
+                overflow = TextOverflow.Ellipsis,
+            )
 
-            Column() {
-                OutlinedButton( onClick = { /*TODO*/ }) {
-
-                    Text(text  = "Delete", Modifier.align(CenterVertically))
+            Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
+                OutlinedButton( onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                    Text(text  = "Delete")
                 }
 
-                OutlinedButton(onClick = { /*TODO*/ }) {
-                    Text(text  = "Edit", Modifier.align(CenterVertically))
+                OutlinedButton(onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                    Text(text  = "Edit")
                 }
             }
 
