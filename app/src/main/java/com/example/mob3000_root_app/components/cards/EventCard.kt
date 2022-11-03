@@ -1,7 +1,9 @@
 package com.example.mob3000_root_app.components.cards
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +50,9 @@ fun EventCard(
 
     val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
     val dateTimeTo = ZonedDateTime.parse(event.dateTo)
+
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
 
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
@@ -87,7 +93,7 @@ fun EventCard(
                         Modifier
                             .padding(15.dp)
                             .width(50.dp)
-                            .background(Color.White),
+                            .background(Color.White).border(1.dp, MaterialTheme.colorScheme.primary),
                         horizontalAlignment = Alignment.CenterHorizontally) {
 
 
@@ -108,10 +114,13 @@ fun EventCard(
                         Text(
                             modifier = Modifier
                                 .padding(1.dp),
-                            color = Color.Red,
+
+                            color = MaterialTheme.colorScheme.primary,
                             style = TextStyle(fontSize = 15.sp),
                             textAlign = TextAlign.Center,
-                            text =  dateTimeFrom.format(dateFormatMonth)
+                            fontWeight = FontWeight.Bold,
+                            text =  dateTimeFrom.format(dateFormatMonth).uppercase()
+
                         )
 
                     }
@@ -119,33 +128,65 @@ fun EventCard(
 
                 Column(
                     Modifier
-                        .fillMaxHeight(.75f)
+                        .fillMaxHeight(.7f)
                         .padding(5.dp)
                 ) {
                     Text(text = event.title,
-                        Modifier
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp), style = MaterialTheme.typography.headlineSmall
+                            .padding(5.dp),
+                        style = MaterialTheme.typography.headlineSmall
                     )
-                    Row() {
-                        Icon(Icons.Filled.LocationOn, "menu")
+                    Row(
+                        Modifier
+                            .padding(vertical = 2.dp)
+                    ) {
+                        Icon(Icons.Filled.People, "people",
+                            tint = MaterialTheme.colorScheme.primary)
                         Text(
+                            modifier = Modifier
+                                .padding(horizontal = 10.dp),
+                            textAlign = TextAlign.Start,
+                            text = event.participants.size.toString()
+                        )
+                        Text(
+                            text = "attending"
+                        )
+
+
+                    }
+
+                    Row(
+                        Modifier
+                            .padding(vertical = 2.dp)
+                    ) {
+                        Icon(Icons.Filled.Timer, "location",
+                            tint = MaterialTheme.colorScheme.primary)
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 10.dp),
+                            textAlign = TextAlign.Start,
+                            text = dateTimeFrom.format(dateFormatFromHour) + " - " + dateTimeTo.format(dateFormatToHour)
+                        )
+                    }
+
+                    Row(
+                        Modifier
+                            .padding(vertical = 2.dp)
+                    ) {
+                        Icon(Icons.Filled.LocationOn, "location",
+                            tint = MaterialTheme.colorScheme.secondary)
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 10.dp),
                             textAlign = TextAlign.Start,
                             text = address
                         )
                     }
 
-                    Row(Modifier
-                        .padding(vertical = 5.dp)) {
-                        Text(modifier = Modifier
-                            .padding(horizontal = 12.dp),
-                            textAlign = TextAlign.Start,
-                            text = 5.toString())
-                        Text(
-                            text = "are going")
 
-                        Icon(Icons.Filled.ToggleOn, "menu")
-                    }
 
                 }
 
@@ -166,7 +207,9 @@ fun EventCard(
 */
 
                     }) {
-                        Text(text = "Learn More")
+                        Text(
+                            text = "Details"
+                        )
                     }
                 }
 
