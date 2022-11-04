@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,15 +16,56 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.App
-import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.data.LoginStatus
+import com.example.mob3000_root_app.data.RootService
+import com.example.mob3000_root_app.data.UserLoginInfo
+import kotlinx.coroutines.launch
 
+class LoginModel : ViewModel(){
+//    var loginStatusResponse:LoginStatus by remember {
+//        mutableStateOf(LoginStatus(user = null))
+//    }
+    var loginStatusResponse:LoginStatus = (LoginStatus(user = null))
+    var errorMessage: String by mutableStateOf("")
+    fun getLoginStatus() {
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val loginStatus = apiService.getUser()
+                loginStatusResponse = loginStatus
+                Log.i("loginStatus", loginStatus.loginStatus.toString())
+            }
+            catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+        }
+    }
+    fun loginUser(userLoginInfo: UserLoginInfo){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val loginStatus = apiService.loginUser(userLoginInfo)
+                loginStatusResponse = loginStatus
+                Log.i("loginStatus", loginStatus.loginStatus.toString())
+            }
+            catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Login(navController: NavHostController) {
+fun Login(
+    navController: NavHostController,
+    loginModel: LoginModel
+  ) {
     var epost by remember{ mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -77,13 +119,15 @@ fun Login(navController: NavHostController) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     TextButton(onClick = {
-                        navController.navigate("register_screen"){
-                        }
+                        //navController.navigate("register_screen")
+                        Log.i("loginStatus", loginModel.getLoginStatus().toString())
                     }) {
                         Text("Create new user")
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            loginModel.loginUser(UserLoginInfo(epost.text, password.text))
+                        },
                     ) {
                         Text("Login")
                     }
@@ -99,10 +143,10 @@ fun LoginNavPreview() {
     App(rememberNavController())
 }
 
-@Preview(showBackground = true, widthDp = 400, heightDp = 600)
-@Composable
-fun LoginPreview() {
-    Login(navController = rememberNavController())
-}
+//@Preview(showBackground = true, widthDp = 400, heightDp = 600)
+//@Composable
+//fun LoginPreview() {
+//    Login(navController = rememberNavController())
+//}
 
 //    navigateUpTo(navController, Screen.Home)

@@ -5,11 +5,7 @@ import com.squareup.moshi.Moshi
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface RootService {
 
@@ -24,16 +20,16 @@ interface RootService {
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
-
     // bruker API
     @POST("user/signup")
     suspend fun addUser(@Body userData: User): Call<User>// trenger mail fornavn etternavn og passord
 
     @GET("user")
-    suspend fun getUser(): User // trenger roller, fornavn etternavn og mail
+    suspend fun getUser(): LoginStatus
 
+    @Headers("Content-Type: application/json")
     @POST("user")
-    suspend fun loginUser(@Body userData: User): Call<User>// trenger data med email og passord
+    suspend fun loginUser(@Body userLoginInfo: UserLoginInfo): LoginStatus// trenger data med email og passord
 
     @PUT("user")
     suspend fun updateUser(@Body userData: User): Call<User>// trenger samme data som registrer
