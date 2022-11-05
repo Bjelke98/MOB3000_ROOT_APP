@@ -16,6 +16,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,12 +114,15 @@ fun Settings(navController: NavHostController) {
                                 lastname = it
                             }
                         )
-                        Button(
-                            onClick = {
+                        Row(
+                            Modifier
+                                .padding(5.dp)
+                                .align(Alignment.End)){
+                            Button(onClick = {
 
-                            },
-                        ) {
-                            Text(stringResource(id = R.string.setting_change_name))
+                            }) {
+                                Text(stringResource(id = R.string.setting_change_name))
+                            }
                         }
                     }
                 }
@@ -168,12 +173,15 @@ fun Settings(navController: NavHostController) {
                                 password=it
                             }
                         )
-                        Button(
-                            onClick = {
+                        Row(
+                            Modifier
+                                .padding(5.dp)
+                                .align(Alignment.End)){
+                            Button(onClick = {
 
-                            },
-                        ) {
-                            Text(stringResource(id = R.string.setting_change_password))
+                            }) {
+                                Text(stringResource(id = R.string.setting_change_password))
+                            }
                         }
                     }
                 }
@@ -211,17 +219,15 @@ fun Settings(navController: NavHostController) {
                         )
                     }
                     Row(
-                        horizontalArrangement = Arrangement.End
-                    ){
-                        Button(
-                            onClick = {
+                        Modifier
+                            .padding(5.dp)
+                            .align(Alignment.End)){
+                        Button(onClick = {
 
-                            },
-                        ) {
+                        }) {
                             Text(stringResource(id = R.string.setting_delete_user))
                         }
                     }
-
                 }
 
             }
