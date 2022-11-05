@@ -9,20 +9,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings(navController: NavHostController) {
     var firstname by remember{ mutableStateOf(TextFieldValue("Henrik")) }
-    var surname by remember{ mutableStateOf(TextFieldValue("Lindam")) }
+    var lastname by remember{ mutableStateOf(TextFieldValue("Lindam")) }
     var password by remember { mutableStateOf(TextFieldValue(""))}
     var nameSelected by remember { mutableStateOf(false) }
     var passwordSelected by remember { mutableStateOf(false) }
+    var deleteUserSelected by remember { mutableStateOf(false) }
 
     val testColors: CardColors = CardDefaults.cardColors(
     containerColor = MaterialTheme.colorScheme.background);
@@ -40,7 +43,8 @@ fun Settings(navController: NavHostController) {
             Column(
                 //verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(6.dp)
+                modifier = Modifier
+                    .padding(6.dp)
                     .fillMaxWidth(1f)
             ) {
                 Row(
@@ -51,65 +55,84 @@ fun Settings(navController: NavHostController) {
                     TextButton(
                         onClick = {
                             nameSelected = !nameSelected
-                            if(passwordSelected) passwordSelected = false
+                            if(nameSelected)
+                                passwordSelected = false
+                                deleteUserSelected = false
+
                         },
                     ) {
-                        Text("Endre navn")
+                        Text(stringResource(id = R.string.setting_change_name))
                     }
                     TextButton(
                         onClick = {
                             passwordSelected = !passwordSelected
-                            if (nameSelected) nameSelected = false
+                            if (passwordSelected)
+                                nameSelected = false
+                                deleteUserSelected = false;
                         },
                     ) {
-                        Text("Endre passord")
+                        Text(stringResource(id = R.string.setting_change_password))
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            deleteUserSelected = !deleteUserSelected
+                            if(deleteUserSelected)
+                                nameSelected = false
+                                passwordSelected = false
+                        },
                     ) {
-                        Text("Slett bruker")
+                        Text(stringResource(id = R.string.setting_delete_user))
                     }
                 }
+                // column for å bytte navn
                 if (nameSelected){
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = "Endre navn", style = MaterialTheme.typography.headlineSmall);
+                        Text(text = stringResource(id = R.string.setting_change_name), style = MaterialTheme.typography.headlineSmall);
                         OutlinedTextField(
                             value = firstname,
                             modifier = Modifier
                                 .padding(8.dp)
                                 .fillMaxWidth(),
-                            label = { Text(text = "Fornavn") },
-                            placeholder = { Text(text = "Fornavn") },
+                            label = { Text(text =  stringResource(id = R.string.firstname)) },
+                            placeholder = { Text(text = stringResource(id = R.string.firstname)) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             onValueChange = {
                                 firstname = it
                             }
                         )
                         OutlinedTextField(
-                            value = surname,
+                            value = lastname,
                             modifier = Modifier
                                 .padding(8.dp)
                                 .fillMaxWidth(),
-                            label = { Text(text = "Etternavn") },
-                            placeholder = { Text(text = "Etternavn") },
+                            label = { Text(text = stringResource(id = R.string.lastname)) },
+                            placeholder = { Text(text = stringResource(id = R.string.lastname)) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             onValueChange = {
-                                surname = it
+                                lastname = it
                             }
                         )
+                        Button(
+                            onClick = {
+
+                            },
+                        ) {
+                            Text(stringResource(id = R.string.setting_change_name))
+                        }
                     }
                 }
 
+                //column for å bytte passord
                 if (passwordSelected){
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = "Endre passord", style = MaterialTheme.typography.headlineSmall);
+                        Text(text = stringResource(id = R.string.setting_change_password), style = MaterialTheme.typography.headlineSmall);
                         OutlinedTextField(
                             value=password,
                             leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
                             modifier= Modifier
                                 .padding(8.dp)
                                 .fillMaxWidth(),
-                            label={Text(text="New Password")},
+                            label={Text(text= stringResource(id = R.string.setting_new_password))},
                             placeholder={Text(text="********")},
                             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                             visualTransformation= PasswordVisualTransformation(),
@@ -123,7 +146,7 @@ fun Settings(navController: NavHostController) {
                             modifier= Modifier
                                 .padding(8.dp)
                                 .fillMaxWidth(),
-                            label={Text(text="Confirm Password")},
+                            label={Text(text=stringResource(id = R.string.setting_confirm_password))},
                             placeholder={Text(text="********")},
                             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                             visualTransformation= PasswordVisualTransformation(),
@@ -137,7 +160,48 @@ fun Settings(navController: NavHostController) {
                             modifier= Modifier
                                 .padding(8.dp)
                                 .fillMaxWidth(),
-                            label={Text(text="Old Password")},
+                            label={Text(text=stringResource(id = R.string.setting_old_password))},
+                            placeholder={Text(text="********")},
+                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+                            visualTransformation= PasswordVisualTransformation(),
+                            onValueChange={
+                                password=it
+                            }
+                        )
+                        Button(
+                            onClick = {
+
+                            },
+                        ) {
+                            Text(stringResource(id = R.string.setting_change_password))
+                        }
+                    }
+                }
+                // column for å slette bruker
+                if (deleteUserSelected){
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall);
+                        OutlinedTextField(
+                            value=password,
+                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
+                            modifier= Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth(),
+                            label={Text(text=stringResource(id = R.string.password))},
+                            placeholder={Text(text="********")},
+                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+                            visualTransformation= PasswordVisualTransformation(),
+                            onValueChange={
+                                password=it
+                            }
+                        )
+                        OutlinedTextField(
+                            value=password,
+                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
+                            modifier= Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth(),
+                            label={Text(text=stringResource(id = R.string.setting_confirm_password))},
                             placeholder={Text(text="********")},
                             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
                             visualTransformation= PasswordVisualTransformation(),
@@ -146,6 +210,18 @@ fun Settings(navController: NavHostController) {
                             }
                         )
                     }
+                    Row(
+                        horizontalArrangement = Arrangement.End
+                    ){
+                        Button(
+                            onClick = {
+
+                            },
+                        ) {
+                            Text(stringResource(id = R.string.setting_delete_user))
+                        }
+                    }
+
                 }
 
             }

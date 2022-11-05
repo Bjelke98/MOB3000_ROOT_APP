@@ -3,5 +3,14 @@
     <string name="nav_label_home">Hjem</string>
     <string name="company_name" translatable="false">/root</string>
     <string name="nav_label_about_us">Om oss</string>
+    <string name="setting_change_name">Endre navn</string>
+    <string name="setting_change_password">Endre passord</string>
+    <string name="setting_new_password">Nytt Passord</string>
+    <string name="setting_confirm_password">Bekreft Passord</string>
+    <string name="setting_old_password">Gammelt Passord</string>
+    <string name="password">Passord</string>
+    <string name="firstname">Fornavn</string>
+    <string name="lastname">Etternavn</string>
+    <string name="setting_delete_user">Slett bruker</string>
     <string name="whats_on_your_mind" translatable="false">Write what\'s on your mind!</string>
 </resources>
