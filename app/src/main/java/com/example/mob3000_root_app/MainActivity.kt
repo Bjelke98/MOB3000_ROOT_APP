@@ -14,7 +14,6 @@ import com.example.mob3000_root_app.template.Template
 import com.example.mob3000_root_app.ui.theme.MOB3000_ROOT_APPTheme
 
 class MainActivity : ComponentActivity() {
-
     private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

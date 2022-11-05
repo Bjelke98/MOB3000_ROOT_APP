@@ -8,15 +8,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.screens.*
 
+var loginModel = LoginModel()
+var articlesModel = ArticlesModel()
+var eventsModel = EventsModel()
+
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = Screen.Home.route,
 ) {
-
-    var articlesModel = ArticlesModel()
-    var eventsModel = EventsModel()
 
     NavHost(
         modifier = modifier,
@@ -32,7 +33,7 @@ fun AppNavHost(
             articlesModel.getArticleList()
             eventsModel.getEventList()
         }
-        composable( route = Screen.Login.route ){ Login(navController) }
+        composable( route = Screen.Login.route ){ Login(navController, loginModel) }
         composable( route = Screen.Register.route ){ Register(navController) }
 
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
