@@ -38,7 +38,7 @@ class LoginModel : ViewModel(){
             try {
                 val loginStatus = apiService.getUser()
                 loginStatusResponse = loginStatus
-                Log.i("loginStatus", loginStatus.loginStatus.toString())
+                Log.i("loginStatus", loginStatus.toString())
             }
             catch (e: Exception) {
                 errorMessage = e.message.toString()
