@@ -62,7 +62,7 @@ fun CommentSection(comments:List<Comment>,
                         keyboardController.show()
                     },
 //                    .focusRequester(focusRequester),
-                placeholder = { Text(stringResource(id = R.string.whats_on_your_mind)) },
+                placeholder = { Text(stringResource(id = R.string.comment_textfield_placeholder)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             )
         }

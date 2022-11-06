@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.cards.Article
+import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.data.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.RootService
@@ -63,7 +63,7 @@ fun Articles(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleModel.articleListResponse){ article ->
-                    Article(
+                    ArticleCard(
                         navController,
                         articleData = article, ArticleType.VERTICAL_ARTICLE,
 //                        focusedArticleModel

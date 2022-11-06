@@ -31,11 +31,10 @@ import com.example.mob3000_root_app.data.ArticleType
 //}
 
 @Composable
-fun Article(
+fun ArticleCard(
     navController: NavHostController,
     articleData: ArticleData,
     type: ArticleType,
-//    focuedArticle: FocusedArticleModel
     focusArticle: () -> Unit
 ) {
 

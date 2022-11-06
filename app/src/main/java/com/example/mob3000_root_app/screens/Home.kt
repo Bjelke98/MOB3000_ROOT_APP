@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.cards.Article
+import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.data.*
 
@@ -50,7 +50,7 @@ fun Home(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = articleModel.articleListResponse){ article ->
-                    Article(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleModel.focusArticle(article) })
+                    ArticleCard(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleModel.focusArticle(article) })
                 }
             }
 
