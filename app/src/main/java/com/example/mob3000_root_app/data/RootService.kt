@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.data
 
-import android.service.autofill.UserData
 import com.squareup.moshi.Moshi
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -14,7 +13,9 @@ interface RootService {
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-    suspend fun postComment(@Body commentData:Comment) : Call<Comment>
+    @Headers("Content-Type: application/json")
+    @POST("comment/{path}")
+    suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
 
     // Event API
     @GET("event")

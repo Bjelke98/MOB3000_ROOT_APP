@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,9 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
-import com.example.mob3000_root_app.data.ArticleData
-import com.example.mob3000_root_app.data.ArticleType
-import com.example.mob3000_root_app.data.RootService
+import com.example.mob3000_root_app.data.*
 import kotlinx.coroutines.launch
 
 class ArticlesModel : ViewModel() {
@@ -28,6 +27,7 @@ class ArticlesModel : ViewModel() {
     var errorMessage: String by mutableStateOf("")
     var focusedArticle by mutableStateOf<ArticleData?>(null)
         private set
+    val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
     fun getArticleList() {
         viewModelScope.launch {
@@ -37,6 +37,19 @@ class ArticlesModel : ViewModel() {
                 articleListResponse = articleList
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
+            }
+        }
+    }
+
+    fun postComment(text: String, articleID: String) {
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val postedStatus = apiService.postComment("article",CommentData(text, articleID))
+                Log.i("CommentStatus", postedStatus.toString())
+            } catch (e: Exception) {
+                errorMessage = e.message.toString()
+                Log.i("Catch", errorMessage)
             }
         }
     }

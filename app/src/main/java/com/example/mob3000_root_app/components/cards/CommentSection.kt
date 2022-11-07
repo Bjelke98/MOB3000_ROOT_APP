@@ -1,9 +1,11 @@
 package com.example.mob3000_root_app.components.cards
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Comment
@@ -15,12 +17,17 @@ import androidx.compose.ui.focus.*
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.Comment
+import com.example.mob3000_root_app.data.UserLoginInfo
+import com.example.mob3000_root_app.data.CommentData
+import com.example.mob3000_root_app.screens.ArticlesModel
+import com.example.mob3000_root_app.screens.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -30,12 +37,17 @@ fun CommentSection(comments:List<Comment>,
                    isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
+                   loginModel: LoginModel,
+                   articlesModel: ArticlesModel,
+                   articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
 
     Column(
          Modifier.fillMaxHeight()
     ) {
+
+        loginModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
 
         Box{
             OutlinedTextField(
@@ -63,7 +75,14 @@ fun CommentSection(comments:List<Comment>,
                     },
 //                    .focusRequester(focusRequester),
                 placeholder = { Text(stringResource(id = R.string.comment_textfield_placeholder)) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
+                keyboardActions = KeyboardActions(
+                    onSend = {
+                        articlesModel.postComment(comment.text, articleID)
+                        Log.i("Comment", "Commenting on :${articleID} ")
+                        Log.i("Comment", "Comment: ${comment.text} ")
+                    },
+                )
             )
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)

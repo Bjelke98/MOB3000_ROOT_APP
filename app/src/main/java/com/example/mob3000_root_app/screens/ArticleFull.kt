@@ -33,7 +33,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ArticleFull(
-    navController: NavHostController, in_articleData: ArticleData?
+    navController: NavHostController, in_articleData: ArticleData?,
+    loginModel: LoginModel,
+    articlesModel: ArticlesModel
 ) {
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
@@ -50,8 +52,6 @@ fun ArticleFull(
     //animasjon for kommentarer
     val density = LocalDensity.current
 
-
-    Log.d("FullArticle", articleData.title)
     Surface(
         Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -132,6 +132,9 @@ fun ArticleFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
+                        loginModel = loginModel,
+                        articlesModel = articlesModel,
+                        articleID = articleData._id
                     )
                 }
             //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
