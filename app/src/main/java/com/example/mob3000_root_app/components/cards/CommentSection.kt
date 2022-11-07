@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.Comment
 import com.example.mob3000_root_app.data.UserLoginInfo
-import com.example.mob3000_root_app.data.CommentData
 import com.example.mob3000_root_app.screens.ArticlesModel
 import com.example.mob3000_root_app.screens.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
@@ -78,7 +77,7 @@ fun CommentSection(comments:List<Comment>,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        articlesModel.postComment(comment.text, articleID)
+                        articlesModel.postComment( articleID, comment.text)
                         Log.i("Comment", "Commenting on :${articleID} ")
                         Log.i("Comment", "Comment: ${comment.text} ")
                     },

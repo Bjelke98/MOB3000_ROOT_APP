@@ -41,11 +41,11 @@ class ArticlesModel : ViewModel() {
         }
     }
 
-    fun postComment(text: String, articleID: String) {
+    fun postComment(articleID: String, text: String) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
-                val postedStatus = apiService.postComment("article",CommentData(text, articleID))
+                val postedStatus = apiService.postComment("article",CommentData(articleID, text))
                 Log.i("CommentStatus", postedStatus.toString())
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
