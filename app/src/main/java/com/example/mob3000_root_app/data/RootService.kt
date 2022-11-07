@@ -1,10 +1,15 @@
 package com.example.mob3000_root_app.data
 
 import com.squareup.moshi.Moshi
+import okhttp3.OkHttpClient
+import okhttp3.internal.JavaNetCookieJar
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.net.CookieManager
+import java.net.CookiePolicy
+
 
 interface RootService {
 
@@ -50,10 +55,18 @@ interface RootService {
         var rootService: RootService? = null
         fun getInstance() : RootService {
             if (rootService == null){
+
+                val cookieManager = CookieManager()
+                cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+                val cookieJar = JavaNetCookieJar(cookieManager)
+
+                val client: OkHttpClient = OkHttpClient.Builder().cookieJar(cookieJar).build()
+
                 val moshi: Moshi = Moshi.Builder().build()
                 rootService = Retrofit.Builder()
                     .baseUrl("https://linrik.herokuapp.com/api/")
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .client(client)
                     .build().create(RootService::class.java)
             }
             return  rootService!!

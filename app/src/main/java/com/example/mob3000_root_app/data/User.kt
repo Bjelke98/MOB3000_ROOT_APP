@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-    val _id: String,
+    val id: String,
     val firstname: String,
     val lastname: String,
     val email: String,
@@ -14,6 +14,13 @@ data class User(
     val editor: Boolean
 ) : Parcelable {
     override fun toString(): String {
-        return "User:\n\t_id='$_id'\n\tfirstname='$firstname'\n\tlastname='$lastname'\n\temail='$email'\n\trootMember=$rootMember\n\tadmin=$admin\n\teditor=$editor"
+        return "User:\n" +
+                "\t_id='$id'\n" +
+                "\tfirstname='$firstname'\n" +
+                "\tlastname='$lastname'\n" +
+                "\temail='$email'\n" +
+                "\trootMember=$rootMember\n" +
+                "\tadmin=$admin\n" +
+                "\teditor=$editor"
     }
 }
