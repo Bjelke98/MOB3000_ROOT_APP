@@ -6,10 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.mob3000_root_app.components.models.ArticleModel
 import com.example.mob3000_root_app.screens.*
 
 var loginModel = LoginModel()
-var articlesModel = ArticlesModel()
+var articleModel = ArticleModel()
 var eventsModel = EventsModel()
 
 @Composable
@@ -27,10 +28,10 @@ fun AppNavHost(
         composable( route = Screen.Home.route ){
             Home(
                 navController,
-                articleModel = articlesModel,
+                articleModel = articleModel,
                 eventsModel = eventsModel
             )
-            articlesModel.getArticleList()
+            articleModel.getArticleList()
             eventsModel.getEventList()
         }
         composable( route = Screen.Login.route ){ Login(navController, loginModel) }
@@ -40,12 +41,12 @@ fun AppNavHost(
         composable( route = Screen.Settings.route ){ Settings(navController) }
 
         composable( route = Screen.Articles.route ) {
-            Articles(navController, articleModel = articlesModel)
-            articlesModel.getArticleList()
+            Articles(navController, articleModel = articleModel)
+            articleModel.getArticleList()
         }
         composable( route = Screen.EditArticles.route ) {
-            ArticleAdmin(navController, articleModel = articlesModel)
-            articlesModel.getArticleList()
+            ArticleAdmin(navController, articleModel = articleModel)
+            articleModel.getArticleList()
         }
         composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
 
@@ -58,8 +59,8 @@ fun AppNavHost(
 //            if (articleData != null) {
 //                ArticleFull(navController, articleData = articleData)
 //            }
-            ArticleFull(navController, articlesModel.focusedArticle, loginModel, articlesModel)
-            articlesModel.getArticleList()
+            articleModel.getArticleList()
+            ArticleFull(navController, loginModel, articleModel)
         }
         composable( route = Screen.About.route ){ About() }
         composable( route = Screen.Events.route ){ Events( eventList = eventsModel.eventListResponse); eventsModel.getEventList()}

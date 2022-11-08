@@ -18,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
+import com.example.mob3000_root_app.components.models.ArticleModel
 import com.example.mob3000_root_app.data.*
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Home(
     navController: NavHostController,
-    articleModel: ArticlesModel,
+    articleModel: ArticleModel,
     eventsModel: EventsModel
 //, focusedArticleModel: FocusedArticleModel
 ) {

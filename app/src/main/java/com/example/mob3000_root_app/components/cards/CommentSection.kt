@@ -23,9 +23,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.models.ArticleModel
 import com.example.mob3000_root_app.data.Comment
 import com.example.mob3000_root_app.data.UserLoginInfo
-import com.example.mob3000_root_app.screens.ArticlesModel
 import com.example.mob3000_root_app.screens.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
@@ -37,7 +37,7 @@ fun CommentSection(comments:List<Comment>,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
                    loginModel: LoginModel,
-                   articlesModel: ArticlesModel,
+                   articleModel: ArticleModel,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
@@ -45,7 +45,6 @@ fun CommentSection(comments:List<Comment>,
     Column(
          Modifier.fillMaxHeight()
     ) {
-
         loginModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
 
         Box{
@@ -77,18 +76,21 @@ fun CommentSection(comments:List<Comment>,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        articlesModel.postComment( articleID, comment.text)
-                        Log.i("Comment", "Commenting on :${articleID} ")
-                        Log.i("Comment", "Comment: ${comment.text} ")
+                        articleModel.postComment( articleID, comment.text)
+                        articleModel.getArticleByID(articleID)
+                        articleModel.articleByIDResponse?.let { articleModel.focusArticle(it) }
+                        Log.i("Comment Attempt", "Article ID: $articleID")
                     },
                 )
             )
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
-            items(items = comments){ item->
-                run {
-                    Comment(item)
+            articleModel.focusedArticle?.let {
+                items(items = it.comments){ item->
+                    run {
+                        Comment(item)
+                    }
                 }
             }
         }

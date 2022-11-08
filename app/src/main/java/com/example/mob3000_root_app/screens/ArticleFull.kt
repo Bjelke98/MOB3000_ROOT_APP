@@ -26,6 +26,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
+import com.example.mob3000_root_app.components.models.ArticleModel
 import com.example.mob3000_root_app.data.ArticleData
 import kotlinx.coroutines.launch
 
@@ -33,9 +34,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ArticleFull(
-    navController: NavHostController, in_articleData: ArticleData?,
+    navController: NavHostController,
     loginModel: LoginModel,
-    articlesModel: ArticlesModel
+    articlesModel: ArticleModel
 ) {
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
@@ -46,7 +47,7 @@ fun ArticleFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val articleData = in_articleData!!
+    val articleData = articlesModel.focusedArticle!!
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -103,6 +104,7 @@ fun ArticleFull(
                     .fillMaxWidth()
                     .fillMaxHeight(.5f)
                     .padding(bottom = 20.dp)
+                    .heightIn(200.dp, 450.dp)
             )
 
             Text(
@@ -133,7 +135,7 @@ fun ArticleFull(
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
                         loginModel = loginModel,
-                        articlesModel = articlesModel,
+                        articleModel = articlesModel,
                         articleID = articleData._id
                     )
                 }

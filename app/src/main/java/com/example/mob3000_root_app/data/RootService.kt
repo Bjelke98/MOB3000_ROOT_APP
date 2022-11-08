@@ -18,13 +18,20 @@ interface RootService {
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-    @Headers("Content-Type: application/json")
-    @POST("comment/{path}")
-    suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
+    @GET("article/{path}")
+    suspend fun getArticleByID(@Path("path") articleid: String): ArticleData
 
     // Event API
     @GET("event")
     suspend fun getEvents(): List<EventData>
+
+    @GET("article/id/{path}")
+    suspend fun getEventByID(@Path("path") eventid: String): ArticleData
+
+    // For både article og event basert på @path
+    @Headers("Content-Type: application/json")
+    @POST("comment/{path}")
+    suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
 
     // bruker API
     @POST("user/signup")

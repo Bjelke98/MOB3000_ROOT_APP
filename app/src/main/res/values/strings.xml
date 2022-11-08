@@ -7,7 +7,7 @@
     <string name="nav_label_events">Arrangementer</string>
     <string name="nav_label_manage_articles">Håndter Artikkler</string>
     <string name="nav_label_manage_events">Håndter Arrangementer</string>
-    <string name="comment_textfield_placeholder">Write what\'s on your mind!</string>
+    <string name="comment_textfield_placeholder">Skriv hva nå enn du tenker!</string>
     <string name="setting_change_name">Endre navn</string>
     <string name="setting_change_password">Endre passord</string>
     <string name="setting_new_password">Nytt Passord</string>

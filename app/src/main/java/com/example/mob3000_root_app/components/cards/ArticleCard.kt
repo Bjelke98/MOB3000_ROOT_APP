@@ -94,6 +94,7 @@ fun ArticleCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
+//                        Metode for å sende data gjennom backstacke
 //                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
                         focusArticle()
                         navigateUpTo(navController, Screen.ArticleFull)

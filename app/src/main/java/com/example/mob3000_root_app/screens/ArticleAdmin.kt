@@ -13,11 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.editables.EditableArticle
+import com.example.mob3000_root_app.components.models.ArticleModel
 
 @Composable
 fun ArticleAdmin(
     navController: NavHostController,
-    articleModel: ArticlesModel
+    articleModel: ArticleModel
 ) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)

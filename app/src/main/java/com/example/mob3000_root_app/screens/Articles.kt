@@ -19,50 +19,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
+import com.example.mob3000_root_app.components.models.ArticleModel
 import com.example.mob3000_root_app.data.*
 import kotlinx.coroutines.launch
-
-class ArticlesModel : ViewModel() {
-    var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
-    var errorMessage: String by mutableStateOf("")
-    var focusedArticle by mutableStateOf<ArticleData?>(null)
-        private set
-    val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
-
-    fun getArticleList() {
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val articleList = apiService.getArticles()
-                articleListResponse = articleList
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-        }
-    }
-
-    fun postComment(articleID: String, text: String) {
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val postedStatus = apiService.postComment("article",CommentData(articleID, text))
-                Log.i("CommentStatus", postedStatus.toString())
-            } catch (e: Exception) {
-                errorMessage = e.message.toString()
-                Log.i("Catch", errorMessage)
-            }
-        }
-    }
-
-    fun focusArticle(focusArticle: ArticleData){
-        focusedArticle = focusArticle
-    }
-}
 
 @Composable
 fun Articles(
     navController: NavHostController,
-    articleModel: ArticlesModel,
+    articleModel: ArticleModel,
 //    focusedArticleModel: FocusedArticleModel
 ) {
 
@@ -79,7 +43,6 @@ fun Articles(
                     ArticleCard(
                         navController,
                         articleData = article, ArticleType.VERTICAL_ARTICLE,
-//                        focusedArticleModel
                         { articleModel.focusArticle(article) }
                     )
                 }

@@ -1,6 +1,7 @@
 package com.example.mob3000_root_app.data
 
 import android.os.Parcelable
+import com.example.mob3000_root_app.components.navigation.articleModel
 import kotlinx.android.parcel.Parcelize
 
 //data class ArticleData(val title: String, val image: String, val description: String, val _id: Int, val comments: List<Comment>)
@@ -14,3 +15,5 @@ data class ArticleData(
     val postedAt: String,
     val title: String
 ): Parcelable
+
+val emptyArticleData = ArticleData(0,"", listOf(),"","","","")
