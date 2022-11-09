@@ -7,11 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.models.ArticleModel
+import com.example.mob3000_root_app.components.models.EventModel
 import com.example.mob3000_root_app.screens.*
 
 var loginModel = LoginModel()
 var articleModel = ArticleModel()
-var eventsModel = EventsModel()
+var eventModel = EventModel()
 
 @Composable
 fun AppNavHost(
@@ -29,10 +30,10 @@ fun AppNavHost(
             Home(
                 navController,
                 articleModel = articleModel,
-                eventsModel = eventsModel
+                eventsModel = eventModel
             )
             articleModel.getArticleList()
-            eventsModel.getEventList()
+            eventModel.getEventList()
         }
         composable( route = Screen.Login.route ){ Login(navController, loginModel) }
         composable( route = Screen.Register.route ){ Register(navController) }
@@ -45,10 +46,14 @@ fun AppNavHost(
             articleModel.getArticleList()
         }
         composable( route = Screen.EditArticles.route ) {
-            ArticleAdmin(navController, articleModel = articleModel)
+            ArticleAdmin(navController, articleModel)
             articleModel.getArticleList()
         }
-        composable( route = Screen.EventAdmin.route ){ EventAdmin(navController) }
+        composable( route = Screen.EditEvents.route ){
+            EventAdmin(navController, eventModel)
+            eventModel.getEventList()
+
+        }
 
         composable( route = Screen.ArticleFull.route ) {
 //            --- Annen måte å sende data til andre views ---
@@ -63,7 +68,11 @@ fun AppNavHost(
             ArticleFull(navController, loginModel, articleModel)
         }
         composable( route = Screen.About.route ){ About() }
-        composable( route = Screen.Events.route ){ Events( eventList = eventsModel.eventListResponse); eventsModel.getEventList()}
+
+        composable( route = Screen.Events.route ){
+            Events( eventList = eventModel.eventListResponse)
+            eventModel.getEventList()
+        }
     }
 }
 

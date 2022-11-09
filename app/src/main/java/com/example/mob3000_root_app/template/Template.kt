@@ -94,7 +94,7 @@ fun Template(
                         label = { Text( stringResource(id = R.string.nav_label_manage_events) ) },
                         selected = navBackStackEntry?.destination?.route==Screen.EventAdmin.route,
                         onClick = {
-                            navigateUpTo(navController, Screen.EventAdmin)
+                            navigateUpTo(navController, Screen.EditEvents)
                             closeDrawer()
                     })
                 }

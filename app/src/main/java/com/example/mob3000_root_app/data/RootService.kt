@@ -25,8 +25,8 @@ interface RootService {
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
-    @GET("article/id/{path}")
-    suspend fun getEventByID(@Path("path") eventid: String): ArticleData
+    @GET("event/id/{path}")
+    suspend fun getEventByID(@Path("path") eventid: String): EventData
 
     // For både article og event basert på @path
     @Headers("Content-Type: application/json")

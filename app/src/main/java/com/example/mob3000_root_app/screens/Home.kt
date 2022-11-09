@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.components.models.ArticleModel
+import com.example.mob3000_root_app.components.models.EventModel
 import com.example.mob3000_root_app.data.*
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -26,7 +27,7 @@ import com.example.mob3000_root_app.data.*
 fun Home(
     navController: NavHostController,
     articleModel: ArticleModel,
-    eventsModel: EventsModel
+    eventsModel: EventModel
 //, focusedArticleModel: FocusedArticleModel
 ) {
 
