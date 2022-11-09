@@ -47,7 +47,7 @@ fun ArticleFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val articleData = articlesModel.focusedArticle!!
+    val articleData = articlesModel.focusedArticle
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -104,7 +104,7 @@ fun ArticleFull(
                     .fillMaxWidth()
                     .fillMaxHeight(.5f)
                     .padding(bottom = 20.dp)
-                    .heightIn(200.dp, 450.dp)
+                    .heightIn(200.dp, 420.dp)
             )
 
             Text(
@@ -130,7 +130,6 @@ fun ArticleFull(
                     ){
                 if (keyboardController != null) {
                     CommentSection(
-                        comments = articleData.comments,
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,

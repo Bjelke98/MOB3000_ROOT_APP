@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 class ArticleModel : ViewModel() {
 
     var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
-    var articleByIDResponse by mutableStateOf<ArticleData?>(null)
+    var articleByIDResponse by mutableStateOf(emptyArticleData)
     var errorMessage: String by mutableStateOf("")
-    var focusedArticle by mutableStateOf<ArticleData?>(null)
+    var focusedArticle by mutableStateOf(emptyArticleData)
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
@@ -45,13 +45,44 @@ class ArticleModel : ViewModel() {
         }
     }
 
-    fun getArticleByID(articleid: String){
+    fun postArticleComment(articleID: String, text: String, articleid: String) {
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val postedStatus = apiService.postComment(
+                    "article",
+                    CommentData(articleID, text)
+                )
+                Log.i("CommentStatus", postedStatus.toString())
+                apiService.getArticleByID(articleid)
+                focusedArticle = articleByIDResponse
+            } catch (e: Exception) {
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun getArticleByID(articleid: String) {
 
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
                 articleByIDResponse = apiService.getArticleByID(articleid)
                 Log.i("Try: Article API Call", articleByIDResponse.toString())
+            }
+            catch (e: Exception){
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun focusArticleByID(articleid: String){
+
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try{
+                focusedArticle = apiService.getArticleByID(articleid)
+                Log.i("Try: Article API Call", focusedArticle.title)
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())

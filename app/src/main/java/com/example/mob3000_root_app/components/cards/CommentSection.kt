@@ -32,8 +32,7 @@ import com.example.mob3000_root_app.ui.theme.Underlined
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CommentSection(comments:List<Comment>,
-                   isCommenting: Boolean,
+fun CommentSection(isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
                    loginModel: LoginModel,
@@ -76,21 +75,20 @@ fun CommentSection(comments:List<Comment>,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        articleModel.postComment( articleID, comment.text)
-                        articleModel.getArticleByID(articleID)
-                        articleModel.articleByIDResponse?.let { articleModel.focusArticle(it) }
+                        onCommentingChanged()
+                        keyboardController.hide()
+                        articleModel.postArticleComment( articleID, comment.text, articleID)
                         Log.i("Comment Attempt", "Article ID: $articleID")
+                        comment = TextFieldValue(text = "", selection = TextRange(0))
                     },
                 )
             )
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
-            articleModel.focusedArticle?.let {
-                items(items = it.comments){ item->
-                    run {
-                        Comment(item)
-                    }
+            items(items = articleModel.focusedArticle.comments){ item->
+                run {
+                    Comment(item)
                 }
             }
         }
