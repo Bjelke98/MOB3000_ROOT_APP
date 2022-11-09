@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.components.models
+package com.example.mob3000_root_app.components.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -7,9 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
+import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiResponse.ArticleData
+import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
-class ArticleModel : ViewModel() {
+class ArticleViewModel : ViewModel() {
 
     var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
     var articleByIDResponse by mutableStateOf<ArticleData?>(null)

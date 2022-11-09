@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.components.models
+package com.example.mob3000_root_app.components.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -7,9 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
+import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiResponse.EventData
+import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
-class EventModel : ViewModel() {
+class EventViewModel : ViewModel() {
 
     var eventListResponse: List<EventData> by mutableStateOf(listOf())
     var eventByIDResponse by mutableStateOf<EventData?>(null)

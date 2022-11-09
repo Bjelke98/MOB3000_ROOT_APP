@@ -1,7 +1,6 @@
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.content
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -26,8 +25,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
-import com.example.mob3000_root_app.components.models.ArticleModel
-import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.screens.profile.LoginModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -36,7 +35,7 @@ import kotlinx.coroutines.launch
 fun ArticleFull(
     navController: NavHostController,
     loginModel: LoginModel,
-    articlesModel: ArticleModel
+    articlesModel: ArticleViewModel
 ) {
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
@@ -135,7 +134,7 @@ fun ArticleFull(
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
                         loginModel = loginModel,
-                        articleModel = articlesModel,
+                        articleViewModel = articlesModel,
                         articleID = articleData._id
                     )
                 }

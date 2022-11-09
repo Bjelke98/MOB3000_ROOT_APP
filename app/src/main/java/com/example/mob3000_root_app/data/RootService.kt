@@ -1,5 +1,8 @@
 package com.example.mob3000_root_app.data
 
+import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.internal.JavaNetCookieJar
@@ -12,7 +15,6 @@ import java.net.CookiePolicy
 
 
 interface RootService {
-
 
     // Article API
     @GET("article")

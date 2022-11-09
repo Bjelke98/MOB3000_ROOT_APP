@@ -1,4 +1,6 @@
-package com.example.mob3000_root_app.data
+package com.example.mob3000_root_app.data.apiResponse
+
+import com.example.mob3000_root_app.data.apiResponse.User
 
 data class LoginStatus(
     val loginStatus: Boolean = false,

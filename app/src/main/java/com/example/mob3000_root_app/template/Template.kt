@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000_root_app.R
@@ -36,6 +37,7 @@ fun Template(
         .wrapContentSize(Alignment.TopEnd)
         .offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            // Profile
             DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
             DropdownMenuItem(text = {Text(text = "Login")},
                 onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
@@ -52,57 +54,22 @@ fun Template(
             ){
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 Column {
-                    //Title
+                    // Title
                     Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp), fontSize = MaterialTheme.typography.headlineMedium.fontSize)
-                    //content
-                    NavigationDrawerItem(
-                        label = { Text(text = stringResource(id = R.string.nav_label_home)) },
-                        selected = navBackStackEntry?.destination?.route==Screen.Home.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Home)
-                            closeDrawer()
-                    })
-                    NavigationDrawerItem(
-                        label = { Text( stringResource(id = R.string.nav_label_articles) ) },
-                        selected = navBackStackEntry?.destination?.route==Screen.Articles.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Articles)
-                            closeDrawer()
-                    })
-                    NavigationDrawerItem(
-                        label = { Text( stringResource(id = R.string.nav_label_events) ) },
-                        selected = navBackStackEntry?.destination?.route==Screen.Events.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.Events)
-                            closeDrawer()
-                    })
-                    NavigationDrawerItem(
-                        label = { Text( stringResource(id = R.string.nav_label_about_us)) },
-                        selected = navBackStackEntry?.destination?.route==Screen.About.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.About)
-                            closeDrawer()
-                    })
-                    NavigationDrawerItem(
-                        label = { Text( stringResource(id = R.string.nav_label_manage_articles) ) },
-                        selected = navBackStackEntry?.destination?.route==Screen.ArticleAdmin.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.EditArticles)
-                            closeDrawer()
-                    })
-                    NavigationDrawerItem(
-                        label = { Text( stringResource(id = R.string.nav_label_manage_events) ) },
-                        selected = navBackStackEntry?.destination?.route==Screen.EventAdmin.route,
-                        onClick = {
-                            navigateUpTo(navController, Screen.EditEvents)
-                            closeDrawer()
-                    })
+
+                    // Content
+                    RootDrawerItem(R.string.nav_label_home, navBackStackEntry, Screen.Home, navController, ::closeDrawer)
+                    RootDrawerItem(R.string.nav_label_articles, navBackStackEntry, Screen.Articles, navController, ::closeDrawer)
+                    RootDrawerItem(R.string.nav_label_events, navBackStackEntry, Screen.Events, navController, ::closeDrawer)
+                    RootDrawerItem(R.string.nav_label_about_us, navBackStackEntry, Screen.About, navController, ::closeDrawer)
+
+                    // Admin
+                    RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
+                    RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
                 }
             }
         }
     ){
-//      drawerState.isClosed
-//      onClick = { scope.launch { drawerState.open() } }
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
@@ -139,4 +106,17 @@ fun Template(
             },
         ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController) }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RootDrawerItem(stringResourceId: Int, navBackStackEntry: NavBackStackEntry?, screen: Screen, navController: NavHostController, closeDrawer: ()->Unit ) {
+    NavigationDrawerItem(
+        label = { Text(text = stringResource(id = stringResourceId)) },
+        selected = navBackStackEntry?.destination?.route==screen.route,
+        onClick = {
+            navigateUpTo(navController, screen)
+            closeDrawer()
+        }
+    )
 }

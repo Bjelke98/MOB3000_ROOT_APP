@@ -1,6 +1,6 @@
 @file:JvmName("HomeOldKt")
 
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.content
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -18,16 +18,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
-import com.example.mob3000_root_app.components.models.ArticleModel
-import com.example.mob3000_root_app.components.models.EventModel
+import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.*
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Home(
     navController: NavHostController,
-    articleModel: ArticleModel,
-    eventsModel: EventModel
+    articleViewModel: ArticleViewModel,
+    eventsModel: EventViewModel
 //, focusedArticleModel: FocusedArticleModel
 ) {
 
@@ -51,8 +51,8 @@ fun Home(
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleModel.articleListResponse){ article ->
-                    ArticleCard(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleModel.focusArticle(article) })
+                items(items = articleViewModel.articleListResponse){ article ->
+                    ArticleCard(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleViewModel.focusArticle(article) })
                 }
             }
 

@@ -3,7 +3,6 @@ package com.example.mob3000_root_app.components.cards
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
@@ -20,20 +19,14 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.navigation.Screen
-import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.ArticleType
-import com.example.mob3000_root_app.data.EventData
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.LocalDate
+import com.example.mob3000_root_app.data.apiResponse.EventData
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 

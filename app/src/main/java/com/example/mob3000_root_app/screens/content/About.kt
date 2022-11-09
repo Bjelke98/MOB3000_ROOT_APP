@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.content
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn

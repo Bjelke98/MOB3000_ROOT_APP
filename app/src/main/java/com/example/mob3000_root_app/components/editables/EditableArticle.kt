@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.data.apiResponse.ArticleData
 
 
 

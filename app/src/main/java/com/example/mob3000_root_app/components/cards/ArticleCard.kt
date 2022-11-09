@@ -17,7 +17,7 @@ import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
-import com.example.mob3000_root_app.data.ArticleData
+import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 
 

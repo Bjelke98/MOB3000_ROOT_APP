@@ -23,10 +23,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.models.ArticleModel
-import com.example.mob3000_root_app.data.Comment
-import com.example.mob3000_root_app.data.UserLoginInfo
-import com.example.mob3000_root_app.screens.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.data.apiResponse.Comment
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.screens.profile.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -37,7 +37,7 @@ fun CommentSection(comments:List<Comment>,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
                    loginModel: LoginModel,
-                   articleModel: ArticleModel,
+                   articleViewModel: ArticleViewModel,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
@@ -76,9 +76,9 @@ fun CommentSection(comments:List<Comment>,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        articleModel.postComment( articleID, comment.text)
-                        articleModel.getArticleByID(articleID)
-                        articleModel.articleByIDResponse?.let { articleModel.focusArticle(it) }
+                        articleViewModel.postComment( articleID, comment.text)
+                        articleViewModel.getArticleByID(articleID)
+                        articleViewModel.articleByIDResponse?.let { articleViewModel.focusArticle(it) }
                         Log.i("Comment Attempt", "Article ID: $articleID")
                     },
                 )
@@ -86,7 +86,7 @@ fun CommentSection(comments:List<Comment>,
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
-            articleModel.focusedArticle?.let {
+            articleViewModel.focusedArticle?.let {
                 items(items = it.comments){ item->
                     run {
                         Comment(item)
@@ -100,7 +100,7 @@ fun CommentSection(comments:List<Comment>,
 }
 
 @Composable
-fun Comment(comment:Comment){
+fun Comment(comment: Comment){
     Card(
         Modifier
             .fillMaxWidth()

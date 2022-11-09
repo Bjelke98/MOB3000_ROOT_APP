@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.content
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.data.ArticleType
-import com.example.mob3000_root_app.data.EventData
+import com.example.mob3000_root_app.data.apiResponse.EventData
 
 @Composable
 fun Events(eventList: List<EventData>) {
