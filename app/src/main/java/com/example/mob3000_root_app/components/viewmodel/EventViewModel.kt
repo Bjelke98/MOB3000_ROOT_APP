@@ -11,15 +11,15 @@ import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
-import com.example.mob3000_root_app.data.RootService
+import com.example.mob3000_root_app.data.apiResponse.emptyEventData
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
     val apiService = RootService.getInstance()
     var eventListResponse: List<EventData> by mutableStateOf(listOf())
-    var eventByIDResponse by mutableStateOf<EventData?>(null)
+    var eventByIDResponse by mutableStateOf(emptyEventData)
     var errorMessage: String by mutableStateOf("")
-    var focusedEvent by mutableStateOf<EventData?>(null)
+    var focusedEvent by mutableStateOf(emptyEventData)
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
@@ -51,12 +51,12 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun getEventyID(eventid: String){
+    fun getEventByID(eventId: String){
 
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
-                eventByIDResponse = apiService.getEventByID(eventid)
+                eventByIDResponse = apiService.getEventByID(eventId)
                 Log.i("Try: Event API Call", eventByIDResponse.toString())
             }
             catch (e: Exception){
