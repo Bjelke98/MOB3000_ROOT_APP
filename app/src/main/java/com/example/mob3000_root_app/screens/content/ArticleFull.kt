@@ -26,7 +26,7 @@ import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.screens.profile.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ArticleFull(
     navController: NavHostController,
-    loginModel: LoginModel,
+    loginViewModel: LoginViewModel,
     articlesModel: ArticleViewModel
 ) {
     var openComments by remember { mutableStateOf(false) }
@@ -46,7 +46,7 @@ fun ArticleFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val articleData = articlesModel.focusedArticle!!
+    val articleData = articlesModel.focusedArticle
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -103,7 +103,7 @@ fun ArticleFull(
                     .fillMaxWidth()
                     .fillMaxHeight(.5f)
                     .padding(bottom = 20.dp)
-                    .heightIn(200.dp, 450.dp)
+                    .heightIn(200.dp, 420.dp)
             )
 
             Text(
@@ -129,11 +129,10 @@ fun ArticleFull(
                     ){
                 if (keyboardController != null) {
                     CommentSection(
-                        comments = articleData.comments,
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginModel = loginModel,
+                        loginViewModel = loginViewModel,
                         articleViewModel = articlesModel,
                         articleID = articleData._id
                     )

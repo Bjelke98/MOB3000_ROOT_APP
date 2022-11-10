@@ -9,3 +9,5 @@ data class ArticleData(
     val postedAt: String,
     val title: String
 )
+
+val emptyArticleData = ArticleData(0,"", listOf(),"","","","")

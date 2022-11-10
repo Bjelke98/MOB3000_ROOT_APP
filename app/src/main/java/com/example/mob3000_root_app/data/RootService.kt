@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.data
+package com.example.mob3000_root_app.data.apiResponse
 
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
@@ -17,12 +17,13 @@ import java.net.CookiePolicy
 
 interface RootService {
 
+
     // Article API
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-    @GET("article/{path}")
-    suspend fun getArticleByID(@Path("path") articleid: String): ArticleData
+    @GET("article/{id}")
+    suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
 
     // Event API
     @GET("event")
