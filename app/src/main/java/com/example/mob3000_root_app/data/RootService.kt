@@ -61,10 +61,10 @@ interface RootService {
     @DELETE("user")
     suspend fun deleteUser(@Body userData: User): Call<User> // trenger passord
 
-    @DELETE("logout")
-    suspend fun logout(): User
+    @GET("user/logout")
+    suspend fun logout(): ResponseStatus
 
-    @PUT("newpassword")
+    @PUT("user/newpassword")
     suspend fun newPassword(@Body userData: User): Call<User> // trenger passord og nytt passord
 
 

@@ -32,17 +32,17 @@ fun AppNavHost(
     ){
         // Navigate Content
         composable( route = Screen.Home.route ){
+            articleViewModel.getArticleList()
+            eventViewModel.getEventList()
             Home(
                 navController,
                 articleViewModel = articleViewModel,
                 eventsModel = eventViewModel
             )
-            articleViewModel.getArticleList()
-            eventViewModel.getEventList()
         }
         composable( route = Screen.Articles.route ) {
-            Articles(navController, articleViewModel = articleViewModel)
             articleViewModel.getArticleList()
+            Articles(navController, articleViewModel = articleViewModel)
         }
         composable( route = Screen.ArticleFull.route ) {
             articleViewModel.getArticleList()
@@ -51,8 +51,8 @@ fun AppNavHost(
         composable( route = Screen.About.route ){ About() }
 
         composable( route = Screen.Events.route ){
-            Events(navController, eventViewModel = eventViewModel)
             eventViewModel.getEventList()
+            Events(navController, eventViewModel = eventViewModel)
         }
 
         composable( route = Screen.EventFull.route) {
@@ -62,12 +62,12 @@ fun AppNavHost(
 
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
-            ArticleAdmin(navController, articleViewModel)
             articleViewModel.getArticleList()
+            ArticleAdmin(navController, articleViewModel)
         }
         composable( route = Screen.EventAdmin.route ){
-            EventAdmin(navController, eventViewModel)
             eventViewModel.getEventList()
+            EventAdmin(navController, eventViewModel)
         }
 
         // Navigate Profile
