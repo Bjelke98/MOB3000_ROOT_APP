@@ -45,30 +45,12 @@ class ArticleModel : ViewModel() {
         }
     }
 
-    fun postArticleComment(articleID: String, text: String, articleid: String) {
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val postedStatus = apiService.postComment(
-                    "article",
-                    CommentData(articleID, text)
-                )
-                Log.i("CommentStatus", postedStatus.toString())
-                apiService.getArticleByID(articleid)
-                focusedArticle = articleByIDResponse
-            } catch (e: Exception) {
-                Log.i("Catch", e.message.toString())
-            }
-        }
-    }
-
     fun getArticleByID(articleid: String) {
-
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
                 articleByIDResponse = apiService.getArticleByID(articleid)
-                Log.i("Try: Article API Call", articleByIDResponse.toString())
+                Log.i("Try: ArticleByID API Call", articleByIDResponse.toString())
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())
@@ -82,7 +64,7 @@ class ArticleModel : ViewModel() {
             val apiService = RootService.getInstance()
             try{
                 focusedArticle = apiService.getArticleByID(articleid)
-                Log.i("Try: Article API Call", focusedArticle.title)
+                Log.i("Try: FocusArticleByID API Call", focusedArticle.toString())
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())

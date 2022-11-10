@@ -1,7 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -40,6 +39,7 @@ fun CommentSection(isCommenting: Boolean,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
+    var commentList by remember { mutableStateOf( articleModel.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
@@ -75,10 +75,15 @@ fun CommentSection(isCommenting: Boolean,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        onCommentingChanged()
                         keyboardController.hide()
-                        articleModel.postArticleComment( articleID, comment.text, articleID)
-                        Log.i("Comment Attempt", "Article ID: $articleID")
+                        articleModel.postComment(articleID, comment.text)
+
+//                      Recomposer ikke med ny data? TODO
+                        articleModel.focusArticleByID(articleID)
+                        commentList = articleModel.focusedArticle.comments
+                        commentList.toString()
+
+                        onCommentingChanged()
                         comment = TextFieldValue(text = "", selection = TextRange(0))
                     },
                 )
@@ -86,14 +91,15 @@ fun CommentSection(isCommenting: Boolean,
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
-            items(items = articleModel.focusedArticle.comments){ item->
+            items(items =
+            commentList
+//            articleModel.focusedArticle.comments
+            ){ item->
                 run {
                     Comment(item)
                 }
             }
         }
-
-
     }
 }
 

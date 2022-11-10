@@ -18,14 +18,14 @@ interface RootService {
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
-    @GET("article/{path}")
-    suspend fun getArticleByID(@Path("path") articleid: String): ArticleData
+    @GET("article/{id}")
+    suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
 
     // Event API
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
-    @GET("article/id/{path}")
+    @GET("event/id/{path}")
     suspend fun getEventByID(@Path("path") eventid: String): ArticleData
 
     // For både article og event basert på @path
