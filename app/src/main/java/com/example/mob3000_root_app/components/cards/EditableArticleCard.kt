@@ -45,16 +45,16 @@ fun EditableArticle(
 
             Text(
                 text  = articleData.title,
-                Modifier.widthIn(0.dp,200.dp).padding(10.dp) ,
+                Modifier.widthIn(0.dp,150.dp).padding(10.dp) ,
                 overflow = TextOverflow.Ellipsis,
             )
 
             Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                OutlinedButton( onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                OutlinedButton( onClick = { /*TODO*/ }, Modifier.size(90.dp,40.dp)) {
                     Text(text  = "Delete")
                 }
 
-                OutlinedButton(onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                OutlinedButton(onClick = { /*TODO*/ }, Modifier.size(90.dp,40.dp)) {
                     Text(text  = "Edit")
                 }
             }
