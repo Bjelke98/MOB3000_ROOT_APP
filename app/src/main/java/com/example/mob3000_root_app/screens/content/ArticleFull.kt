@@ -26,7 +26,7 @@ import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSection
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.screens.profile.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ArticleFull(
     navController: NavHostController,
-    loginModel: LoginModel,
+    loginViewModel: LoginViewModel,
     articlesModel: ArticleViewModel
 ) {
     var openComments by remember { mutableStateOf(false) }
@@ -132,7 +132,7 @@ fun ArticleFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginModel = loginModel,
+                        loginViewModel = loginViewModel,
                         articleViewModel = articlesModel,
                         articleID = articleData._id
                     )

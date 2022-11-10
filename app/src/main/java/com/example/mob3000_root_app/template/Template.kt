@@ -18,12 +18,14 @@ import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.AppNavHost
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Template(
-    navController: NavHostController
+    navController: NavHostController,
+    loginViewModel: LoginViewModel
 ) {
     var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -38,10 +40,16 @@ fun Template(
         .offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             // Profile
-            DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
-            DropdownMenuItem(text = {Text(text = "Login")},
-                onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+//            if(loginViewModel.loginStatusResponse.user==null){
+//                DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+//                DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+//            } else {
+//                DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
+//                DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+//            }
+            DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
             DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+            DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
             DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
         }
     }
@@ -64,6 +72,10 @@ fun Template(
                     RootDrawerItem(R.string.nav_label_about_us, navBackStackEntry, Screen.About, navController, ::closeDrawer)
 
                     // Admin
+//                    if(loginViewModel.loginStatusResponse.user?.editor == true){
+//                        RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
+//                        RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
+//                    }
                     RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
                     RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
                 }
@@ -104,7 +116,7 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController, loginViewModel = loginViewModel) }
     }
 }
 

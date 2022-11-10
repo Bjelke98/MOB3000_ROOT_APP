@@ -25,7 +25,7 @@ import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.data.apiResponse.Comment
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
-import com.example.mob3000_root_app.screens.profile.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -34,7 +34,7 @@ import com.example.mob3000_root_app.ui.theme.Underlined
 fun CommentSection(isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
-                   loginModel: LoginModel,
+                   loginViewModel: LoginViewModel,
                    articleViewModel: ArticleViewModel,
                    articleID: String
 ){
@@ -44,8 +44,6 @@ fun CommentSection(isCommenting: Boolean,
     Column(
          Modifier.fillMaxHeight()
     ) {
-        loginModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
-
         Box{
             OutlinedTextField(
                 value = comment.text,
