@@ -9,16 +9,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.apiResponse.ArticleData
 
 
 
 @Composable
-fun EditableArticle(
-    articleData : ArticleData
+fun EditArticleCard(
+    navHost: NavHostController,
+    articleData : ArticleData,
+    editFocus: ()-> Unit
 ){
     Card() {
         Row(
@@ -44,20 +49,27 @@ fun EditableArticle(
 
             Text(
                 text  = articleData.title,
-                Modifier.widthIn(0.dp,200.dp).padding(10.dp) ,
+                Modifier.widthIn(0.dp,200.dp).padding(10.dp),
                 overflow = TextOverflow.Ellipsis,
             )
 
             Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                OutlinedButton( onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                OutlinedButton(
+                    onClick = { /*TODO*/ },
+                    Modifier.size(100.dp,40.dp)
+                ) {
                     Text(text  = "Delete")
                 }
 
-                OutlinedButton(onClick = { /*TODO*/ }, Modifier.size(100.dp,40.dp)) {
+                OutlinedButton(
+                    onClick = { /*TODO*/
+                        editFocus()
+                        navigateUpTo(navHost, Screen.ArticleEditAdmin)
+                    },
+                    Modifier.size(100.dp,40.dp)) {
                     Text(text  = "Edit")
                 }
             }
-
         }
     }
 }

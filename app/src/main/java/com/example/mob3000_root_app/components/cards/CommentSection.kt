@@ -28,7 +28,6 @@ import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.screens.profile.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CommentSection(isCommenting: Boolean,
@@ -39,7 +38,7 @@ fun CommentSection(isCommenting: Boolean,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
-    var commentList by remember { mutableStateOf<List<Comment>>( articleViewModel.focusedArticle.comments ) }
+    var commentList by remember { mutableStateOf( articleViewModel.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
@@ -75,6 +74,7 @@ fun CommentSection(isCommenting: Boolean,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
+//                       TODO G;re dette async?
                         keyboardController.hide()
                         articleViewModel.postComment(articleID, comment.text)
 

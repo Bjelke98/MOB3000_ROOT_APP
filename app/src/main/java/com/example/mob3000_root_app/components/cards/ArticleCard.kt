@@ -94,12 +94,13 @@ fun ArticleCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-//                        Metode for å sende data gjennom backstacke
-//                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
+/*Metode for å sende data gjennom backstacke
+                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
+ */
+
+//                      Setter focusedArticle i articleModelView og navigerer til ArticleFull
                         focusArticle()
                         navigateUpTo(navController, Screen.ArticleFull)
-
-
                     }) {
                         Text(text = "Learn More")
                     }

@@ -12,16 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.cards.EditableArticle
+import com.example.mob3000_root_app.components.cards.EditArticleCard
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.components.viewmodel.EditArticleVM
 
 @Composable
 fun ArticleAdmin(
     navController: NavHostController,
-    articleViewModel: ArticleViewModel
+    articleViewModel: ArticleViewModel,
+    editArticleVM: EditArticleVM
 ) {
+//    TODO Legge testcolors inn i ui.theme
     val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background)
+        containerColor = MaterialTheme.colorScheme.background
+    )
 
     Surface() {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -33,8 +37,12 @@ fun ArticleAdmin(
             )
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                items(items = articleViewModel.articleListResponse) { item ->
-                    EditableArticle(articleData = item)
+                items(items = articleViewModel.articleListResponse) { article ->
+                    EditArticleCard(
+                        navHost = navController,
+                        articleData = article,
+                        editFocus = { editArticleVM.focusArticle(article) }
+                    )
                 }
             }
         }
