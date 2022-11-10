@@ -46,6 +46,7 @@ fun EventCard(
 {
 
     val address: String = if (event.address == null)  "Adresse" else event.address
+    val image = event.image ?: "defaultEvent.jpg"
 
     val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
     val dateTimeTo = ZonedDateTime.parse(event.dateTo)
@@ -77,7 +78,7 @@ fun EventCard(
                 Box() {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/" + event.image)
+                            .data("https://linrik.herokuapp.com/api/resources/$image")
                             .crossfade(true)
                             .build(),
                         placeholder = painterResource(R.drawable.testing),

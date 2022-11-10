@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
 import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.RootService
@@ -15,7 +16,7 @@ import com.example.mob3000_root_app.data.apiResponse.emptyEventData
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
-
+    val apiService = RootService.getInstance()
     var eventListResponse: List<EventData> by mutableStateOf(listOf())
     var eventByIDResponse by mutableStateOf(emptyEventData)
     var errorMessage: String by mutableStateOf("")
@@ -61,6 +62,17 @@ class EventViewModel : ViewModel() {
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun deleteEventById(eventid: String){
+        viewModelScope.launch {
+            try {
+                var data = apiService.deleteEventById(EventId(eventid))
+                Log.i("adminLog", "event ble slettet")
+            } catch (e: Exception){
+                Log.i("Error", e.message.toString())
             }
         }
     }
