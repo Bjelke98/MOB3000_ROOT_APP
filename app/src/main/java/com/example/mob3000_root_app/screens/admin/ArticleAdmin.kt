@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.editables.EditableArticle
+import com.example.mob3000_root_app.components.cards.EditableArticle
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 
 @Composable

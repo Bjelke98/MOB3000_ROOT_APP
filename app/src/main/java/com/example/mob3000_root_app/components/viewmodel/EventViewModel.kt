@@ -13,7 +13,7 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
-
+    val apiService = RootService.getInstance()
     var eventListResponse: List<EventData> by mutableStateOf(listOf())
     var eventByIDResponse by mutableStateOf<EventData?>(null)
     var errorMessage: String by mutableStateOf("")
@@ -59,6 +59,17 @@ class EventViewModel : ViewModel() {
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun deleteEventById(eventid: String){
+        viewModelScope.launch {
+            try {
+                var message = apiService.deleteEventById(eventid)
+                Log.i("adminLog", "event ble slettet")
+            } catch (e: Exception){
+                Log.i("Error", e.message.toString())
             }
         }
     }
