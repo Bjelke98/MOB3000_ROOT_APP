@@ -3,6 +3,7 @@ package com.example.mob3000_root_app.screens.profile
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+// import androidx.compose.foundation.gestures.ModifierLocalScrollableContainerProvider.value
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -108,13 +110,16 @@ fun Login(
 
                 OutlinedTextField(
                     value=password,
+
                     leadingIcon= {
                         Icon(imageVector = Icons.Default.Lock, contentDescription = null)
                     },
+
                     trailingIcon = {
                         Icon(
                             modifier = Modifier.clickable(
-                                onClickLabel = if (isPasswordHidden) {
+                                onClickLabel =
+                                if (isPasswordHidden) {
                                     stringResource(id = R.string.show_password)
                                 } else
                                     stringResource(id = R.string.hide_password)
@@ -126,18 +131,18 @@ fun Login(
                             } else Icons.Default.Person, contentDescription = null
                         )
                     },
+                    visualTransformation = if (!isPasswordHidden) VisualTransformation.None
+                    else PasswordVisualTransformation(),
 
                     modifier= Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label={Text(text="Password")},
-                    placeholder={Text(text="********")},
+                    // placeholder={Text(text="********")},
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-
-                    visualTransformation= PasswordVisualTransformation(),
                     onValueChange={
                         password=it
-                    }
+                    },
                 )
 
                 Row(
