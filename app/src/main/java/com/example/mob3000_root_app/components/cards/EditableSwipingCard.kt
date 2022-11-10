@@ -51,7 +51,7 @@ fun EditableEvent(
                 Text(text = "Slett " + eventData.title)
             },
             text = {
-                Text(text = "Er du sikker på av du vil slette " + eventData.title)
+                Text(text = "Er du sikker på av du vil slette: \n" + eventData.title)
             },
             confirmButton = {
                 TextButton(
