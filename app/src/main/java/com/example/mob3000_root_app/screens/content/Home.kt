@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
+import com.example.mob3000_root_app.components.navigation.eventViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.*
@@ -65,7 +66,7 @@ fun Home(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = eventsModel.eventListResponse){ event ->
-                    EventCard(event, ArticleType.HORIZONTAL_ARTICLE)
+                    EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, { eventViewModel.focusEvent(event)})
                 }
             }
         }
