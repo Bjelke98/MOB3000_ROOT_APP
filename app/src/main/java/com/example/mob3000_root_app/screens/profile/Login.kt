@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.profile
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -21,16 +21,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.App
-import com.example.mob3000_root_app.data.LoginStatus
-import com.example.mob3000_root_app.data.RootService
-import com.example.mob3000_root_app.data.UserLoginInfo
+import com.example.mob3000_root_app.data.apiResponse.LoginStatus
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiResponse.RootService
 import kotlinx.coroutines.launch
 
 class LoginModel : ViewModel(){
 //    var loginStatusResponse:LoginStatus by remember {
 //        mutableStateOf(LoginStatus(user = null))
 //    }
-    var loginStatusResponse:LoginStatus = (LoginStatus(user = null))
+    var loginStatusResponse: LoginStatus = (LoginStatus(user = null))
     var errorMessage: String by mutableStateOf("")
     fun getLoginStatus() {
         viewModelScope.launch {

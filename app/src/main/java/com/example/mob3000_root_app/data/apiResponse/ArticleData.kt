@@ -1,7 +1,4 @@
-package com.example.mob3000_root_app.data
-
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+package com.example.mob3000_root_app.data.apiResponse
 
 data class ArticleData(
     val __v: Int,

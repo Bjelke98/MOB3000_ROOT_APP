@@ -1,5 +1,8 @@
-package com.example.mob3000_root_app.data
+package com.example.mob3000_root_app.data.apiResponse
 
+import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.internal.JavaNetCookieJar
@@ -26,7 +29,7 @@ interface RootService {
     suspend fun getEvents(): List<EventData>
 
     @GET("event/id/{path}")
-    suspend fun getEventByID(@Path("path") eventid: String): ArticleData
+    suspend fun getEventByID(@Path("path") eventid: String): EventData
 
     // For både article og event basert på @path
     @Headers("Content-Type: application/json")

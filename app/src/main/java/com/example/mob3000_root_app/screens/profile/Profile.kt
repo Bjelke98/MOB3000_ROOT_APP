@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.screens
+package com.example.mob3000_root_app.screens.profile
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

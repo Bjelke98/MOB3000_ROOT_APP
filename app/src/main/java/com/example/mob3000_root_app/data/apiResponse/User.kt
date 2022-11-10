@@ -1,9 +1,8 @@
-package com.example.mob3000_root_app.data
+package com.example.mob3000_root_app.data.apiResponse
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class User(
     val id: String,
     val firstname: String,
@@ -12,7 +11,7 @@ data class User(
     val rootMember: Boolean,
     val admin: Boolean,
     val editor: Boolean
-) : Parcelable {
+){
     override fun toString(): String {
         return "User:\n" +
                 "\t_id='$id'\n" +

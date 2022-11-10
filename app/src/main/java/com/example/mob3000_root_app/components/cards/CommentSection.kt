@@ -22,10 +22,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.models.ArticleModel
-import com.example.mob3000_root_app.data.Comment
-import com.example.mob3000_root_app.data.UserLoginInfo
-import com.example.mob3000_root_app.screens.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.data.apiResponse.Comment
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.screens.profile.LoginModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -35,11 +35,11 @@ fun CommentSection(isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
                    loginModel: LoginModel,
-                   articleModel: ArticleModel,
+                   articleViewModel: ArticleViewModel,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
-    var commentList by remember { mutableStateOf( articleModel.focusedArticle.comments ) }
+    var commentList by remember { mutableStateOf<List<Comment>>( articleViewModel.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
@@ -76,11 +76,11 @@ fun CommentSection(isCommenting: Boolean,
                 keyboardActions = KeyboardActions(
                     onSend = {
                         keyboardController.hide()
-                        articleModel.postComment(articleID, comment.text)
+                        articleViewModel.postComment(articleID, comment.text)
 
 //                      Recomposer ikke med ny data? TODO
-                        articleModel.focusArticleByID(articleID)
-                        commentList = articleModel.focusedArticle.comments
+                        articleViewModel.focusArticleByID(articleID)
+                        commentList = articleViewModel.focusedArticle.comments
                         commentList.toString()
 
                         onCommentingChanged()
@@ -104,7 +104,7 @@ fun CommentSection(isCommenting: Boolean,
 }
 
 @Composable
-fun Comment(comment:Comment){
+fun Comment(comment: Comment){
     Card(
         Modifier
             .fillMaxWidth()
