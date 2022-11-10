@@ -2,6 +2,7 @@ package com.example.mob3000_root_app.screens.profile
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -21,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.App
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.data.apiResponse.LoginStatus
 import com.example.mob3000_root_app.data.RootService
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
@@ -72,6 +75,10 @@ fun Login(
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
 
+    var isPasswordHidden by remember {
+        mutableStateOf(true)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -101,13 +108,32 @@ fun Login(
 
                 OutlinedTextField(
                     value=password,
-                    leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
+                    leadingIcon= {
+                        Icon(imageVector = Icons.Default.Lock, contentDescription = null)
+                    },
+                    trailingIcon = {
+                        Icon(
+                            modifier = Modifier.clickable(
+                                onClickLabel = if (isPasswordHidden) {
+                                    stringResource(id = R.string.show_password)
+                                } else
+                                    stringResource(id = R.string.hide_password)
+                            ) {
+                                isPasswordHidden = !isPasswordHidden
+                            },
+                            imageVector = if (isPasswordHidden) {
+                                Icons.Default.Lock
+                            } else Icons.Default.Person, contentDescription = null
+                        )
+                    },
+
                     modifier= Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
                     label={Text(text="Password")},
                     placeholder={Text(text="********")},
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+
                     visualTransformation= PasswordVisualTransformation(),
                     onValueChange={
                         password=it
