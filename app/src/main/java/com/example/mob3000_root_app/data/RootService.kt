@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.data.apiResponse
+package com.example.mob3000_root_app.data
 
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
