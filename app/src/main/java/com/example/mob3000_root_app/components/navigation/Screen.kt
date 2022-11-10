@@ -13,6 +13,7 @@ sealed class Screen(val route: String) {
     object About:           Screen(route = "about_screen")
     object Events:          Screen(route = "events_screen")
     object ArticleFull:     Screen(route = "article_full_screen")
+    object EventFull:       Screen(route = "event_full_screen")
 
     // Admin Screens
     object ArticleAdmin:    Screen(route = "article_admin")

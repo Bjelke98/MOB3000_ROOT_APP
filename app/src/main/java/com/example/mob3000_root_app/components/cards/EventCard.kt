@@ -22,9 +22,13 @@ import androidx.compose.material3.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import java.time.ZonedDateTime
@@ -34,12 +38,15 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventCard(
+    navController: NavHostController,
     event: EventData,
-    type: ArticleType
+    type: ArticleType,
+    focusEvent: () -> Unit
     )
 {
 
     val address: String = if (event.address == null)  "Adresse" else event.address
+    val image = event.image ?: "defaultEvent.jpg"
 
     val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
     val dateTimeTo = ZonedDateTime.parse(event.dateTo)
@@ -71,7 +78,7 @@ fun EventCard(
                 Box() {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/" + event.image)
+                            .data("https://linrik.herokuapp.com/api/resources/$image")
                             .crossfade(true)
                             .build(),
                         placeholder = painterResource(R.drawable.testing),
@@ -194,11 +201,13 @@ fun EventCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-/*                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
+/*
                         focusArticle()
                         navigateUpTo(navController, Screen.ArticleFull)
 */
 
+                        focusEvent()
+                        navigateUpTo(navController, Screen.EventFull)
                     }) {
                         Text(
                             text = "Details"

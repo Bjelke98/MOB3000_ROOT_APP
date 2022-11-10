@@ -74,7 +74,8 @@ fun AboutCard(person: AboutData) {
 
         }
             Row(modifier = Modifier
-                .padding(horizontal = 15.dp)) {
+                .padding(horizontal = 15.dp)
+            ) {
 
                 Text(
                     modifier = Modifier

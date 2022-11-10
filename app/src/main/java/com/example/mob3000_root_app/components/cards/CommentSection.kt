@@ -1,7 +1,5 @@
 package com.example.mob3000_root_app.components.cards
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,26 +22,98 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
+import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.Comment
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
-import com.example.mob3000_root_app.screens.profile.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.ui.theme.Underlined
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CommentSection(comments:List<Comment>,
-                   isCommenting: Boolean,
+fun CommentSectionArticle(isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
-                   loginModel: LoginModel,
+                   loginViewModel: LoginViewModel,
                    articleViewModel: ArticleViewModel,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
+    var commentList by remember { mutableStateOf<List<Comment>>( articleViewModel.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
+    ) {
+        Box{
+            OutlinedTextField(
+                value = comment.text,
+                onValueChange = {
+                    comment = TextFieldValue( it , TextRange(it.length))
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Comment,
+                        contentDescription = null
+                    )
+                },
+                singleLine = false,
+                maxLines = 2,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .onFocusChanged {
+                        if (isCommenting) keyboardController.hide()
+                        onCommentingChanged()
+                    }
+                    .onFocusEvent {
+                        keyboardController.show()
+                    },
+//                    .focusRequester(focusRequester),
+                placeholder = { Text(stringResource(id = R.string.comment_textfield_placeholder)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
+                keyboardActions = KeyboardActions(
+                    onSend = {
+                        keyboardController.hide()
+                        articleViewModel.postComment(articleID, comment.text)
+
+//                      Recomposer ikke med ny data? TODO
+                        articleViewModel.focusArticleByID(articleID)
+                        commentList = articleViewModel.focusedArticle.comments
+                        commentList.toString()
+
+                        onCommentingChanged()
+                        comment = TextFieldValue(text = "", selection = TextRange(0))
+                    },
+                )
+            )
+        }
+        LazyColumn(Modifier.heightIn(0.dp, 300.dp)
+        ){
+            items(items =
+            commentList
+//            articleModel.focusedArticle.comments
+            ){ item->
+                run {
+                    Comment(item)
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@Composable
+fun CommentSectionEvent(isCommenting: Boolean,
+                        onCommentingChanged: () -> Unit,
+                        keyboardController: SoftwareKeyboardController,
+                        loginModel: LoginViewModel,
+                        eventViewModel: EventViewModel,
+                        eventId: String
+){
+    var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
+    var commentList by remember { mutableStateOf<List<Comment>>( eventViewModel.focusedEvent.comments ) }
+
+    Column(
+        Modifier.fillMaxHeight()
     ) {
         loginModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
 
@@ -76,26 +146,31 @@ fun CommentSection(comments:List<Comment>,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-                        articleViewModel.postComment( articleID, comment.text)
-                        articleViewModel.getArticleByID(articleID)
-                        articleViewModel.articleByIDResponse?.let { articleViewModel.focusArticle(it) }
-                        Log.i("Comment Attempt", "Article ID: $articleID")
+                        keyboardController.hide()
+                        eventViewModel.postComment(eventId, comment.text)
+
+//                      Recomposer ikke med ny data? TODO
+                        eventViewModel.getEventByID(eventId)
+                        commentList = eventViewModel.focusedEvent.comments
+                        commentList.toString()
+
+                        onCommentingChanged()
+                        comment = TextFieldValue(text = "", selection = TextRange(0))
                     },
                 )
             )
         }
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
-            articleViewModel.focusedArticle?.let {
-                items(items = it.comments){ item->
-                    run {
-                        Comment(item)
-                    }
+            items(items =
+            commentList
+//            articleModel.focusedArticle.comments
+            ){ item->
+                run {
+                    Comment(item)
                 }
             }
         }
-
-
     }
 }
 

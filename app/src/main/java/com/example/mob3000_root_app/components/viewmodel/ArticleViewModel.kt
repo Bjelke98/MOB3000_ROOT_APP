@@ -10,14 +10,15 @@ import com.example.mob3000_root_app.data.*
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
+import com.example.mob3000_root_app.data.apiResponse.emptyArticleData
 import kotlinx.coroutines.launch
 
 class ArticleViewModel : ViewModel() {
 
     var articleListResponse: List<ArticleData> by mutableStateOf(listOf())
-    var articleByIDResponse by mutableStateOf<ArticleData?>(null)
+    var articleByIDResponse by mutableStateOf(emptyArticleData)
     var errorMessage: String by mutableStateOf("")
-    var focusedArticle by mutableStateOf<ArticleData?>(null)
+    var focusedArticle by mutableStateOf(emptyArticleData)
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
@@ -48,13 +49,26 @@ class ArticleViewModel : ViewModel() {
         }
     }
 
-    fun getArticleByID(articleid: String){
-
+    fun getArticleByID(articleid: String) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
                 articleByIDResponse = apiService.getArticleByID(articleid)
-                Log.i("Try: Article API Call", articleByIDResponse.toString())
+                Log.i("Try: ArticleByID API Call", articleByIDResponse.toString())
+            }
+            catch (e: Exception){
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun focusArticleByID(articleid: String){
+
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try{
+                focusedArticle = apiService.getArticleByID(articleid)
+                Log.i("Try: FocusArticleByID API Call", focusedArticle.toString())
             }
             catch (e: Exception){
                 Log.i("Catch", e.message.toString())
