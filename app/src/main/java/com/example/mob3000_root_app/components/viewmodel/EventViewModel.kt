@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
 import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.RootService
@@ -67,7 +68,7 @@ class EventViewModel : ViewModel() {
     fun deleteEventById(eventid: String){
         viewModelScope.launch {
             try {
-                var message = apiService.deleteEventById(eventid)
+                var data = apiService.deleteEventById(EventId(eventid))
                 Log.i("adminLog", "event ble slettet")
             } catch (e: Exception){
                 Log.i("Error", e.message.toString())

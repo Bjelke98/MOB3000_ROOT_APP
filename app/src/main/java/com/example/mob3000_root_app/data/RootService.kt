@@ -1,6 +1,7 @@
 package com.example.mob3000_root_app.data.apiResponse
 
 import com.example.mob3000_root_app.data.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Json
@@ -29,8 +30,9 @@ interface RootService {
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
-    @DELETE("event")
-    suspend fun deleteEventById(@Body eventid: String): Call<Json>
+    @Headers("Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "event", hasBody = true)
+    suspend fun deleteEventById(@Body eventid: EventId): ResponseStatus
 
     @GET("event/id/{path}")
     suspend fun getEventByID(@Path("path") eventid: String): EventData
