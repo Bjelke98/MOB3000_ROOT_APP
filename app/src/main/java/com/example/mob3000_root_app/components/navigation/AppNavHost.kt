@@ -57,7 +57,7 @@ fun AppNavHost(
 
         composable( route = Screen.EventFull.route) {
             eventViewModel.getEventList()
-            EventFull(navController, loginModel, eventViewModel )
+            EventFull(navController, loginViewModel, eventViewModel )
         }
 
         // Navigate Admin

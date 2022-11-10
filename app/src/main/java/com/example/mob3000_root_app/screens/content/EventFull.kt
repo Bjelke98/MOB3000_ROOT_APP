@@ -24,9 +24,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSectionEvent
-import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
-import com.example.mob3000_root_app.screens.profile.LoginModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -34,7 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun EventFull(
     navController: NavHostController,
-    loginModel: LoginModel,
+    loginModel: LoginViewModel,
     eventsModel: EventViewModel
 
 ) {

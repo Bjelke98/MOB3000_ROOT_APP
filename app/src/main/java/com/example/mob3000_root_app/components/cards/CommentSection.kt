@@ -105,7 +105,7 @@ fun CommentSectionArticle(isCommenting: Boolean,
 fun CommentSectionEvent(isCommenting: Boolean,
                         onCommentingChanged: () -> Unit,
                         keyboardController: SoftwareKeyboardController,
-                        loginModel: LoginModel,
+                        loginModel: LoginViewModel,
                         eventViewModel: EventViewModel,
                         eventId: String
 ){
