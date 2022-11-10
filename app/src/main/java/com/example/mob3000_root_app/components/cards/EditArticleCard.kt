@@ -25,6 +25,7 @@ fun EditArticleCard(
     articleData : ArticleData,
     editFocus: ()-> Unit
 ){
+    val defaultImage = articleData.image ?: "defaultArticle.jpg"
     Card() {
         Row(
             Modifier
@@ -36,7 +37,7 @@ fun EditArticleCard(
             Box(Modifier.sizeIn(0.dp,0.dp,100.dp,100.dp)) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
+                        .data("https://linrik.herokuapp.com/api/resources/$defaultImage")
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.testing),
@@ -49,14 +50,13 @@ fun EditArticleCard(
 
             Text(
                 text  = articleData.title,
-                Modifier.widthIn(0.dp,200.dp).padding(10.dp),
+                Modifier.widthIn(0.dp,150.dp).padding(10.dp) ,
                 overflow = TextOverflow.Ellipsis,
             )
 
             Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                OutlinedButton(
-                    onClick = { /*TODO*/ },
-                    Modifier.size(100.dp,40.dp)
+                OutlinedButton( onClick = { /*TODO*/ },
+                    Modifier.size(90.dp,40.dp)
                 ) {
                     Text(text  = "Delete")
                 }
@@ -66,7 +66,7 @@ fun EditArticleCard(
                         editFocus()
                         navigateUpTo(navHost, Screen.ArticleEditAdmin)
                     },
-                    Modifier.size(100.dp,40.dp)) {
+                    Modifier.size(90.dp,40.dp)) {
                     Text(text  = "Edit")
                 }
             }

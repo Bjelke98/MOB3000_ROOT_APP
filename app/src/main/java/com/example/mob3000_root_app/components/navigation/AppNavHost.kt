@@ -9,13 +9,14 @@ import com.example.mob3000_root_app.components.cards.EditArticleCard
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EditArticleVM
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
 import com.example.mob3000_root_app.screens.admin.ArticleEditAdmin
 import com.example.mob3000_root_app.screens.admin.EventAdmin
 import com.example.mob3000_root_app.screens.content.*
 import com.example.mob3000_root_app.screens.profile.*
 
-var loginModel = LoginModel()
+//var loginViewModel = LoginViewModel()
 var articleViewModel = ArticleViewModel()
 var eventViewModel = EventViewModel()
 var editArticleVM = EditArticleVM()
@@ -25,6 +26,7 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = Screen.Home.route,
+    loginViewModel: LoginViewModel
 ) {
 
     NavHost(
@@ -48,12 +50,18 @@ fun AppNavHost(
         }
         composable( route = Screen.ArticleFull.route ) {
             articleViewModel.getArticleList()
-            ArticleFull(navController, loginModel, articleViewModel)
+            ArticleFull(navController, loginViewModel, articleViewModel)
         }
         composable( route = Screen.About.route ){ About() }
+
         composable( route = Screen.Events.route ){
-            Events( eventList = eventViewModel.eventListResponse)
+            Events(navController, eventViewModel = eventViewModel)
             eventViewModel.getEventList()
+        }
+
+        composable( route = Screen.EventFull.route) {
+            eventViewModel.getEventList()
+            EventFull(navController, loginViewModel, eventViewModel )
         }
 
         // Navigate Admin
@@ -71,7 +79,7 @@ fun AppNavHost(
         }
 
         // Navigate Profile
-        composable( route = Screen.Login.route ){ Login(navController, loginModel) }
+        composable( route = Screen.Login.route ){ Login(navController, loginViewModel) }
         composable( route = Screen.Register.route ){ Register(navController) }
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
         composable( route = Screen.Settings.route ){ Settings(navController) }

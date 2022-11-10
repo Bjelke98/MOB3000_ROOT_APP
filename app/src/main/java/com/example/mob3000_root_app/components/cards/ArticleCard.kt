@@ -38,6 +38,8 @@ fun ArticleCard(
     focusArticle: () -> Unit
 ) {
 
+    val image = articleData.image ?: "defaultArticle.jpg"
+
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
 
@@ -47,6 +49,8 @@ fun ArticleCard(
 
     val horizontalColMods = Modifier.width(contentWidth80per)
     val verticalColMods = Modifier.fillMaxWidth()
+
+
 
     Card(
         Modifier
@@ -58,7 +62,7 @@ fun ArticleCard(
 
                    AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
+                        .data("https://linrik.herokuapp.com/api/resources/$image")
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.testing),
