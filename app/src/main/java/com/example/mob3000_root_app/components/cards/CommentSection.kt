@@ -38,7 +38,6 @@ fun CommentSectionArticle(isCommenting: Boolean,
                    articleID: String
 ){
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
-    var commentList by remember { mutableStateOf<List<Comment>>( articleViewModel.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
@@ -73,12 +72,17 @@ fun CommentSectionArticle(isCommenting: Boolean,
                 keyboardActions = KeyboardActions(
                     onSend = {
                         keyboardController.hide()
-                        articleViewModel.postComment(articleID, comment.text)
+                        articleViewModel.postComment(articleID, comment.text){ postedStatus ->
+                            if(postedStatus!=null){
+                                articleViewModel.focusArticleByID(articleID)
+                            } else {
+
+                            }
+                        }
 
 //                      Recomposer ikke med ny data? TODO
-                        articleViewModel.focusArticleByID(articleID)
-                        commentList = articleViewModel.focusedArticle.comments
-                        commentList.toString()
+                        //commentList = articleViewModel.focusedArticle.comments
+                        //commentList.toString()
 
                         onCommentingChanged()
                         comment = TextFieldValue(text = "", selection = TextRange(0))
@@ -89,12 +93,11 @@ fun CommentSectionArticle(isCommenting: Boolean,
         LazyColumn(Modifier.heightIn(0.dp, 300.dp)
         ){
             items(items =
-            commentList
-//            articleModel.focusedArticle.comments
+                articleViewModel.focusedArticle.comments
             ){ item->
-                run {
+                //run {
                     Comment(item)
-                }
+                //}
             }
         }
     }

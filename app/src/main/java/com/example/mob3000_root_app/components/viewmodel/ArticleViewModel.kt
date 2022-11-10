@@ -2,6 +2,7 @@ package com.example.mob3000_root_app.components.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiResponse.ArticleData
+import com.example.mob3000_root_app.data.apiResponse.Comment
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyArticleData
 import kotlinx.coroutines.launch
@@ -34,7 +36,7 @@ class ArticleViewModel : ViewModel() {
         }
     }
 
-    fun postComment(articleID: String, text: String) {
+    fun postComment(articleID: String, text: String, cb: (postedStatus: ResponseStatus?)->Unit) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
@@ -42,8 +44,10 @@ class ArticleViewModel : ViewModel() {
                     "article",
                     CommentData(articleID, text)
                 )
+                cb.invoke(postedStatus)
                 Log.i("CommentStatus", postedStatus.toString())
             } catch (e: Exception) {
+                cb.invoke(null)
                 Log.i("Catch", e.message.toString())
             }
         }
