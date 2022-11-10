@@ -25,17 +25,28 @@ import me.saket.swipe.SwipeableActionsBox
 @Composable
 fun EditableEvent(
     eventData : EventData
+
 ){
     var eventViewModel = EventViewModel()
     val defaultImage = eventData.image ?: "defaultEvent.jpg"
 
     val testColors= MaterialTheme.colorScheme.background
     val openDialog = remember { mutableStateOf(false) }
+
     val editSwipe = SwipeAction(
         icon = painterResource(R.drawable.edit_icon),
-        background = Color.Blue,
+        background = Color.Cyan,
         onSwipe = {
+
+
             // navigere til edit event
+        }
+    )
+    val deleteSwipe = SwipeAction(
+        icon = painterResource(R.drawable.delete_icon),
+        background = Color.Red,
+        onSwipe = {
+            openDialog.value = true;
         }
     )
 
@@ -75,14 +86,7 @@ fun EditableEvent(
         )
     }
 
-    val deleteSwipe = SwipeAction(
-        icon = painterResource(R.drawable.delete_icon),
 
-        background = Color.Red,
-        onSwipe = {
-            openDialog.value = true;
-        }
-    )
     SwipeableActionsBox(
         modifier = Modifier,// må endres til å hente fra bakrunnen til
         startActions = listOf(editSwipe),
