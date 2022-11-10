@@ -11,7 +11,7 @@ import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
-import com.example.mob3000_root_app.data.apiResponse.RootService
+import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {

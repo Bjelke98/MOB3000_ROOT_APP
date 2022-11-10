@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.LoginStatus
-import com.example.mob3000_root_app.data.apiResponse.RootService
+import com.example.mob3000_root_app.data.RootService
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel(){
