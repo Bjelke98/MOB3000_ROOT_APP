@@ -49,9 +49,15 @@ fun AppNavHost(
             ArticleFull(navController, loginViewModel, articleViewModel)
         }
         composable( route = Screen.About.route ){ About() }
+
         composable( route = Screen.Events.route ){
-            Events( eventList = eventViewModel.eventListResponse)
+            Events(navController, eventViewModel = eventViewModel)
             eventViewModel.getEventList()
+        }
+
+        composable( route = Screen.EventFull.route) {
+            eventViewModel.getEventList()
+            EventFull(navController, loginModel, eventViewModel )
         }
 
         // Navigate Admin

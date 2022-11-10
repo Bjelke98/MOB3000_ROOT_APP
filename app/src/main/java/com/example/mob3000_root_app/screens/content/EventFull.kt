@@ -18,24 +18,25 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.cards.CommentSectionArticle
+import com.example.mob3000_root_app.components.cards.CommentSectionEvent
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.components.viewmodel.EventViewModel
+import com.example.mob3000_root_app.screens.profile.LoginModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ArticleFull(
+fun EventFull(
     navController: NavHostController,
-    loginViewModel: LoginViewModel,
-    articlesModel: ArticleViewModel
+    loginModel: LoginModel,
+    eventsModel: EventViewModel
+
 ) {
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
@@ -46,7 +47,7 @@ fun ArticleFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val articleData = articlesModel.focusedArticle
+    val eventData = eventsModel.focusedEvent
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -84,7 +85,7 @@ fun ArticleFull(
                 }
 
                 Text(
-                    text = articleData.title,
+                    text = eventData.title,
                     Modifier
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.headlineLarge
@@ -93,11 +94,11 @@ fun ArticleFull(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
+                    .data("https://linrik.herokuapp.com/api/resources/" + eventData.image)
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.sauce),
-                contentDescription = (articleData.description),
+                contentDescription = (eventData.description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -107,7 +108,7 @@ fun ArticleFull(
             )
 
             Text(
-                text = articleData.description,
+                text = eventData.description,
                 Modifier
                     .fillMaxWidth()
                     .padding(5.dp),
@@ -124,21 +125,22 @@ fun ArticleFull(
                     expandFrom = Alignment.Bottom
                 )
                 ,
-                    exit = slideOutVertically() + shrinkVertically(shrinkTowards = Alignment.Top)/* + fadeOut()*/
+                exit = slideOutVertically() + shrinkVertically(shrinkTowards = Alignment.Top)/* + fadeOut()*/
 
-                    ){
+            ){
                 if (keyboardController != null) {
-                    CommentSectionArticle(
+                    CommentSectionEvent(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginViewModel = loginViewModel,
-                        articleViewModel = articlesModel,
-                        articleID = articleData._id
+                        loginModel = loginModel,
+                        eventViewModel = eventsModel,
+                        eventId = eventData._id
+
                     )
                 }
-            //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
-            // onclick fordi kommentarene ble ferdig composed etter launch ble ferdig
+                //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
+                // onclick fordi kommentarene ble ferdig composed etter launch ble ferdig
                 coroutineScope.launch {
                     scrollState.animateScrollTo(2000)
                 }
@@ -154,22 +156,16 @@ fun ArticleFull(
                 Icon(
                     painter = painterResource(
                         id = (
-                            if (!openComments) {
-                                R.drawable.ic_baseline_chat_bubble_outline_24
-                            } else {
-                                R.drawable.ic_baseline_arrow_back_ios_24
-                            }
-                        )
+                                if (!openComments) {
+                                    R.drawable.ic_baseline_chat_bubble_outline_24
+                                } else {
+                                    R.drawable.ic_baseline_arrow_back_ios_24
+                                }
+                                )
                     ),
                     contentDescription = "Comments"
                 )
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArticlePreview() {
-//    ArticleFull(rememberNavController()/*,ArticleTestdata().dataList[1]*/, )
 }
