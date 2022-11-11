@@ -29,7 +29,7 @@ fun EditableEvent(
     eventData : EventData,
     eventViewModel: EventViewModel
 ){
-    val defaultImage = eventData.image ?: "defaultEvent.jpg"
+    val image = eventData.image ?: "defaultEvent.jpg"
 
     val testColors= MaterialTheme.colorScheme.background
     val openDialog = remember { mutableStateOf(false) }
@@ -114,7 +114,7 @@ fun EditableEvent(
 
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/$defaultImage")
+                            .data("https://linrik.herokuapp.com/api/resources/$image")
                             .crossfade(true)
                             .build(),
                         placeholder = painterResource(R.drawable.testing),
