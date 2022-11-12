@@ -38,39 +38,8 @@ fun ArticleEditAdmin(navHost: NavHostController, articleViewModel: ArticleViewMo
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-<<<<<<< HEAD
    val context = LocalContext.current
 
-=======
-// val datePicker = MaterialDatePicker.Builder.dateRangePicker()
-//  .setTitleText( stringResource(com.example.mob3000_root_app.R.string.datepicker_select_date) )
-//  .build()
-
-// var pictureFile by remember { mutableStateOf(File("")) }
-//   var imageUri by remember { mutableStateOf<Uri?>(null) }
-//   val bitmap = remember { mutableStateOf<Bitmap?>(null) }
-//   val launcher = rememberLauncherForActivityResult(
-//      contract = ActivityResultContracts.GetContent()){
-//         uri: Uri? -> imageUri = uri
-//   }
-   val context = LocalContext.current
-
-
-// val pictureHeight = 200
-// val pictureWidth = 150
-// val intent: Intent = Intent(Intent.ACTION_GET_CONTENT, null)
-//  .setType("image/*")
-//  .putExtra("crop", "true")
-//  .putExtra("aspectX", 1)
-//  .putExtra("aspectY", 1)
-//  .putExtra("outputX", pictureWidth)
-//  .putExtra("outputY", pictureHeight)
-//  .putExtra("scale", true)
-//  .putExtra("scaleUpIfNeeded", true)
-//  .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pictureFile))
-//  .putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
-
->>>>>>> origin/MakingArticleEditable
    val calendar = Calendar.getInstance()
    val year = calendar.get(Calendar.YEAR)
    val month = calendar.get(Calendar.MONTH)
@@ -84,29 +53,11 @@ fun ArticleEditAdmin(navHost: NavHostController, articleViewModel: ArticleViewMo
     }, year, month, day
    )
 
-<<<<<<< HEAD
     Box(
         Modifier
             .fillMaxSize()
             .padding(20.dp),
     ) {
-=======
-    val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background)
-
-    Box(
-        Modifier
-//            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .fillMaxSize()
-            .padding(20.dp),
-    ) {
-//        Card(
-//            Modifier
-//            .fillMaxSize()
-//            .padding(20.dp),
-//            colors = testColors,
-//        ) {
->>>>>>> origin/MakingArticleEditable
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -131,36 +82,12 @@ fun ArticleEditAdmin(navHost: NavHostController, articleViewModel: ArticleViewMo
                 }
 
                 Button(onClick = {
-<<<<<<< HEAD
                     Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.upload_picture_button))
                 }
             }
         }
-=======
-    //    launcher.launch("image/*")
-                    Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(stringResource(com.example.mob3000_root_app.R.string.upload_picture_button))
-                }
-
-    //      imageUri?.let {
-    //         val source = ImageDecoder
-    //         .createSource(context.contentResolver,it)
-    //
-    //         bitmap.value = ImageDecoder.decodeBitmap(source)
-    //
-    //         bitmap.value?.let {  btm ->
-    //            Image(bitmap = btm.asImageBitmap(),
-    //            contentDescription =null,
-    //            modifier = Modifier.size(400.dp))
-    //         }
-    //      }
-            }
-        }
-//    }
->>>>>>> origin/MakingArticleEditable
 }
 
 
