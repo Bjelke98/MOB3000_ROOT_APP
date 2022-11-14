@@ -44,8 +44,9 @@ fun Template(
 //                DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
 //                DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
 //            } else {
-//                DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
-//                DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+//                DropdownMenuItem(text = { Text(text = "Profil") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
+//                DropdownMenuItem(text = { Text(text = "Instillinger") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+//                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginViewModel.logoutUser() ;navigateUpTo(navController, Screen.Home) })
 //            }
             DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
             DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})

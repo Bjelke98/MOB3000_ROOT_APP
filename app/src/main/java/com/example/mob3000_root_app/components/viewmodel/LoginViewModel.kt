@@ -59,4 +59,19 @@ class LoginViewModel : ViewModel(){
             }
         }
     }
+
+    fun logoutUser(){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                apiService.logout()
+                getLoginStatus()
+                //du får tilbake status kode 200 eller 210
+            }
+            catch (e: Exception) {
+                getLoginStatus() // må ha den her siden logout vil alltid gi en error hehe
+                errorMessage = e.message.toString()
+            }
+        }
+    }
 }
