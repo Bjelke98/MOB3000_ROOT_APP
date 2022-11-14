@@ -2,6 +2,7 @@ package com.example.mob3000_root_app.data
 
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.EventId
+import com.example.mob3000_root_app.data.apiRequest.NameChange
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Json
@@ -56,7 +57,7 @@ interface RootService {
     suspend fun loginUser(@Body userLoginInfo: UserLoginInfo): LoginStatus// trenger data med email og passord
 
     @PUT("user")
-    suspend fun updateUser(@Body userData: User): Call<User>// trenger samme data som registrer
+    suspend fun updateUser(@Body nameChange: NameChange): ResponseStatus// trenger samme data som registrer
 
     @DELETE("user")
     suspend fun deleteUser(@Body userData: User): Call<User> // trenger passord

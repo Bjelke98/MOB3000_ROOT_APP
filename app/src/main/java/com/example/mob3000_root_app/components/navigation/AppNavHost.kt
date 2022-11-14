@@ -74,7 +74,7 @@ fun AppNavHost(
         composable( route = Screen.Login.route ){ Login(navController, loginViewModel) }
         composable( route = Screen.Register.route ){ Register(navController) }
         composable( route = Screen.Profile.route ) { Profile(navController = navController)}
-        composable( route = Screen.Settings.route ){ Settings(navController) }
+        composable( route = Screen.Settings.route ){ Settings(navController, loginViewModel) }
     }
 }
 

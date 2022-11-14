@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.AppNavHost
 import com.example.mob3000_root_app.components.navigation.Screen
