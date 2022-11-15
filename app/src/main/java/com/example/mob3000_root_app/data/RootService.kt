@@ -6,12 +6,15 @@ import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.internal.JavaNetCookieJar
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.io.File
 import java.net.CookieManager
 import java.net.CookiePolicy
 
@@ -26,6 +29,19 @@ interface RootService {
     @GET("article/{id}")
     suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
 
+    @Multipart
+    @POST("article")
+    suspend fun postArticle(
+        @Part("title") title: String,
+        @Part("desciption") description: String,
+        @Part("image") image: File
+    )
+
+//    @POST("article")
+//    suspend fun postArticle(requestBody: RequestBody){
+//
+//    }
+
     // Event API
     @GET("event")
     suspend fun getEvents(): List<EventData>
@@ -36,7 +52,6 @@ interface RootService {
 
     @GET("event/id/{path}")
     suspend fun getEventByID(@Path("path") eventid: String): EventData
-
 
 
     // For både article og event basert på @path

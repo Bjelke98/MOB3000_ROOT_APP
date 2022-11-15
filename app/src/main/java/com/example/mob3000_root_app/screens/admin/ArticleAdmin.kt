@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.EditArticleCard
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.components.viewmodel.EditArticleVM
+import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 
 @Composable
 fun ArticleAdmin(
     navController: NavHostController,
     articleViewModel: ArticleViewModel,
-    editArticleVM: EditArticleVM
+    editArticleVM: PostPutArticleVM
 ) {
 //    TODO Legge testcolors inn i ui.theme
     val testColors: CardColors = CardDefaults.cardColors(

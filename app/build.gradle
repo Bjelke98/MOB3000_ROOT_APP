@@ -61,14 +61,18 @@ dependencies {
     //swipeable
     implementation "me.saket.swipe:swipe:1.0.0"
 
+
     //bilder
     implementation("io.coil-kt:coil-compose:2.2.2")
 
-//    //Date Picker
-//    implementation 'com.google.android.material:material:1.7.0'
+//    //DateTime Picker
+    implementation "io.github.vanpra.compose-material-dialogs:datetime:0.9.0"
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+//    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
     // Cookies
     implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'

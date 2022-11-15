@@ -5,9 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mob3000_root_app.components.cards.EditArticleCard
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.components.viewmodel.EditArticleVM
+import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
@@ -19,7 +18,7 @@ import com.example.mob3000_root_app.screens.profile.*
 //var loginViewModel = LoginViewModel()
 var articleViewModel = ArticleViewModel()
 var eventViewModel = EventViewModel()
-var editArticleVM = EditArticleVM()
+var postPutArticleVM = PostPutArticleVM()
 
 @Composable
 fun AppNavHost(
@@ -66,11 +65,11 @@ fun AppNavHost(
 
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
-            ArticleAdmin(navController, articleViewModel, editArticleVM)
+            ArticleAdmin(navController, articleViewModel, postPutArticleVM)
             articleViewModel.getArticleList()
         }
         composable( route = Screen.ArticleEditAdmin.route ) {
-            ArticleEditAdmin(navController, articleViewModel)
+            ArticleEditAdmin(navController, postPutArticleVM)
             articleViewModel.getArticleList()
         }
         composable( route = Screen.EventAdmin.route ){
