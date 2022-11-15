@@ -1,8 +1,6 @@
 package com.example.mob3000_root_app.data
 
-import com.example.mob3000_root_app.data.apiRequest.CommentData
-import com.example.mob3000_root_app.data.apiRequest.EventId
-import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiRequest.*
 import com.example.mob3000_root_app.data.apiResponse.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
@@ -55,17 +53,17 @@ interface RootService {
     @POST("user")
     suspend fun loginUser(@Body userLoginInfo: UserLoginInfo): LoginStatus// trenger data med email og passord
 
-    @PUT("user")
-    suspend fun updateUser(@Body userData: User): Call<User>// trenger samme data som registrer
+    @PUT("user/all")
+    suspend fun updateUser(@Body nameChange: NameChange): ResponseStatus// trenger samme data som registrer
 
     @DELETE("user")
-    suspend fun deleteUser(@Body userData: User): Call<User> // trenger passord
+    suspend fun deleteUser(@Body deleteUser: DeleteUser): ResponseStatus // trenger passord
 
-    @DELETE("logout")
-    suspend fun logout(): User
+    @GET("user/logout")
+    suspend fun logout(): ResponseStatus
 
-    @PUT("newpassword")
-    suspend fun newPassword(@Body userData: User): Call<User> // trenger passord og nytt passord
+    @PUT("user/newpassword")
+    suspend fun newPassword(@Body passwordChange: PasswordChange): ResponseStatus // trenger passord og nytt passord
 
 
 

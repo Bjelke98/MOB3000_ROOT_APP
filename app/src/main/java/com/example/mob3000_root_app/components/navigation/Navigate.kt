@@ -7,3 +7,6 @@ fun navigateUpTo(navController: NavHostController, screen: Screen){
         popUpTo(screen.route)
     }
 }
+fun navigateUp(navController: NavHostController){
+    navController.navigateUp()
+}

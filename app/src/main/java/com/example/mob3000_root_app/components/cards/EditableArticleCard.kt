@@ -20,7 +20,7 @@ import com.example.mob3000_root_app.data.apiResponse.ArticleData
 fun EditableArticle(
     articleData : ArticleData
 ){
-    val defaultImage = articleData.image ?: "defaultArticle.jpg"
+    val image = articleData.image ?: "defaultArticle.jpg"
     Card() {
         Row(
             Modifier
@@ -32,7 +32,7 @@ fun EditableArticle(
             Box(Modifier.sizeIn(0.dp,0.dp,100.dp,100.dp)) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://linrik.herokuapp.com/api/resources/$defaultImage")
+                        .data("https://linrik.herokuapp.com/api/resources/$image")
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.testing),

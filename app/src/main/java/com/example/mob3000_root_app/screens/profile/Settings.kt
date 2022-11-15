@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens.profile
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,15 +17,19 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.cards.changeName
+import com.example.mob3000_root_app.components.cards.changePassword
+import com.example.mob3000_root_app.components.cards.deleteUser
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("SuspiciousIndentation")
 @Composable
-fun Settings(navController: NavHostController) {
-    var firstname by remember{ mutableStateOf(TextFieldValue("Henrik")) }
-    var lastname by remember{ mutableStateOf(TextFieldValue("Lindam")) }
-    var password by remember { mutableStateOf(TextFieldValue(""))}
+fun Settings(
+    navController: NavHostController,
+    loginViewModel: LoginViewModel
+) {
     var nameSelected by remember { mutableStateOf(false) }
     var passwordSelected by remember { mutableStateOf(false) }
     var deleteUserSelected by remember { mutableStateOf(false) }
@@ -86,150 +91,17 @@ fun Settings(navController: NavHostController) {
                         Text(stringResource(id = R.string.setting_delete_user))
                     }
                 }
+                val user = loginViewModel.loginStatusResponse.user
+                if (user != null){
                 // column for å bytte navn
-                if (nameSelected){
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = stringResource(id = R.string.setting_change_name), style = MaterialTheme.typography.headlineSmall);
-                        OutlinedTextField(
-                            value = firstname,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label = { Text(text =  stringResource(id = R.string.firstname)) },
-                            placeholder = { Text(text = stringResource(id = R.string.firstname)) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                            onValueChange = {
-                                firstname = it
-                            }
-                        )
-                        OutlinedTextField(
-                            value = lastname,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label = { Text(text = stringResource(id = R.string.lastname)) },
-                            placeholder = { Text(text = stringResource(id = R.string.lastname)) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                            onValueChange = {
-                                lastname = it
-                            }
-                        )
-                        Row(
-                            Modifier
-                                .padding(5.dp)
-                                .align(Alignment.End)){
-                            Button(onClick = {
-
-                            }) {
-                                Text(stringResource(id = R.string.setting_change_name))
-                            }
-                        }
-                    }
-                }
+                if (nameSelected){ changeName(user, loginViewModel) }
 
                 //column for å bytte passord
-                if (passwordSelected){
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = stringResource(id = R.string.setting_change_password), style = MaterialTheme.typography.headlineSmall);
-                        OutlinedTextField(
-                            value=password,
-                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-                            modifier= Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label={Text(text= stringResource(id = R.string.setting_new_password))},
-                            placeholder={Text(text="********")},
-                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-                            visualTransformation= PasswordVisualTransformation(),
-                            onValueChange={
-                                password=it
-                            }
-                        )
-                        OutlinedTextField(
-                            value=password,
-                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-                            modifier= Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label={Text(text=stringResource(id = R.string.setting_confirm_password))},
-                            placeholder={Text(text="********")},
-                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-                            visualTransformation= PasswordVisualTransformation(),
-                            onValueChange={
-                                password=it
-                            }
-                        )
-                        OutlinedTextField(
-                            value=password,
-                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-                            modifier= Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label={Text(text=stringResource(id = R.string.setting_old_password))},
-                            placeholder={Text(text="********")},
-                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-                            visualTransformation= PasswordVisualTransformation(),
-                            onValueChange={
-                                password=it
-                            }
-                        )
-                        Row(
-                            Modifier
-                                .padding(5.dp)
-                                .align(Alignment.End)){
-                            Button(onClick = {
+                if (passwordSelected){ changePassword(loginViewModel) }
 
-                            }) {
-                                Text(stringResource(id = R.string.setting_change_password))
-                            }
-                        }
-                    }
-                }
                 // column for å slette bruker
-                if (deleteUserSelected){
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall);
-                        OutlinedTextField(
-                            value=password,
-                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-                            modifier= Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label={Text(text=stringResource(id = R.string.password))},
-                            placeholder={Text(text="********")},
-                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-                            visualTransformation= PasswordVisualTransformation(),
-                            onValueChange={
-                                password=it
-                            }
-                        )
-                        OutlinedTextField(
-                            value=password,
-                            leadingIcon={Icon(imageVector= Icons.Default.Lock,contentDescription=null)},
-                            modifier= Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            label={Text(text=stringResource(id = R.string.setting_confirm_password))},
-                            placeholder={Text(text="********")},
-                            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
-                            visualTransformation= PasswordVisualTransformation(),
-                            onValueChange={
-                                password=it
-                            }
-                        )
-                    }
-                    Row(
-                        Modifier
-                            .padding(5.dp)
-                            .align(Alignment.End)){
-                        Button(onClick = {
-
-                        }) {
-                            Text(stringResource(id = R.string.setting_delete_user))
-                        }
-                    }
+                if (deleteUserSelected){ deleteUser(loginViewModel) }
                 }
-
             }
         }
     }

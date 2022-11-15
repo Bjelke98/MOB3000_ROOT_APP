@@ -15,7 +15,7 @@ import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 @Composable
 fun EventAdmin (
     navController: NavHostController,
-    eventsModel: EventViewModel
+    eventViewModel: EventViewModel
 ) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -29,9 +29,11 @@ fun EventAdmin (
                 style = MaterialTheme.typography.headlineLarge
             )
 
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                items(items = eventsModel.eventListResponse) { item ->
-                    EditableEvent(eventData = item)
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                items(items = eventViewModel.eventListResponse) { item ->
+                    EditableEvent(eventData = item, eventViewModel = eventViewModel)
                 }
             }
         }
