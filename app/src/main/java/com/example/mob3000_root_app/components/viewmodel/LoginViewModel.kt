@@ -7,12 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.RootService
-import com.example.mob3000_root_app.data.apiRequest.DeleteUser
-import com.example.mob3000_root_app.data.apiRequest.NameChange
-import com.example.mob3000_root_app.data.apiRequest.PasswordChange
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.LoginStatus
-import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel(){
@@ -59,46 +55,6 @@ class LoginViewModel : ViewModel(){
             }
             catch (e: Exception) {
                 cb.invoke(LoginStatus(user = null))
-                errorMessage = e.message.toString()
-            }
-        }
-    }
-
-    fun changeName(nameChange: NameChange, cb: (status: ResponseStatus)-> Unit){
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val responseStatus = apiService.updateUser(nameChange)
-                cb.invoke(responseStatus)
-                // må bytte navn til det endra navnet
-            }
-            catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-        }
-    }
-
-    fun changePassword(passwordChange: PasswordChange, cb: (status: ResponseStatus)-> Unit){
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val responseStatus = apiService.newPassword(passwordChange)
-                cb.invoke(responseStatus)
-            }
-            catch (e: Exception) {
-                errorMessage = e.message.toString()
-            }
-        }
-    }
-
-    fun deleteUser(deleteUser: DeleteUser, cb: (status: ResponseStatus)-> Unit){
-        viewModelScope.launch {
-            val apiService = RootService.getInstance()
-            try {
-                val responseStatus = apiService.deleteUser(deleteUser)
-                cb.invoke(responseStatus)
-            }
-            catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
         }
