@@ -10,6 +10,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.twotone.AccountCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -95,11 +98,10 @@ fun Login(
                                 isPasswordHidden = !isPasswordHidden
                             },
                             imageVector = if (isPasswordHidden) {
-                                Icons.Default.Lock
-                            } else Icons.Default.Person, contentDescription = null
+                                Icons.Filled.Visibility
+                            } else Icons.Default.VisibilityOff, contentDescription = null
                         )
-                    },
-                    visualTransformation = if (!isPasswordHidden) VisualTransformation.None
+                    }, visualTransformation = if (!isPasswordHidden) VisualTransformation.None
                     else PasswordVisualTransformation(),
 
                     modifier= Modifier
