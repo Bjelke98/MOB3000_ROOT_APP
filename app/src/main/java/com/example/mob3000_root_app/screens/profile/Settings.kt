@@ -97,10 +97,10 @@ fun Settings(
                 if (nameSelected){ changeName(user, loginViewModel) }
 
                 //column for å bytte passord
-                if (passwordSelected){ changePassword() }
+                if (passwordSelected){ changePassword(loginViewModel) }
 
                 // column for å slette bruker
-                if (deleteUserSelected){ deleteUser() }
+                if (deleteUserSelected){ deleteUser(loginViewModel) }
                 }
             }
         }

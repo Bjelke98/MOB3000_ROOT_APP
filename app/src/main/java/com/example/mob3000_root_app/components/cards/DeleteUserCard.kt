@@ -17,11 +17,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.data.apiRequest.DeleteUser
+import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun deleteUser() {
+fun deleteUser(
+    loginViewModel: LoginViewModel
+) {
     var password by remember { mutableStateOf(TextFieldValue("")) }
+    var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall);
         OutlinedTextField(
@@ -39,7 +45,7 @@ fun deleteUser() {
             }
         )
         OutlinedTextField(
-            value=password,
+            value=confirmPassword,
             leadingIcon={ Icon(imageVector= Icons.Default.Lock,contentDescription=null) },
             modifier= Modifier
                 .padding(8.dp)
@@ -49,7 +55,7 @@ fun deleteUser() {
             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
             visualTransformation= PasswordVisualTransformation(),
             onValueChange={
-                password=it
+                confirmPassword=it
             }
         )
         Row(
@@ -57,7 +63,15 @@ fun deleteUser() {
                 .padding(5.dp)
                 .align(Alignment.End)){
             Button(onClick = {
+                if (password.text.equals(confirmPassword.text)){
+                    loginViewModel.deleteUser(DeleteUser(password.text)){ status: ResponseStatus? ->
+                        if(status!=null){
+                            print(status)
+                        } else {
 
+                        }
+                    }
+                }
             }) {
                 Text(stringResource(id = R.string.setting_delete_user))
             }
