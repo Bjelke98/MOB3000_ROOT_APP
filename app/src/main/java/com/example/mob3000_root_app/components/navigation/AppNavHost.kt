@@ -15,6 +15,9 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     appVM: AppViewModel
 ) {
+    val articleVM = appVM.articleVM
+    val eventVM = appVM.eventVM
+
     NavHost(
         modifier = modifier,
         navController = appVM.navController,
@@ -22,37 +25,37 @@ fun AppNavHost(
     ){
         // Navigate Content
         composable( route = Screen.Home.route ){
-            appVM.articleVM.getArticleList()
-            appVM.articleVM.getArticleList()
+            articleVM.getArticleList()
+            eventVM.getEventList()
             Home(appVM)
         }
         composable( route = Screen.Articles.route ) {
-            appVM.articleVM.getArticleList()
+            articleVM.getArticleList()
             Articles(appVM)
         }
         composable( route = Screen.ArticleFull.route ) {
-            appVM.articleVM.getArticleList()
+            articleVM.getArticleList()
             ArticleFull(appVM)
         }
         composable( route = Screen.About.route ){ About() }
 
         composable( route = Screen.Events.route ){
-            appVM.eventVM.getEventList()
+            eventVM.getEventList()
             Events(appVM)
         }
 
         composable( route = Screen.EventFull.route) {
-            appVM.eventVM.getEventList()
+            eventVM.getEventList()
             EventFull(appVM)
         }
 
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
-            appVM.articleVM.getArticleList()
+            articleVM.getArticleList()
             ArticleAdmin(appVM)
         }
         composable( route = Screen.EventAdmin.route ){
-            appVM.eventVM.getEventList()
+            eventVM.getEventList()
             EventAdmin(appVM)
         }
 
