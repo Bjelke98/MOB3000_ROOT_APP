@@ -1,7 +1,7 @@
 package com.example.mob3000_root_app.data
 
-import com.example.mob3000_root_app.data.apiRequest.*
 import com.example.mob3000_root_app.data.apiResponse.*
+import com.example.mob3000_root_app.screens.admin.apiRequest.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient

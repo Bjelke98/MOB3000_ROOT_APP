@@ -1,6 +1,8 @@
 package com.example.mob3000_root_app.screens.content
-
+import android.content.pm.*
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,6 +21,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -27,6 +30,7 @@ import com.example.mob3000_root_app.components.cards.CommentSectionEvent
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
+
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -38,6 +42,7 @@ fun EventFull(
 
 ) {
     var openComments by remember { mutableStateOf(false) }
+    val adresse = eventsModel.focusedEvent.address
     // Blir satt til false i koden ved oppstart
     var isCommenting by remember{ mutableStateOf(true) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -114,6 +119,20 @@ fun EventFull(
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis
             )
+            fun openMap(){
+                val gmmIntentUri = Uri.parse("geo:37.7749,-122.4194")
+                val intent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                intent.setPackage("com.google.android.apps.maps")
+                if(intent.resolveActivity(packageManager)!=null){
+                    startActivity(intent)
+                }
+            }
+            Button(onClick = {openMap()}) {
+                Text(
+                    text = "$adresse"
+                )
+            }
+
 
 
 
@@ -168,3 +187,5 @@ fun EventFull(
         }
     }
 }
+
+

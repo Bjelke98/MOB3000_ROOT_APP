@@ -7,10 +7,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.RootService
-import com.example.mob3000_root_app.data.apiRequest.DeleteUser
-import com.example.mob3000_root_app.data.apiRequest.NameChange
-import com.example.mob3000_root_app.data.apiRequest.PasswordChange
-import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.screens.admin.apiRequest.DeleteUser
+import com.example.mob3000_root_app.screens.admin.apiRequest.NameChange
+import com.example.mob3000_root_app.screens.admin.apiRequest.PasswordChange
+import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.LoginStatus
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
