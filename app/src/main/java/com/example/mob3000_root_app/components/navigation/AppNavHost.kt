@@ -60,9 +60,9 @@ fun AppNavHost(
         }
 
         // Navigate Profile
-        composable( route = Screen.Login.route ){ Login(appVM) }
+        composable( route = Screen.Login.route )   { Login   (appVM) }
         composable( route = Screen.Register.route ){ Register(appVM) }
-        composable( route = Screen.Profile.route ) { Profile(appVM)}
+        composable( route = Screen.Profile.route ) { Profile (appVM) }
         composable( route = Screen.Settings.route ){ Settings(appVM) }
     }
 }

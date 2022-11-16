@@ -42,7 +42,7 @@ fun UploadFileTest(appVM: AppViewModel) {
             launcher.launch("image/*")
 
         }) {
-            Text("Last opp")
+            Text("velg")
         }
 
         imageUri?.let {
@@ -60,7 +60,7 @@ fun UploadFileTest(appVM: AppViewModel) {
             }
         }
         Button(onClick = {
-            imageUri?.let { uploadVM.newArticle(it) }
+            imageUri?.let { uploadVM.newArticle(it, context) }
         }) {
             Text(text = "Upload")
         }
