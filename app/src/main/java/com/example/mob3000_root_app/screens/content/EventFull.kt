@@ -53,7 +53,7 @@ fun EventFull(
     val eventVM = appVM.eventVM
 
     var openComments by remember { mutableStateOf(false) }
-    val adresse = eventsModel.focusedEvent.address
+    val adresse = eventVM.focusedEvent.address
     // Blir satt til false i koden ved oppstart
     var isCommenting by remember{ mutableStateOf(true) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -174,14 +174,16 @@ fun EventFull(
                 overflow = TextOverflow.Ellipsis
             )
             fun openMap(){
-                val gmmIntentUri = Uri.parse("geo:37.7749,-122.4194")
-                val intent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                intent.setPackage("com.google.android.apps.maps")
-                if(intent.resolveActivity(packageManager)!=null){
-                    startActivity(intent)
-                }
+
             }
-            Button(onClick = {openMap()}) {
+            val context = LocalContext.current
+            Button(onClick = {
+                val gmmIntentUri =
+                    Uri.parse("geo:0,0?q=$adresse")
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(context,mapIntent,null)
+            }) {
                 Text(
                     text = "$adresse"
                 )

@@ -9,11 +9,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
-import com.example.mob3000_root_app.data.apiRequest.CommentData
-import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyEventData
+import com.example.mob3000_root_app.screens.admin.apiRequest.CommentData
+import com.example.mob3000_root_app.screens.admin.apiRequest.EventId
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
