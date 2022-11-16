@@ -22,16 +22,16 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import java.time.format.TextStyle
 
 
 @Composable
-fun Profile(navController: NavController,
-            loginViewModel: LoginViewModel) {
+fun Profile(appVM: AppViewModel) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
-    val user = loginViewModel.loginStatusResponse.user ?: return
+    val user = appVM.loginVM.loginStatusResponse.user ?: return
 
     Box(
         modifier = Modifier
@@ -94,7 +94,7 @@ fun Profile(navController: NavController,
                             modifier = Modifier
                                 .weight(weight = 1f, fill = false),
                             onClick = {
-                                navController.navigate("Settings_screen")
+                                appVM.navController.navigate("Settings_screen")
                             }) {
                             Icon(
                                 modifier = Modifier.size(24.dp),

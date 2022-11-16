@@ -15,23 +15,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
-import com.example.mob3000_root_app.components.navigation.eventViewModel
-import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.components.viewmodel.EventViewModel
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.*
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Home(
-    navController: NavHostController,
-    articleViewModel: ArticleViewModel,
-    eventsModel: EventViewModel
-//, focusedArticleModel: FocusedArticleModel
+    appVM: AppViewModel
 ) {
-
+    val navController = appVM.navController
+    val articleVM = appVM.articleVM
+    val eventVM = appVM.eventVM
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -52,8 +48,8 @@ fun Home(
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleViewModel.articleListResponse){ article ->
-                    ArticleCard(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleViewModel.focusArticle(article) })
+                items(items = articleVM.articleListResponse){ article ->
+                    ArticleCard(navController, articleData = article, ArticleType.HORIZONTAL_ARTICLE, { articleVM.focusArticle(article) })
                 }
             }
 
@@ -65,8 +61,8 @@ fun Home(
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = eventsModel.eventListResponse){ event ->
-                    EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, { eventViewModel.focusEvent(event)})
+                items(items = eventVM.eventListResponse){ event ->
+                    EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, { eventVM.focusEvent(event)})
                 }
             }
         }

@@ -16,22 +16,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.mob3000_root_app.App
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login(
-    navController: NavHostController,
-    loginViewModel: LoginViewModel
+    appVM: AppViewModel
   ) {
+    val loginVM = appVM.loginVM
+    val navController = appVM.navController
+
     var epost by remember{ mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -85,7 +83,7 @@ fun Login(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     TextButton(onClick = {
-                        Log.i("loginStatus", loginViewModel.loginStatusResponse.toString())
+                        Log.i("loginStatus", loginVM.loginStatusResponse.toString())
                         navigateUpTo(navController, Screen.Register)
                         //Log.i("loginStatus", loginViewModel.getLoginStatus().toString())
                     }) {
@@ -94,7 +92,7 @@ fun Login(
                     val context = LocalContext.current
                     Button(
                         onClick = {
-                            loginViewModel.loginUser(UserLoginInfo(epost.text, password.text)){ cbLoginStatus->
+                            loginVM.loginUser(UserLoginInfo(epost.text, password.text)){ cbLoginStatus->
                                 if(cbLoginStatus.loginStatus) {
                                     navigateUpTo(navController, Screen.Home)
                                 } else {
@@ -110,17 +108,3 @@ fun Login(
         }
     }
 }
-
-//@Preview(showBackground = true, widthDp = 400, heightDp = 65)
-//@Composable
-//fun LoginNavPreview() {
-//    App(rememberNavController())
-//}
-
-//@Preview(showBackground = true, widthDp = 400, heightDp = 600)
-//@Composable
-//fun LoginPreview() {
-//    Login(navController = rememberNavController())
-//}
-
-//    navigateUpTo(navController, Screen.Home)

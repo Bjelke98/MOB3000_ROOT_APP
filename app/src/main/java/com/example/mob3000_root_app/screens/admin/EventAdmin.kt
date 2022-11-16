@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.EditableEvent
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 
 
 @Composable
 fun EventAdmin (
-    navController: NavHostController,
-    eventViewModel: EventViewModel
+    appVM: AppViewModel
 ) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -32,8 +32,8 @@ fun EventAdmin (
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                items(items = eventViewModel.eventListResponse) { item ->
-                    EditableEvent(eventData = item, eventViewModel = eventViewModel)
+                items(items = appVM.eventVM.eventListResponse) { item ->
+                    EditableEvent(eventData = item, appVM = appVM)
                 }
             }
         }
