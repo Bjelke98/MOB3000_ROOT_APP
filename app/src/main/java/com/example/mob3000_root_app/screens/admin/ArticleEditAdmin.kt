@@ -5,11 +5,8 @@ package com.example.mob3000_root_app.screens.admin
 import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.graphics.Picture
-import android.media.Image
 import android.net.Uri
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts

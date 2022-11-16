@@ -9,6 +9,7 @@ import com.squareup.moshi.Moshi
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import okhttp3.internal.JavaNetCookieJar
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -32,9 +33,9 @@ interface RootService {
     @Multipart
     @POST("article")
     suspend fun postArticle(
-        @Part("title") title: String,
-        @Part("desciption") description: String,
-        @Part("image") image: File
+        @Part("title") title: RequestBody,
+        @Part("desciption") description: RequestBody,
+        @Part image: MultipartBody.Part
     )
 
 //    @POST("article")
