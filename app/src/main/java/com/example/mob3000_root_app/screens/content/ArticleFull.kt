@@ -25,6 +25,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSectionArticle
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
@@ -33,10 +34,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ArticleFull(
-    navController: NavHostController,
-    loginViewModel: LoginViewModel,
-    articlesModel: ArticleViewModel
+    appVM: AppViewModel
 ) {
+    val articleVM = appVM.articleVM
+
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
     var isCommenting by remember{ mutableStateOf(true) }
@@ -46,7 +47,7 @@ fun ArticleFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val articleData = articlesModel.focusedArticle
+    val articleData = articleVM.focusedArticle
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -72,17 +73,6 @@ fun ArticleFull(
                 Modifier
                     .fillMaxWidth()
             ) {
-                IconButton(
-                    onClick = { navController.popBackStack() },
-                    Modifier
-                        .padding(end = 10.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
-                        contentDescription = "BackArrow"
-                    )
-                }
-
                 Text(
                     text = articleData.title,
                     Modifier
@@ -132,8 +122,7 @@ fun ArticleFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginViewModel = loginViewModel,
-                        articleViewModel = articlesModel,
+                        appVM = appVM,
                         articleID = articleData._id
                     )
                 }
@@ -166,10 +155,4 @@ fun ArticleFull(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArticlePreview() {
-//    ArticleFull(rememberNavController()/*,ArticleTestdata().dataList[1]*/, )
 }

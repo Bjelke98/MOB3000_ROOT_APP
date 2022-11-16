@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSectionEvent
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.data.apiResponse.EventData
@@ -43,11 +44,10 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EventFull(
-    navController: NavHostController,
-    loginModel: LoginViewModel,
-    eventsModel: EventViewModel,
-
+    appVM: AppViewModel
 ) {
+    val eventVM = appVM.eventVM
+
     var openComments by remember { mutableStateOf(false) }
     // Blir satt til false i koden ved oppstart
     var isCommenting by remember{ mutableStateOf(true) }
@@ -57,7 +57,7 @@ fun EventFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val eventData = eventsModel.focusedEvent
+    val eventData = eventVM.focusedEvent
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -92,11 +92,9 @@ fun EventFull(
             Row(
                 Modifier
                     .fillMaxWidth()
-
-
             ) {
                 IconButton(
-                    onClick = { navController.popBackStack() },
+                    onClick = { appVM.navController.popBackStack() },
                     Modifier
                         .padding(bottom = 5.dp)
                 ) {
@@ -166,7 +164,7 @@ fun EventFull(
                 text = eventData.description,
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 5.dp),
+                    .padding(5.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis
             )
@@ -202,10 +200,8 @@ fun EventFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginModel = loginModel,
-                        eventViewModel = eventsModel,
+                        appVM = appVM,
                         eventId = eventData._id
-
                     )
                 }
                 //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på

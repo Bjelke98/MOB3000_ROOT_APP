@@ -2,79 +2,65 @@ package com.example.mob3000_root_app.components.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
-import com.example.mob3000_root_app.components.viewmodel.EventViewModel
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
 import com.example.mob3000_root_app.screens.admin.EventAdmin
 import com.example.mob3000_root_app.screens.content.*
 import com.example.mob3000_root_app.screens.profile.*
 
-//var loginViewModel = LoginViewModel()
-var articleViewModel = ArticleViewModel()
-var eventViewModel = EventViewModel()
-
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    startDestination: String = Screen.Home.route,
-    loginViewModel: LoginViewModel
+    appVM: AppViewModel
 ) {
-
     NavHost(
         modifier = modifier,
-        navController = navController,
-        startDestination = startDestination,
+        navController = appVM.navController,
+        startDestination = appVM.startDestination,
     ){
         // Navigate Content
         composable( route = Screen.Home.route ){
-            articleViewModel.getArticleList()
-            eventViewModel.getEventList()
-            Home(
-                navController,
-                articleViewModel = articleViewModel,
-                eventsModel = eventViewModel
-            )
+            appVM.articleVM.getArticleList()
+            appVM.articleVM.getArticleList()
+            Home(appVM)
         }
         composable( route = Screen.Articles.route ) {
-            articleViewModel.getArticleList()
-            Articles(navController, articleViewModel = articleViewModel)
+            appVM.articleVM.getArticleList()
+            Articles(appVM)
         }
         composable( route = Screen.ArticleFull.route ) {
-            articleViewModel.getArticleList()
-            ArticleFull(navController, loginViewModel, articleViewModel)
+            appVM.articleVM.getArticleList()
+            ArticleFull(appVM)
         }
         composable( route = Screen.About.route ){ About() }
 
         composable( route = Screen.Events.route ){
-            eventViewModel.getEventList()
-            Events(navController, eventViewModel = eventViewModel)
+            appVM.eventVM.getEventList()
+            Events(appVM)
         }
 
         composable( route = Screen.EventFull.route) {
-            eventViewModel.getEventList()
-            EventFull(navController, loginViewModel, eventViewModel )
+            appVM.eventVM.getEventList()
+            EventFull(appVM)
         }
 
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
-            articleViewModel.getArticleList()
-            ArticleAdmin(navController, articleViewModel)
+            appVM.articleVM.getArticleList()
+            ArticleAdmin(appVM)
         }
         composable( route = Screen.EventAdmin.route ){
-            eventViewModel.getEventList()
-            EventAdmin(navController, eventViewModel)
+            appVM.eventVM.getEventList()
+            EventAdmin(appVM)
         }
 
         // Navigate Profile
-        composable( route = Screen.Login.route ){ Login(navController, loginViewModel) }
-        composable( route = Screen.Register.route ){ Register(navController) }
-        composable( route = Screen.Profile.route ) { Profile(navController = navController,loginViewModel)}
-        composable( route = Screen.Settings.route ){ Settings(navController, loginViewModel) }
+        composable( route = Screen.Login.route ){ Login(appVM) }
+        composable( route = Screen.Register.route ){ Register(appVM) }
+        composable( route = Screen.Profile.route ) { Profile(appVM)}
+        composable( route = Screen.Settings.route ){ Settings(appVM) }
     }
 }
 
