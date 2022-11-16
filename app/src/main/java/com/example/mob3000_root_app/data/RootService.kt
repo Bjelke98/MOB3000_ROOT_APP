@@ -4,7 +4,9 @@ import com.example.mob3000_root_app.data.apiResponse.*
 import com.example.mob3000_root_app.screens.admin.apiRequest.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.internal.JavaNetCookieJar
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -16,6 +18,14 @@ import java.net.CookiePolicy
 
 interface RootService {
 
+    // Bjelke Test File Upload
+    @Multipart
+    @POST("article")
+    suspend fun bjelkeNewArticle(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part body: MultipartBody.Part,
+    ) : ResponseStatus
 
     // Article API
     @GET("article")
