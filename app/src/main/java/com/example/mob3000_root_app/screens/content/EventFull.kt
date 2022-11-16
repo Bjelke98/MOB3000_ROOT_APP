@@ -173,9 +173,6 @@ fun EventFull(
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis
             )
-            fun openMap(){
-
-            }
             val context = LocalContext.current
             Button(onClick = {
                 val gmmIntentUri =
