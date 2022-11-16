@@ -64,7 +64,7 @@ fun EditArticleCard(
                 OutlinedButton(
                     onClick = { /*TODO*/
                         editFocus()
-                        navigateUpTo(navHost, Screen.ArticleEditAdmin)
+                        navigateUpTo(navHost, Screen.EditArticle)
                     },
                     Modifier.size(90.dp,40.dp)) {
                     Text(text  = "Edit")

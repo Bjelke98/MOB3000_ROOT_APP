@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -159,7 +158,7 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
 //                        postPutArticleVM.postArticleTest(title, description, imageFile)
-                        imageUri?.let { postPutArticleVM.postArticleTest(title, description, it, context) }
+                        imageUri?.let { postPutArticleVM.postArticle(title, description, it, context) }
 
                         Log.i("Post",title+", "+description+", "+imageFile.path)
                     }

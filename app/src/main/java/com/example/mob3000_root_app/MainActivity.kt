@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.mob3000_root_app.bjelkeTests.UploadFileTest
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UploadFileTest(appViewModel)
+                    Template(appViewModel)
                 }
             }
         }

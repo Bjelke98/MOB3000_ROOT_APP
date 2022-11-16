@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
+import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
 import com.example.mob3000_root_app.screens.admin.ArticleEditAdmin
 import com.example.mob3000_root_app.screens.admin.EventAdmin
@@ -19,7 +20,7 @@ fun AppNavHost(
 ) {
     val articleVM = appVM.articleVM
     val eventVM = appVM.eventVM
-    var postPutArticleVM = PostPutArticleVM()
+    val postPutArticleVM = PostPutArticleVM()
 
     NavHost(
         modifier = modifier,
@@ -55,11 +56,10 @@ fun AppNavHost(
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
             articleVM.getArticleList()
-            ArticleAdmin(navController, articleViewModel, postPutArticleVM)
+            ArticleAdmin(appVM = appVM, postPutArticleVM)
         }
-        composable( route = Screen.ArticleEditAdmin.route ) {
-            ArticleEditAdmin(navController, postPutArticleVM)
-            articleViewModel.getArticleList()
+        composable( route = Screen.EditArticle .route ) {
+            ArticleEditAdmin(appVM.navController, postPutArticleVM)
         }
 
         composable( route = Screen.EventAdmin.route ){
