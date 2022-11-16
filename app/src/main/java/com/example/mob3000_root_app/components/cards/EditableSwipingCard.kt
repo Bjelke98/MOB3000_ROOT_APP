@@ -1,6 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
-import androidx.compose.foundation.background
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -17,46 +17,61 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.EventData
+import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun EditableEvent(
-    eventData : EventData
+    eventData : EventData,
+    appVM: AppViewModel
 ){
-    var eventViewModel = EventViewModel()
-    val defaultImage = eventData.image ?: "defaultEvent.jpg"
+    val image = eventData.image ?: "defaultEvent.jpg"
 
     val testColors= MaterialTheme.colorScheme.background
     val openDialog = remember { mutableStateOf(false) }
+
     val editSwipe = SwipeAction(
         icon = painterResource(R.drawable.edit_icon),
-        background = Color.Blue,
+        background = Color.Cyan,
         onSwipe = {
+
+
             // navigere til edit event
         }
     )
-
+    val deleteSwipe = SwipeAction(
+        icon = painterResource(R.drawable.delete_icon),
+        background = Color.Red,
+        onSwipe = {
+            openDialog.value = true
+        }
+    )
+    val context = LocalContext.current
     if (openDialog.value){
         AlertDialog(
             onDismissRequest = {
-                // Dismiss the dialog when the user clicks outside the dialog or on the back
-                // button. If you want to disable that functionality, simply use an empty
-                // onDismissRequest.
                 openDialog.value = false
             },
             title = {
                 Text(text = "Slett " + eventData.title)
             },
             text = {
-                Text(text = "Er du sikker på av du vil slette " + eventData.title)
+                Text(text = "Er du sikker på av du vil slette: \n" + eventData.title)
             },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        eventViewModel.deleteEventById(eventData._id)
+                        appVM.eventVM.deleteEventById(eventData._id){ status: ResponseStatus? ->
+                            if(status!=null){
+                                appVM.eventVM.getEventList()
+                            } else {
+                                Toast.makeText(context, "Error deleting event", Toast.LENGTH_LONG).show()
+                            }
+                        }
                         openDialog.value = false
                     }
                 ) {
@@ -75,14 +90,7 @@ fun EditableEvent(
         )
     }
 
-    val deleteSwipe = SwipeAction(
-        icon = painterResource(R.drawable.delete_icon),
 
-        background = Color.Red,
-        onSwipe = {
-            openDialog.value = true;
-        }
-    )
     SwipeableActionsBox(
         modifier = Modifier,// må endres til å hente fra bakrunnen til
         startActions = listOf(editSwipe),
@@ -106,7 +114,7 @@ fun EditableEvent(
 
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/$defaultImage")
+                            .data("https://linrik.herokuapp.com/api/resources/$image")
                             .crossfade(true)
                             .build(),
                         placeholder = painterResource(R.drawable.testing),

@@ -21,11 +21,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.Comment
-import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -33,12 +33,13 @@ import com.example.mob3000_root_app.ui.theme.Underlined
 fun CommentSectionArticle(isCommenting: Boolean,
                    onCommentingChanged: () -> Unit,
                    keyboardController: SoftwareKeyboardController,
-                   loginViewModel: LoginViewModel,
-                   articleViewModel: ArticleViewModel,
+                   appVM: AppViewModel,
                    articleID: String
 ){
+    val articleVM = appVM.articleVM
+
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
-    var commentList by remember { mutableStateOf( articleViewModel.focusedArticle.comments ) }
+    var commentList by remember { mutableStateOf<List<Comment>>( articleVM.focusedArticle.comments ) }
 
     Column(
          Modifier.fillMaxHeight()
@@ -72,13 +73,12 @@ fun CommentSectionArticle(isCommenting: Boolean,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
                     onSend = {
-//                       TODO G;re dette async?
                         keyboardController.hide()
-                        articleViewModel.postComment(articleID, comment.text)
+                        articleVM.postComment(articleID, comment.text)
 
 //                      Recomposer ikke med ny data? TODO
-                        articleViewModel.focusArticleByID(articleID)
-                        commentList = articleViewModel.focusedArticle.comments
+                        articleVM.focusArticleByID(articleID)
+                        commentList = articleVM.focusedArticle.comments
                         commentList.toString()
 
                         onCommentingChanged()
@@ -106,17 +106,18 @@ fun CommentSectionArticle(isCommenting: Boolean,
 fun CommentSectionEvent(isCommenting: Boolean,
                         onCommentingChanged: () -> Unit,
                         keyboardController: SoftwareKeyboardController,
-                        loginModel: LoginViewModel,
-                        eventViewModel: EventViewModel,
+                        appVM: AppViewModel,
                         eventId: String
 ){
+    val eventVM = appVM.eventVM
+
     var comment by remember{ mutableStateOf(TextFieldValue(text = "", selection = TextRange(0))) }
-    var commentList by remember { mutableStateOf<List<Comment>>( eventViewModel.focusedEvent.comments ) }
+    var commentList by remember { mutableStateOf<List<Comment>>( eventVM.focusedEvent.comments ) }
 
     Column(
         Modifier.fillMaxHeight()
     ) {
-        loginModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
+        appVM.loginVM.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
 
         Box{
             OutlinedTextField(
@@ -148,11 +149,11 @@ fun CommentSectionEvent(isCommenting: Boolean,
                 keyboardActions = KeyboardActions(
                     onSend = {
                         keyboardController.hide()
-                        eventViewModel.postComment(eventId, comment.text)
+                        eventVM.postComment(eventId, comment.text)
 
 //                      Recomposer ikke med ny data? TODO
-                        eventViewModel.getEventByID(eventId)
-                        commentList = eventViewModel.focusedEvent.comments
+                        eventVM.getEventByID(eventId)
+                        commentList = eventVM.focusedEvent.comments
                         commentList.toString()
 
                         onCommentingChanged()
@@ -205,10 +206,4 @@ fun Modifier.conditional(
     } else {
         this
     }
-}
-
-@Preview
-@Composable
-fun MyPreview(){
-//    CommentSection(comments = ArticleTestdata().comments, true, {})
 }

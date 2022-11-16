@@ -1,34 +1,40 @@
 package com.example.mob3000_root_app.components.viewmodel
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
-import com.example.mob3000_root_app.data.apiRequest.CommentData
-import com.example.mob3000_root_app.data.apiRequest.EventId
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyEventData
+import com.example.mob3000_root_app.screens.admin.apiRequest.CommentData
+import com.example.mob3000_root_app.screens.admin.apiRequest.EventId
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
-    val apiService = RootService.getInstance()
-    var eventListResponse: List<EventData> by mutableStateOf(listOf())
+//    var eventListResponse: List<EventData> by mutableStateOf(listOf())
+    var eventListResponse = mutableStateListOf<EventData>()
     var eventByIDResponse by mutableStateOf(emptyEventData)
     var errorMessage: String by mutableStateOf("")
     var focusedEvent by mutableStateOf(emptyEventData)
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
+
     fun getEventList() {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
-                val eventList = apiService.getEvents()
-                eventListResponse = eventList
+                val eventDataInput = apiService.getEvents()
+                if(eventDataInput != eventListResponse){
+                    eventListResponse.clear()
+                    eventListResponse.addAll(eventDataInput)
+                }
             }
             catch (e: Exception) {
                 errorMessage = e.message.toString()
@@ -65,13 +71,16 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun deleteEventById(eventid: String){
+    fun deleteEventById(eventid: String, cb: (status: ResponseStatus?)->Unit){
         viewModelScope.launch {
+            val apiService = RootService.getInstance()
             try {
-                var data = apiService.deleteEventById(EventId(eventid))
+                val responseStatus = apiService.deleteEventById(EventId(eventid))
                 Log.i("adminLog", "event ble slettet")
+                cb.invoke(responseStatus)
             } catch (e: Exception){
                 Log.i("Error", e.message.toString())
+                cb.invoke(null)
             }
         }
     }

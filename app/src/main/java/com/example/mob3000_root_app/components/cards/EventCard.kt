@@ -162,7 +162,7 @@ fun EventCard(
                         Modifier
                             .padding(vertical = 2.dp)
                     ) {
-                        Icon(Icons.Filled.Timer, "location",
+                        Icon(Icons.Filled.Timer, "timer",
                             tint = MaterialTheme.colorScheme.primary)
                         Text(
                             modifier = Modifier
@@ -210,7 +210,7 @@ fun EventCard(
                         navigateUpTo(navController, Screen.EventFull)
                     }) {
                         Text(
-                            text = "Details"
+                            text = ("detaljer").uppercase()
                         )
                     }
                 }

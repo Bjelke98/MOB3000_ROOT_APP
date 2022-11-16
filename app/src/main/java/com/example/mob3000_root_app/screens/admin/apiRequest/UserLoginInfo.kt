@@ -1,4 +1,4 @@
-package com.example.mob3000_root_app.data.apiRequest
+package com.example.mob3000_root_app.screens.admin.apiRequest
 
 import com.squareup.moshi.Json
 

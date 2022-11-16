@@ -24,4 +24,6 @@
     <string name="post_article_button">Publiser Artikkel!</string>
     <string name="edit_card_title">Tittel</string>
     <string name="edit_card_description">Beskrivelse</string>
+    <string name="show_password">vis passord</string>
+    <string name="hide_password">gjem passord</string>
 </resources>

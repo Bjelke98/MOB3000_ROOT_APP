@@ -22,13 +22,16 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import java.time.format.TextStyle
 
 
 @Composable
-fun Profile(navController: NavController) {
+fun Profile(appVM: AppViewModel) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
+    val user = appVM.loginVM.loginStatusResponse.user ?: return
 
     Box(
         modifier = Modifier
@@ -70,7 +73,7 @@ fun Profile(navController: NavController) {
 
                             // Brukernavn
                             Text(
-                                text = "Bruker navn",
+                                text = user.firstname,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -79,7 +82,7 @@ fun Profile(navController: NavController) {
 
                             // Epost
                             Text(
-                                text = "example@email.com",
+                                text = user.email,
 
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
@@ -91,7 +94,7 @@ fun Profile(navController: NavController) {
                             modifier = Modifier
                                 .weight(weight = 1f, fill = false),
                             onClick = {
-                                navController.navigate("Settings_screen")
+                                appVM.navController.navigate("Settings_screen")
                             }) {
                             Icon(
                                 modifier = Modifier.size(24.dp),
@@ -101,23 +104,27 @@ fun Profile(navController: NavController) {
                         }
                     }
                 }
+                var roller:StringBuilder = StringBuilder()
+                if(user.admin) roller.append("Administrator, " )
+                if(user.editor)roller.append("Redaktør, ")
+                if(user.rootMember)roller.append("Root medlem, ")
+                //Roller
                 Text(
-                    text = "Rolle"
+                    text ="Roller: ${roller.toString().dropLast(2)}"
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-
+                //Fornavn
                 Text(
-                    text = "Fornavn"
+                    text = "Fornavn: ${user.firstname}"
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-
+                //Etternavn
                 Text(
-                    text = "Etternavn"
+                    text = "Etternavn: ${user.lastname}"
                 )
             }
-
         }
     }
 }

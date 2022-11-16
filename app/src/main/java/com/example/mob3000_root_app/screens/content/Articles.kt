@@ -13,16 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.data.*
 
 @Composable
 fun Articles(
-    navController: NavHostController,
-    articleViewModel: ArticleViewModel,
-//    focusedArticleModel: FocusedArticleModel
+    appVM: AppViewModel
 ) {
-
+    val navController = appVM.navController
+    val articleVM = appVM.articleVM
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -32,11 +32,11 @@ fun Articles(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = articleViewModel.articleListResponse){ article ->
+                items(items = articleVM.articleListResponse){ article ->
                     ArticleCard(
                         navController,
                         articleData = article, ArticleType.VERTICAL_ARTICLE,
-                        { articleViewModel.focusArticle(article) }
+                        { articleVM.focusArticle(article) }
                     )
                 }
             }

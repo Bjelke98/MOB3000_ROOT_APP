@@ -1,10 +1,7 @@
 package com.example.mob3000_root_app.screens.content
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.EventCard
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.*
@@ -21,10 +19,9 @@ import com.example.mob3000_root_app.data.apiResponse.EventData
 
 @Composable
 fun Events(
-    navController: NavHostController,
-    eventViewModel: EventViewModel,
+    appVM: AppViewModel
 ) {
-
+    val eventVM = appVM.eventVM
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -34,11 +31,11 @@ fun Events(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(items = eventViewModel.eventListResponse){ event ->
+                items(items = eventVM.eventListResponse){ event ->
                     EventCard(
-                        navController,
+                        appVM.navController,
                         event = event, ArticleType.HORIZONTAL_ARTICLE,
-                        { eventViewModel.focusEvent(event) }
+                        { eventVM.focusEvent(event) }
                     )
                 }
             }

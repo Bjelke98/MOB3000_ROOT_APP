@@ -106,7 +106,7 @@ fun ArticleCard(
                         focusArticle()
                         navigateUpTo(navController, Screen.ArticleFull)
                     }) {
-                        Text(text = "Learn More")
+                        Text(text = ("les mer").uppercase())
                     }
                 }
             }
