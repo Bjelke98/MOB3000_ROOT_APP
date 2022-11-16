@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
@@ -26,7 +27,7 @@ import me.saket.swipe.SwipeableActionsBox
 @Composable
 fun EditableEvent(
     eventData : EventData,
-    eventViewModel: EventViewModel
+    appVM: AppViewModel
 ){
     val image = eventData.image ?: "defaultEvent.jpg"
 
@@ -64,9 +65,9 @@ fun EditableEvent(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        eventViewModel.deleteEventById(eventData._id){ status: ResponseStatus? ->
+                        appVM.eventVM.deleteEventById(eventData._id){ status: ResponseStatus? ->
                             if(status!=null){
-                                eventViewModel.getEventList()
+                                appVM.eventVM.getEventList()
                             } else {
                                 Toast.makeText(context, "Error deleting event", Toast.LENGTH_LONG).show()
                             }

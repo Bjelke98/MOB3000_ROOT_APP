@@ -21,20 +21,20 @@ import com.example.mob3000_root_app.components.navigation.AppNavHost
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUp
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Template(
-    navController: NavHostController,
-    loginViewModel: LoginViewModel
+    appVM: AppViewModel
 ) {
     var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val navController = appVM.navController
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-
     fun closeDrawer(){
         scope.launch { drawerState.close() }
     }
@@ -51,7 +51,7 @@ fun Template(
 //                DropdownMenuItem(text = { Text(text = "Instillinger") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
 //                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginViewModel.logoutUser() ;navigateUpTo(navController, Screen.Home) })
 //            }
-            DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+            DropdownMenuItem(text = { Text(text = "Login") }, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
             DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
             DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
             DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
@@ -153,7 +153,7 @@ fun Template(
                     }
                 )
             },
-        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), navController = navController, loginViewModel = loginViewModel) }
+        ){ innerPadding -> AppNavHost(Modifier.padding(innerPadding), appVM) }
     }
 }
 

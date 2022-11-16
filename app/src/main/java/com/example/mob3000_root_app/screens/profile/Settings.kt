@@ -22,14 +22,14 @@ import com.example.mob3000_root_app.components.cards.changePassword
 import com.example.mob3000_root_app.components.cards.deleteUser
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun Settings(
-    navController: NavHostController,
-    loginViewModel: LoginViewModel
-) {
+fun Settings(appVM: AppViewModel) {
+    val loginVM = appVM.loginVM
+
     var nameSelected by remember { mutableStateOf(false) }
     var passwordSelected by remember { mutableStateOf(false) }
     var deleteUserSelected by remember { mutableStateOf(false) }
@@ -91,16 +91,16 @@ fun Settings(
                         Text(stringResource(id = R.string.setting_delete_user))
                     }
                 }
-                val user = loginViewModel.loginStatusResponse.user
+                val user = loginVM.loginStatusResponse.user
                 if (user != null){
                 // column for å bytte navn
-                if (nameSelected){ changeName(user, loginViewModel) }
+                if (nameSelected){ changeName(user, loginVM) }
 
                 //column for å bytte passord
-                if (passwordSelected){ changePassword(loginViewModel) }
+                if (passwordSelected){ changePassword(loginVM) }
 
                 // column for å slette bruker
-                if (deleteUserSelected){ deleteUser(loginViewModel) }
+                if (deleteUserSelected){ deleteUser(loginVM) }
                 }
             }
         }

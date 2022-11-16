@@ -17,4 +17,6 @@
     <string name="firstname">Fornavn</string>
     <string name="lastname">Etternavn</string>
     <string name="setting_delete_user">Slett bruker</string>
+    <string name="show_password">vis passord</string>
+    <string name="hide_password">gjem passord</string>
 </resources>

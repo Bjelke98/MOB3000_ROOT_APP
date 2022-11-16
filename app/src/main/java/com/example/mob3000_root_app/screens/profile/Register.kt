@@ -17,12 +17,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Register(navController: NavHostController) {
+fun Register(appVM: AppViewModel) {
     var fornavn       by remember{ mutableStateOf(TextFieldValue("")) }
     var etternavn     by remember{ mutableStateOf(TextFieldValue("")) }
     var epost         by remember{ mutableStateOf(TextFieldValue("")) }
@@ -146,7 +147,7 @@ fun Register(navController: NavHostController) {
                 ) {
                     TextButton(
                         onClick = {
-                            navController.navigate("login_screen")
+                            appVM.navController.navigate("login_screen")
                         }) {
                         Text("Har bruker allerede? Login her.")
                     }

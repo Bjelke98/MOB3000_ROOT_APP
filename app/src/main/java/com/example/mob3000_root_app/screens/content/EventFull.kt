@@ -7,18 +7,26 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.CalendarViewMonth
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
@@ -27,20 +35,23 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSectionEvent
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.data.apiResponse.EventData
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EventFull(
-    navController: NavHostController,
-    loginModel: LoginViewModel,
-    eventsModel: EventViewModel
-
+    appVM: AppViewModel
 ) {
+    val eventVM = appVM.eventVM
+
     var openComments by remember { mutableStateOf(false) }
     val adresse = eventsModel.focusedEvent.address
     // Blir satt til false i koden ved oppstart
@@ -51,11 +62,21 @@ fun EventFull(
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
 
-    val eventData = eventsModel.focusedEvent
+    val eventData = eventVM.focusedEvent
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
     val density = LocalDensity.current
+
+    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
+    val dateTimeTo = ZonedDateTime.parse(eventData.dateTo)
+
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
+
+    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
+    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
+    val dateFormatFull = DateTimeFormatter.ofPattern("dd.MM.yyyy") //
 
     Surface(
         Modifier
@@ -70,7 +91,7 @@ fun EventFull(
         Column(
             Modifier
                 .fillMaxHeight()
-                .padding(top = 5.dp)
+                .padding(15.dp)
                 .verticalScroll(scrollState), verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -78,9 +99,9 @@ fun EventFull(
                     .fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = { navController.popBackStack() },
+                    onClick = { appVM.navController.popBackStack() },
                     Modifier
-                        .padding(end = 10.dp)
+                        .padding(bottom = 5.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
@@ -88,12 +109,6 @@ fun EventFull(
                     )
                 }
 
-                Text(
-                    text = eventData.title,
-                    Modifier
-                        .fillMaxWidth(),
-                    style = MaterialTheme.typography.headlineLarge
-                )
             }
 
             AsyncImage(
@@ -106,10 +121,49 @@ fun EventFull(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(.5f)
-                    .padding(bottom = 20.dp)
-                    .heightIn(200.dp, 420.dp)
+                    .clip(RoundedCornerShape(15.dp))
+                    .height(200.dp)
             )
+
+            Row(modifier = Modifier
+                .padding(top = 5.dp)) {
+                Icon(
+                    Icons.Filled.CalendarToday, "date",
+                    tint = MaterialTheme.colorScheme.primary)
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp),
+                    textAlign = TextAlign.Start,
+                    text = dateTimeFrom.format(dateFormatFull)
+
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp),
+                    textAlign = TextAlign.Start,
+                    text = dateTimeFrom.format(dateFormatFromHour) + " - " + dateTimeTo.format(dateFormatToHour)
+
+                )
+            }
+
+            Text(
+                text = eventData.title.uppercase(),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 5.dp),
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            // Day, Month, Year
+            // FromTime, ToTime
+
+            // Location, e.g. City
+            // StreetAddress
+            // ClickableText
+
+            // Participants attending will be here
+
+
 
             Text(
                 text = eventData.description,
@@ -135,6 +189,20 @@ fun EventFull(
 
 
 
+            Spacer(modifier = Modifier.weight(1f))
+
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+                onClick = {
+
+            },
+            shape = RoundedCornerShape(25.dp),
+
+            ) {
+                Text(text = ("bli med").uppercase())
+                // OnClick text blir til "Meld av".uppercase()
+            }
 
             AnimatedVisibility((openComments),
                 enter = slideInVertically {
@@ -151,10 +219,8 @@ fun EventFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
-                        loginModel = loginModel,
-                        eventViewModel = eventsModel,
+                        appVM = appVM,
                         eventId = eventData._id
-
                     )
                 }
                 //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
@@ -163,6 +229,7 @@ fun EventFull(
                     scrollState.animateScrollTo(2000)
                 }
             }
+
             IconButton(
                 onClick = {
                     openComments = !openComments

@@ -25,6 +25,7 @@ class EventViewModel : ViewModel() {
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
+
     fun getEventList() {
         viewModelScope.launch {
             val apiService = RootService.getInstance()

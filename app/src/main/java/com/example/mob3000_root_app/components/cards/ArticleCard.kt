@@ -105,7 +105,7 @@ fun ArticleCard(
 
 
                     }) {
-                        Text(text = "Learn More")
+                        Text(text = ("les mer").uppercase())
                     }
                 }
             }

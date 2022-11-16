@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.EditableArticle
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 
 @Composable
 fun ArticleAdmin(
-    navController: NavHostController,
-    articleViewModel: ArticleViewModel
+    appVM: AppViewModel
 ) {
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -33,7 +33,7 @@ fun ArticleAdmin(
             )
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                items(items = articleViewModel.articleListResponse) { item ->
+                items(items = appVM.articleVM.articleListResponse) { item ->
                     EditableArticle(articleData = item)
                 }
             }
