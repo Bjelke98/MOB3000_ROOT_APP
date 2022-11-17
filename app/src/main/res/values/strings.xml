@@ -17,6 +17,13 @@
     <string name="firstname">Fornavn</string>
     <string name="lastname">Etternavn</string>
     <string name="setting_delete_user">Slett bruker</string>
+    <string name="datepicker_select_date">Velg Dato</string>
+    <string name="datepicker_from_button">Velg Dato Fra</string>
+    <string name="datepicker_to_button">Velg Dato Til</string>
+    <string name="upload_picture_button">Velg Bilde</string>
+    <string name="post_article_button">Publiser Artikkel!</string>
+    <string name="edit_card_title">Tittel</string>
+    <string name="edit_card_description">Beskrivelse</string>
     <string name="show_password">vis passord</string>
     <string name="hide_password">gjem passord</string>
 </resources>

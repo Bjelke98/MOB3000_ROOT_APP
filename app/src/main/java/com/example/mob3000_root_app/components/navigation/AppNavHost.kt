@@ -5,10 +5,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
+import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
+import com.example.mob3000_root_app.screens.admin.ArticleEditAdmin
 import com.example.mob3000_root_app.screens.admin.EventAdmin
 import com.example.mob3000_root_app.screens.content.*
 import com.example.mob3000_root_app.screens.profile.*
+
 
 @Composable
 fun AppNavHost(
@@ -17,6 +20,7 @@ fun AppNavHost(
 ) {
     val articleVM = appVM.articleVM
     val eventVM = appVM.eventVM
+    val postPutArticleVM = PostPutArticleVM()
 
     NavHost(
         modifier = modifier,
@@ -52,17 +56,21 @@ fun AppNavHost(
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
             articleVM.getArticleList()
-            ArticleAdmin(appVM)
+            ArticleAdmin(appVM = appVM, postPutArticleVM)
         }
+        composable( route = Screen.EditArticle .route ) {
+            ArticleEditAdmin(appVM.navController, postPutArticleVM)
+        }
+
         composable( route = Screen.EventAdmin.route ){
             eventVM.getEventList()
             EventAdmin(appVM)
         }
 
         // Navigate Profile
-        composable( route = Screen.Login.route ){ Login(appVM) }
+        composable( route = Screen.Login.route )   { Login   (appVM) }
         composable( route = Screen.Register.route ){ Register(appVM) }
-        composable( route = Screen.Profile.route ) { Profile(appVM)}
+        composable( route = Screen.Profile.route ) { Profile (appVM) }
         composable( route = Screen.Settings.route ){ Settings(appVM) }
     }
 }
