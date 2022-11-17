@@ -3,7 +3,9 @@ package com.example.mob3000_root_app.screens.profile
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
@@ -44,8 +46,8 @@ fun Settings(appVM: AppViewModel) {
     ){
         Card(modifier = Modifier
             .padding(10.dp)
-            .fillMaxWidth(1f)
-            ,colors = testColors
+            .fillMaxWidth(1f),
+            colors = testColors
         ) {
             Column(
                 //verticalArrangement = Arrangement.Center,
@@ -53,6 +55,7 @@ fun Settings(appVM: AppViewModel) {
                 modifier = Modifier
                     .padding(6.dp)
                     .fillMaxWidth(1f)
+                    .verticalScroll(rememberScrollState())
             ) {
                 Row(
                     modifier = Modifier.padding(vertical = 24.dp),

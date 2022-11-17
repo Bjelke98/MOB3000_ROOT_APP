@@ -50,65 +50,111 @@ fun ArticleCard(
     val horizontalColMods = Modifier.width(contentWidth80per)
     val verticalColMods = Modifier.fillMaxWidth()
 
-
-
     Card(
         Modifier
             .fillMaxWidth()
             .height(contentHeight60per)
         , colors = testColors){
-        Box(Modifier.fillMaxSize()) {
-            Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
-
-                   AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://linrik.herokuapp.com/api/resources/$image")
-                        .crossfade(true)
-                        .build(),
-                    placeholder = painterResource(R.drawable.testing),
-                    contentDescription = ("Image could not load"),
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(.5f)
-                )
-
-                Column(
-                    Modifier
-                        .fillMaxHeight(.75f)
-                        .padding(5.dp)
-                ) {
-                    Text(text = articleData.title,
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            if(maxHeight>400.dp) {
+                Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+                    VerticalAsyncImage(image = image)
+                    Column(
                         Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-
-                    Text(text = articleData.description,
+                            .fillMaxHeight(.75f)
+                            .padding(5.dp)
+                    ) {
+                        TitleVertical(text = articleData.title)
+                        DescriptionVertical(text = articleData.description)
+                    }
+                    Row(
                         Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
+                            .padding(5.dp)
+                            .align(Alignment.End)){
+                        ReadMoreButton(navController = navController){
+                            focusArticle()
+                        }
+                    }
                 }
-                Row(
-                    Modifier
-                        .padding(5.dp)
-                        .align(Alignment.End)){
-                    Button(onClick = {
-//                        Metode for å sende data gjennom backstacke
-//                        navController.currentBackStackEntry?.savedStateHandle?.set(key = "article", value = data)
-                        focusArticle()
-                        navigateUpTo(navController, Screen.ArticleFull)
-
-
-                    }) {
-                        Text(text = ("les mer").uppercase())
+            } else {
+                Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+                    HorizontalAsyncImage(image = image)
+                    Column(
+                        Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(.7f)
+                            .padding(10.dp)
+                    ) {
+                        TitleVertical(text = articleData.title)
+                        DescriptionVertical(text = articleData.description)
+                        ReadMoreButton(navController = navController) {
+                            focusArticle()
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TitleVertical(text:String) {
+    Text(text = text,
+        Modifier
+            .fillMaxWidth()
+            .padding(5.dp),
+        style = MaterialTheme.typography.headlineSmall
+    )
+}
+
+@Composable
+fun DescriptionVertical(text:String) {
+    Text(text = text,
+        Modifier
+            .fillMaxWidth()
+            .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+fun VerticalAsyncImage(image: String) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data("https://linrik.herokuapp.com/api/resources/$image")
+            .crossfade(true)
+            .build(),
+        placeholder = painterResource(R.drawable.testing),
+        contentDescription = ("Image could not load"),
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.5f)
+    )
+}
+
+@Composable
+fun HorizontalAsyncImage(image: String) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data("https://linrik.herokuapp.com/api/resources/$image")
+            .crossfade(true)
+            .build(),
+        placeholder = painterResource(R.drawable.testing),
+        contentDescription = ("Image could not load"),
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth(.3f)
+            .fillMaxHeight()
+    )
+}
+
+@Composable
+fun ReadMoreButton(navController: NavHostController, focusArticle: () -> Unit) {
+    Button(onClick = {
+        focusArticle()
+        navigateUpTo(navController, Screen.ArticleFull)
+    }) {
+        Text(text = ("les mer").uppercase())
     }
 }
