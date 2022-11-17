@@ -46,8 +46,10 @@ fun ArticleCard(
     val configuration = LocalConfiguration.current
     val contentHeight60per = (configuration.screenHeightDp.dp/3)*2
     val contentWidth80per = (configuration.screenWidthDp.dp/10)*8
+    val contentWidth60per = (configuration.screenWidthDp.dp/10)*6
 
     val horizontalColMods = Modifier.width(contentWidth80per)
+    val horizontalColAndViewMods = Modifier.width(contentWidth60per)
     val verticalColMods = Modifier.fillMaxWidth()
 
     Card(
@@ -77,18 +79,27 @@ fun ArticleCard(
                     }
                 }
             } else {
-                Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+                Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColAndViewMods) {
                     HorizontalAsyncImage(image = image)
                     Column(
                         Modifier
                             .fillMaxHeight()
-                            .fillMaxWidth(.7f)
+                            .fillMaxWidth()
                             .padding(10.dp)
                     ) {
-                        TitleVertical(text = articleData.title)
-                        DescriptionVertical(text = articleData.description)
-                        ReadMoreButton(navController = navController) {
-                            focusArticle()
+                        Column(Modifier.fillMaxHeight(.75f)) {
+                            TitleVertical(text = articleData.title)
+                            DescriptionVertical(text = articleData.description)
+                        }
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.End)
+                                .fillMaxHeight(),
+                            verticalAlignment = Alignment.Bottom
+                        ) {
+                            ReadMoreButton(navController = navController) {
+                                focusArticle()
+                            }
                         }
                     }
                 }
@@ -144,7 +155,7 @@ fun HorizontalAsyncImage(image: String) {
         contentDescription = ("Image could not load"),
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .fillMaxWidth(.3f)
+            .fillMaxWidth(.4f)
             .fillMaxHeight()
     )
 }
