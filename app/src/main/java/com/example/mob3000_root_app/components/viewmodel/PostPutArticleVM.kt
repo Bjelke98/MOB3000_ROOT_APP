@@ -35,50 +35,137 @@ class PostPutArticleVM: ViewModel() {
         focusedArticle = focusArticle
     }
 
-    fun postArticle(title: String, description: String, imageUri: Uri, context: Context) {
+    fun updateArticle(title: String, description: String, articleID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
 
-            var file = File.createTempFile("imagefile", ".jpeg")
+            var file: File? = null
 
-            if (Build.VERSION.SDK_INT >= 29) {
-                try  {
-                    Log.i("Open FileDescriptor", "Opening..")
-                    val imagePFD: ParcelFileDescriptor? = context.contentResolver.openFileDescriptor(
-                        imageUri,"r"
-                    )
-                    Log.i("Open FileDescriptor", "Done..")
+            if(imageUri != null) {
+//                Om Android versjon er v.10 eller nyere: Håndter fil på ny måte
 
-                    if (imagePFD != null) {
-                        Log.i("Attemt DecoideFileDesc", "Decoding..")
-                        val bitmap = BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
-                        Log.i("Attemt DecoideFileDesc", "Done")
+//                //Initialiserer fil med gyldig mediatype
+                file = File.createTempFile("imagefile", ".jpeg")
+                if (Build.VERSION.SDK_INT >= 29) {
+                    try {
+                        Log.i("Open FileDescriptor", "Opening..")
+                        val imagePFD: ParcelFileDescriptor? =
+                            context.contentResolver.openFileDescriptor(
+                                imageUri, "r"
+                            )
+                        Log.i("Open FileDescriptor", "Done..")
 
+                        if (imagePFD != null) {
+                            Log.i("Attemt DecoideFileDesc", "Decoding..")
+                            val bitmap = BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
+                            Log.i("Attemt DecoideFileDesc", "Done")
 
-                        val byteArrOutStream = ByteArrayOutputStream()
-                        Log.i("Attemt Bitmap Compress", "Compressing..")
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrOutStream)
-                        Log.i("Attemt Bitmap Compress", "Done..")
+//                          Skriv bilde inn i filen
+                            val byteArrOutStream = ByteArrayOutputStream()
+                            Log.i("Attemt Bitmap Compress", "Compressing..")
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrOutStream)
+                            Log.i("Attemt Bitmap Compress", "Done..")
 
-                        Log.i("Attemt write", "writing..")
-                        file.writeBytes(byteArrOutStream.toByteArray())
-                        Log.i("Attemt write", "done")
+                            Log.i("Attemt write", "writing..")
+                            file.writeBytes(byteArrOutStream.toByteArray())
+                            Log.i("Attemt write", "done")
+                        }
+                        imagePFD?.close()
+
+                    } catch (ex: IOException) {
+                        Log.i("Catch", ex.toString())
                     }
-                    imagePFD?.close()
+                } else {
 
-                } catch ( ex: IOException) {
-                    Log.i("Catch",ex.toString())
-                }
-            } else {
-
-                Log.i("Catch","Old Version of Android")
+                    Log.i("Catch", "Old Version of Android")
 //                eventuell håndtering av gamle versjoner
+                }
             }
 
             try {
-                val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull()) as RequestBody
-                val body: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, reqFile)
+                val body: MultipartBody.Part?
+                if(file != null) {
+                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull()) as RequestBody
+                    body = MultipartBody.Part.createFormData("image", file.name, reqFile)
+                    Log.i("File == null?", "Not Null")
+                }
+                else {
+                    body = null
+                    Log.i("File == null?", "Null")
+                }
+                val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
+                val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+                val idPart: RequestBody = articleID.toRequestBody("text/plain".toMediaTypeOrNull())
+                val response: ResponseStatus = apiService.updateArticle(titlePart, descriptionPart, idPart, body)
+                Log.i("UploadTest", response.toString())
+            }
+            catch (e: Exception) {
+                val errorMessage = e.message.toString()
+                Log.i("UploadTest", errorMessage)
+            }
+        }
+    }
+
+    fun postArticle(title: String, description: String, imageUri: Uri?, context: Context) {
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            Log.i("UploadTest", "Start trycatch")
+
+            var file: File? = null
+
+            if(imageUri != null) {
+//                Om Android versjon er v.10 eller nyere: Håndter fil på ny måte
+
+//                //Initialiserer fil med gyldig mediatype
+                file = File.createTempFile("imagefile", ".jpeg")
+                if (Build.VERSION.SDK_INT >= 29) {
+                    try {
+                        Log.i("Open FileDescriptor", "Opening..")
+                        val imagePFD: ParcelFileDescriptor? =
+                            context.contentResolver.openFileDescriptor(
+                                imageUri, "r"
+                            )
+                        Log.i("Open FileDescriptor", "Done..")
+
+                        if (imagePFD != null) {
+                            Log.i("Attemt DecoideFileDesc", "Decoding..")
+                            val bitmap = BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
+                            Log.i("Attemt DecoideFileDesc", "Done")
+
+//                          Skriv bilde inn i filen
+                            val byteArrOutStream = ByteArrayOutputStream()
+                            Log.i("Attemt Bitmap Compress", "Compressing..")
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrOutStream)
+                            Log.i("Attemt Bitmap Compress", "Done..")
+
+                            Log.i("Attemt write", "writing..")
+                            file.writeBytes(byteArrOutStream.toByteArray())
+                            Log.i("Attemt write", "done")
+                        }
+                        imagePFD?.close()
+
+                    } catch (ex: IOException) {
+                        Log.i("Catch", ex.toString())
+                    }
+                } else {
+
+                    Log.i("Catch", "Old Version of Android")
+//                eventuell håndtering av gamle versjoner
+                }
+            }
+
+            try {
+                val body: MultipartBody.Part?
+                if(file != null) {
+                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull()) as RequestBody
+                    body = MultipartBody.Part.createFormData("image", file.name, reqFile)
+                    Log.i("File == null?", "Not Null")
+                }
+                else {
+                    body = null
+                    Log.i("File == null?", "Null")
+                }
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
                 val response: ResponseStatus = apiService.postArticle(titlePart, descriptionPart, body)

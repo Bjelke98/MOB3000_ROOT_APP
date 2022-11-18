@@ -36,23 +36,10 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticleVM) {
+fun ArticleEditAdmin(postPutArticleVM: PostPutArticleVM) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-
-// val datePicker = MaterialDatePicker.Builder.dateRangePicker()
-//  .setTitleText( stringResource(com.example.mob3000_root_app.R.string.datepicker_select_date) )
-//  .build()
-
     val context = LocalContext.current
-
-    val pictureHeight = 200
-    val pictureWidth = 150
-
-    var selectedImagePath by remember { mutableStateOf<Uri>( Uri.parse("") ) }
-
-    var tempImageFile by remember { mutableStateOf( File(context.cacheDir,"userImage.jpg") ) }
-//    tempImageFile.createNewFile()
 
     val dateDialogState = rememberMaterialDialogState()
     MaterialDialog(
@@ -89,14 +76,7 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
     ) { uri: Uri? ->
         run {
             if (uri != null) {
-                selectedImagePath = uri
                 imageUri = uri
-
-                tempImageFile = selectedImagePath.path?.let { File(it) }!!
-//                val pathString = tempImageFile.path.split(":")
-//                Log.i("Image Path", pathString[1])
-                Log.i("Image Full Path", tempImageFile.path)
-
             }
         }
     }
@@ -150,7 +130,6 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
             }
 
             Button(onClick = {
-//                datePickerDialog.show()
                 dateDialogState.show()
                 Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
             }) {
@@ -160,10 +139,10 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
             Button(
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
-//                        postPutArticleVM.postArticleTest(title, description, imageFile)
-                        imageUri?.let { postPutArticleVM.postArticle(title, description, it, context) }
+                        postPutArticleVM.updateArticle(title, description, postPutArticleVM.focusedArticle._id, imageUri, context)
+//                        postPutArticleVM.postArticle(title, description, imageUri, context)
 
-                        Log.i("Post",title+", "+description+", "+imageFile.path)
+                        Log.i("Post",title+", "+description+", "+ (imageUri?.path ?: "No Image"))
                     }
                     else
                         Log.i("Post","missing Info")
@@ -195,8 +174,6 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
             }
         }
     }
-//    }
-
 }
 
 
@@ -204,5 +181,5 @@ fun ArticleEditAdmin(navHost: NavHostController, postPutArticleVM: PostPutArticl
 @Preview(showBackground = true, widthDp = 150, heightDp = 1920 )
 @Composable
 fun myPreview(){
-    ArticleEditAdmin(navHost = NavHostController(LocalContext.current), postPutArticleVM = PostPutArticleVM())
+    ArticleEditAdmin(postPutArticleVM = PostPutArticleVM())
 }

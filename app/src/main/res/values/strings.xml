@@ -26,4 +26,9 @@
     <string name="edit_card_description">Beskrivelse</string>
     <string name="show_password">vis passord</string>
     <string name="hide_password">gjem passord</string>
+    <string name="confirm_delete">Er du sikker på av du vil slette:</string>
+    <string name="delete_button">Slett</string>
+    <string name="cancel_button">Avbryt</string>
+    <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
+    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
 </resources>
