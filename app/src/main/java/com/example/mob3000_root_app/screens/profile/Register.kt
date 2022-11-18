@@ -2,7 +2,9 @@ package com.example.mob3000_root_app.screens.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
@@ -41,7 +43,7 @@ fun Register(appVM: AppViewModel) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(6.dp)
+                modifier = Modifier.padding(6.dp).verticalScroll(rememberScrollState())
             ) {
                 Text(text = "Registrer", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
                 OutlinedTextField(
