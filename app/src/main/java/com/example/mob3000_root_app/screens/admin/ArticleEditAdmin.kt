@@ -21,11 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
@@ -36,11 +34,13 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleEditAdmin(postPutArticleVM: PostPutArticleVM) {
+fun ArticleEditAdmin(appVM: AppViewModel) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
+    val ppArticleVM = appVM.ppArticleVM
+
+    val context = LocalContext.current
     val dateDialogState = rememberMaterialDialogState()
     MaterialDialog(
         dialogState = dateDialogState,
@@ -139,7 +139,7 @@ fun ArticleEditAdmin(postPutArticleVM: PostPutArticleVM) {
             Button(
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
-                        postPutArticleVM.updateArticle(title, description, postPutArticleVM.focusedArticle._id, imageUri, context)
+                        ppArticleVM.updateArticle(title, description, ppArticleVM.focusedArticle._id, imageUri, context)
 //                        postPutArticleVM.postArticle(title, description, imageUri, context)
 
                         Log.i("Post",title+", "+description+", "+ (imageUri?.path ?: "No Image"))
@@ -174,12 +174,4 @@ fun ArticleEditAdmin(postPutArticleVM: PostPutArticleVM) {
             }
         }
     }
-}
-
-
-
-@Preview(showBackground = true, widthDp = 150, heightDp = 1920 )
-@Composable
-fun myPreview(){
-    ArticleEditAdmin(postPutArticleVM = PostPutArticleVM())
 }

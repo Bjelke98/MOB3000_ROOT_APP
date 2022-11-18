@@ -11,19 +11,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.cards.EditArticleCard
-import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleAdmin(
-    appVM: AppViewModel,
-    editArticleVM: PostPutArticleVM
+    appVM: AppViewModel
 ) {
 //    TODO Legge testcolors inn i ui.theme
     val testColors: CardColors = CardDefaults.cardColors(
@@ -63,7 +59,7 @@ fun ArticleAdmin(
                     EditArticleCard(
                         navHost = appVM.navController,
                         articleData = article,
-                        editFocus = { editArticleVM.focusArticle(article) }
+                        editFocus = { appVM.ppArticleVM.focusArticle(article) }
                     )
                 }
                 item {

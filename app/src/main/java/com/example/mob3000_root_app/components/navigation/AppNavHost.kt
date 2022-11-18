@@ -20,7 +20,6 @@ fun AppNavHost(
 ) {
     val articleVM = appVM.articleVM
     val eventVM = appVM.eventVM
-    val postPutArticleVM = PostPutArticleVM()
 
     NavHost(
         modifier = modifier,
@@ -56,10 +55,10 @@ fun AppNavHost(
         // Navigate Admin
         composable( route = Screen.ArticleAdmin.route ) {
             articleVM.getArticleList()
-            ArticleAdmin(appVM = appVM, postPutArticleVM)
+            ArticleAdmin(appVM)
         }
         composable( route = Screen.EditArticle .route ) {
-            ArticleEditAdmin(postPutArticleVM)
+            ArticleEditAdmin(appVM)
         }
 
         composable( route = Screen.EventAdmin.route ){
