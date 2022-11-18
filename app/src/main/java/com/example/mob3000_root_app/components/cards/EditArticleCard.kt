@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -25,8 +26,10 @@ fun EditArticleCard(
     articleData : ArticleData,
     editFocus: ()-> Unit
 ){
+    val testColors: CardColors = CardDefaults.cardColors(
+        containerColor = MaterialTheme.colorScheme.background)
     val image = articleData.image ?: "defaultArticle.jpg"
-    Card() {
+    Card(Modifier.padding(horizontal = 15.dp), colors = testColors) {
         Row(
             Modifier
                 .padding(10.dp)
