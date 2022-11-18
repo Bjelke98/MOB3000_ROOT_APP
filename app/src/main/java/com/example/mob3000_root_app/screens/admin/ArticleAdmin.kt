@@ -27,17 +27,10 @@ fun ArticleAdmin(
 
     Surface() {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-
-            Text(
-                text = "Article Admin",
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.headlineLarge
-            )
-
             LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 items(items = appVM.articleVM.articleListResponse) { article ->
                     EditArticleCard(
-                        navHost = appVM.navController,
+                        appVM = appVM,
                         articleData = article,
                         editFocus = { editArticleVM.focusArticle(article) }
                     )

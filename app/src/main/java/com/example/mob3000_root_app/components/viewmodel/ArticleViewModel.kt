@@ -7,7 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.*
-import com.example.mob3000_root_app.screens.admin.apiRequest.CommentData
+import com.example.mob3000_root_app.data.apiRequest.ArticleID
+import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyArticleData
@@ -60,6 +61,21 @@ class ArticleViewModel : ViewModel() {
                 Log.i("Catch", e.message.toString())
             }
         }
+    }
+
+    fun deleteArticleByID(articleid: String, cb: (status: ResponseStatus?)->Unit){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val responseStatus = apiService.deleteArticleById(ArticleID(articleid) )
+                Log.i("API_Request_Log", "artikkel ble slettet")
+                cb.invoke(responseStatus)
+            } catch (e: Exception){
+                Log.i("API_Error", e.message.toString())
+                cb.invoke(null)
+            }
+        }
+
     }
 
     fun focusArticleByID(articleid: String){
