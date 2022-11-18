@@ -12,6 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -57,10 +58,10 @@ fun EditableEvent(
                 openDialog.value = false
             },
             title = {
-                Text(text = "Slett " + eventData.title)
+                Text(text = stringResource(id = R.string.delete_button) + eventData.title)
             },
             text = {
-                Text(text = "Er du sikker på av du vil slette: \n" + eventData.title)
+                Text(text = stringResource(id = R.string.confirm_delete) + "\n" + eventData.title)
             },
             confirmButton = {
                 TextButton(
@@ -75,7 +76,7 @@ fun EditableEvent(
                         openDialog.value = false
                     }
                 ) {
-                    Text("Slett")
+                    Text(stringResource(id = R.string.delete_button))
                 }
             },
             dismissButton = {
@@ -84,7 +85,7 @@ fun EditableEvent(
                         openDialog.value = false
                     }
                 ) {
-                    Text("Avbryt")
+                    Text(stringResource(id = R.string.cancel_button))
                 }
             }
         )

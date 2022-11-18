@@ -59,7 +59,7 @@ fun AppNavHost(
             ArticleAdmin(appVM = appVM, postPutArticleVM)
         }
         composable( route = Screen.EditArticle .route ) {
-            ArticleEditAdmin(appVM.navController, postPutArticleVM)
+            ArticleEditAdmin(postPutArticleVM)
         }
 
         composable( route = Screen.EventAdmin.route ){

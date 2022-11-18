@@ -22,7 +22,16 @@ interface RootService {
     suspend fun postArticle(
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
-        @Part body: MultipartBody.Part,
+        @Part body: MultipartBody.Part?,
+    ) : ResponseStatus
+
+    @Multipart
+    @POST("article")
+    suspend fun updateArticle(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("articleid") articleID: RequestBody,
+        @Part body: MultipartBody.Part?,
     ) : ResponseStatus
 
     // Article API
@@ -49,6 +58,7 @@ interface RootService {
     @Headers("Content-Type: application/json")
     @POST("comment/{path}")
     suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
+
 
     // bruker API
     @POST("user/signup")
