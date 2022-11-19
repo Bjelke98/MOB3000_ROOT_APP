@@ -1,10 +1,11 @@
 package com.example.mob3000_root_app.data
 
+import com.example.mob3000_root_app.data.apiRequest.*
 import com.example.mob3000_root_app.data.apiResponse.*
-import com.example.mob3000_root_app.screens.admin.apiRequest.*
-import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.internal.JavaNetCookieJar
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -17,12 +18,34 @@ import java.net.CookiePolicy
 interface RootService {
 
 
+
     // Article API
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
 
     @GET("article/{id}")
     suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
+
+    @Multipart
+    @POST("article")
+    suspend fun postArticle(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part body: MultipartBody.Part?,
+    ) : ResponseStatus
+
+    @Multipart
+    @POST("article")
+    suspend fun updateArticle(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("articleid") articleID: RequestBody,
+        @Part body: MultipartBody.Part?,
+    ) : ResponseStatus
+
+    @Headers("Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "article", hasBody = true)
+    suspend fun deleteArticleById(@Body articleid: ArticleID): ResponseStatus
 
     // Event API
     @GET("event")
@@ -41,6 +64,7 @@ interface RootService {
     @Headers("Content-Type: application/json")
     @POST("comment/{path}")
     suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
+
 
     // bruker API
     @POST("user/signup")

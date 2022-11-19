@@ -5,10 +5,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
+import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
+import com.example.mob3000_root_app.screens.admin.ArticleEditAdmin
 import com.example.mob3000_root_app.screens.admin.EventAdmin
 import com.example.mob3000_root_app.screens.content.*
 import com.example.mob3000_root_app.screens.profile.*
+
 
 @Composable
 fun AppNavHost(
@@ -54,15 +57,19 @@ fun AppNavHost(
             articleVM.getArticleList()
             ArticleAdmin(appVM)
         }
+        composable( route = Screen.EditArticle .route ) {
+            ArticleEditAdmin(appVM)
+        }
+
         composable( route = Screen.EventAdmin.route ){
             eventVM.getEventList()
             EventAdmin(appVM)
         }
 
         // Navigate Profile
-        composable( route = Screen.Login.route ){ Login(appVM) }
+        composable( route = Screen.Login.route )   { Login   (appVM) }
         composable( route = Screen.Register.route ){ Register(appVM) }
-        composable( route = Screen.Profile.route ) { Profile(appVM)}
+        composable( route = Screen.Profile.route ) { Profile (appVM) }
         composable( route = Screen.Settings.route ){ Settings(appVM) }
     }
 }

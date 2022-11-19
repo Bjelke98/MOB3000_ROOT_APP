@@ -12,7 +12,7 @@ import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
-import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.template.Template
 import com.example.mob3000_root_app.ui.theme.MOB3000_ROOT_APPTheme
 
@@ -30,9 +30,7 @@ class MainActivity : ComponentActivity() {
             loginViewModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
             appViewModel = AppViewModel(
                 navController = navController,
-                loginVM = loginViewModel,
-                articleVM = ArticleViewModel(),
-                eventVM = EventViewModel()
+                loginVM = loginViewModel
             )
             MOB3000_ROOT_APPTheme {
                 Surface(

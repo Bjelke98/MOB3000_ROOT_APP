@@ -1,6 +1,8 @@
 package com.example.mob3000_root_app.template
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
@@ -64,7 +66,7 @@ fun Template(
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp),
             ){
-                Column {
+                Column (Modifier.verticalScroll(rememberScrollState())) {
                     // Title
                     Text(text = stringResource(id = R.string.company_name), modifier = Modifier.padding(16.dp), fontSize = MaterialTheme.typography.headlineMedium.fontSize)
 
