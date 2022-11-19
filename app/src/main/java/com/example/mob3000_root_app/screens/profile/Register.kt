@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.screens.profile
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,12 +15,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
+import com.example.mob3000_root_app.data.apiResponse.NewUser
 
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 
@@ -149,13 +154,26 @@ fun Register(appVM: AppViewModel) {
                 ) {
                     TextButton(
                         onClick = {
-                            appVM.navController.navigate("login_screen")
+                            navigateUpTo(appVM.navController, Screen.Login)
                         }) {
                         Text("Har bruker allerede? Login her.")
                     }
+                    val context = LocalContext.current
                     Button(
                         onClick = {
-
+                            appVM.loginVM.registerUser(NewUser(
+                                firstname.text,
+                                lastname.text,
+                                epost.text,
+                                password.text
+                            )) {
+                                if(it == null) {
+                                    navigateUpTo(appVM.navController, Screen.Login)
+                                }
+                                else {
+                                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                                }
+                            }
                         },
                     ) {
                         Text("Registrer bruker")

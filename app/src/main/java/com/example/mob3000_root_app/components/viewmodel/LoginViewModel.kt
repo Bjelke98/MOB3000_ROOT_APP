@@ -12,6 +12,7 @@ import com.example.mob3000_root_app.data.apiRequest.NameChange
 import com.example.mob3000_root_app.data.apiRequest.PasswordChange
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.data.apiResponse.LoginStatus
+import com.example.mob3000_root_app.data.apiResponse.NewUser
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
@@ -21,7 +22,7 @@ class LoginViewModel : ViewModel(){
 //    }
     var loginStatusResponse: LoginStatus by mutableStateOf(LoginStatus(user = null))
 
-    var registerStatusResponse: RegisterStatus by mutableStateOf(RegisterStatus(newUser = null))
+    var registerStatusResponse: String by mutableStateOf("")
 
     var errorMessage: String by mutableStateOf("")
     fun getLoginStatus() {
@@ -68,16 +69,19 @@ class LoginViewModel : ViewModel(){
     }
 
     // Registrer bruker
-    fun registerUser(UserRegisterInfo: UserRegisterInfo){
+    fun registerUser(userRegisterInfo: NewUser, cb: (result: String?)->Unit){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
-                val registerStatus = apiService
+                val registerStatus = apiService.addUser(userRegisterInfo)
+                Log.i("registrerinfo", registerStatus)
+                cb.invoke(registerStatus)
             }
             catch (e: Exception) {
                 errorMessage = e.message.toString()
+                Log.i("registrerinfo", errorMessage)
+                cb.invoke(null)
             }
-
         }
     }
 

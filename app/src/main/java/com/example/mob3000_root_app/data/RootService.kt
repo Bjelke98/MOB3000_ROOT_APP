@@ -68,7 +68,7 @@ interface RootService {
 
     // bruker API
     @POST("user/signup")
-    suspend fun addUser(@Body userData: User): Call<User>// trenger mail fornavn etternavn og passord
+    suspend fun addUser(@Body userData: NewUser): String // trenger mail fornavn etternavn og passord
 
     @GET("user")
     suspend fun getUser(): LoginStatus
