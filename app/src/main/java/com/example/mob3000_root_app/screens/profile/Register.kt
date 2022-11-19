@@ -24,11 +24,11 @@ import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Register(appVM: AppViewModel) {
-    var fornavn       by remember{ mutableStateOf(TextFieldValue("")) }
-    var etternavn     by remember{ mutableStateOf(TextFieldValue("")) }
-    var epost         by remember{ mutableStateOf(TextFieldValue("")) }
-    var passord       by remember{ mutableStateOf(TextFieldValue("")) }
-    var gjentaPassord by remember{ mutableStateOf(TextFieldValue("")) }
+    var firstname      by remember{ mutableStateOf(TextFieldValue("")) }
+    var lastname       by remember{ mutableStateOf(TextFieldValue("")) }
+    var epost          by remember{ mutableStateOf(TextFieldValue("")) }
+    var password       by remember{ mutableStateOf(TextFieldValue("")) }
+    var repeatPassword by remember{ mutableStateOf(TextFieldValue("")) }
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
@@ -45,7 +45,7 @@ fun Register(appVM: AppViewModel) {
             ) {
                 Text(text = "Registrer", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
                 OutlinedTextField(
-                    value = fornavn,
+                    value = firstname,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -60,12 +60,12 @@ fun Register(appVM: AppViewModel) {
 
                     placeholder = { Text(text = "Skriv ditt etternavn") },
                     onValueChange = {
-                        fornavn = it
+                        firstname = it
                     }
                 )
 
                 OutlinedTextField(
-                    value = etternavn,
+                    value = lastname,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -79,7 +79,7 @@ fun Register(appVM: AppViewModel) {
                     label = { Text(text = "Etternavn") },
                     placeholder = { Text(text = "Skriv ditt etternavn") },
                     onValueChange = {
-                        etternavn = it
+                        lastname = it
                     }
                 )
 
@@ -103,7 +103,7 @@ fun Register(appVM: AppViewModel) {
                 )
 
                 OutlinedTextField(
-                    value = passord,
+                    value = password,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Lock,
@@ -117,13 +117,13 @@ fun Register(appVM: AppViewModel) {
                     placeholder = { Text(text = "Eksempel") },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
-                        passord = it
+                        password = it
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                 )
 
                 OutlinedTextField(
-                    value = gjentaPassord,
+                    value = repeatPassword,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Lock,
@@ -137,7 +137,7 @@ fun Register(appVM: AppViewModel) {
                     placeholder = { Text(text = "Eksempel") },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
-                        gjentaPassord = it
+                        repeatPassword = it
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                 )
@@ -152,8 +152,9 @@ fun Register(appVM: AppViewModel) {
                         Text("Har bruker allerede? Login her.")
                     }
                     Button(
+                        onClick = {
 
-                        onClick = {},
+                        },
                     ) {
                         Text("Registrer bruker")
                     }

@@ -63,9 +63,11 @@ fun Login(
                 modifier = Modifier.padding(6.dp)
             ) {
                 Text(text = "Login", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
+
                 OutlinedTextField(
                     value=epost,
-                    leadingIcon={Icon(imageVector= Icons.Default.Person,contentDescription=null)},
+                    leadingIcon={
+                        Icon(imageVector= Icons.Default.Person,contentDescription=null)},
                     modifier= Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
@@ -79,10 +81,8 @@ fun Login(
 
                 OutlinedTextField(
                     value=password,
-
                     leadingIcon= {
-                        Icon(imageVector = Icons.Default.Lock, contentDescription = null)
-                    },
+                        Icon(imageVector = Icons.Default.Lock, contentDescription = null)},
 
                     trailingIcon = {
                         Icon(

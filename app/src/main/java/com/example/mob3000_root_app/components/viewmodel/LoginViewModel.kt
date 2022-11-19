@@ -7,12 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.RootService
-import com.example.mob3000_root_app.screens.admin.apiRequest.DeleteUser
-import com.example.mob3000_root_app.screens.admin.apiRequest.NameChange
-import com.example.mob3000_root_app.screens.admin.apiRequest.PasswordChange
-import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
-import com.example.mob3000_root_app.data.apiResponse.LoginStatus
-import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
+import com.example.mob3000_root_app.data.apiResponse.*
+import com.example.mob3000_root_app.screens.admin.apiRequest.*
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel(){
@@ -20,6 +16,9 @@ class LoginViewModel : ViewModel(){
 //        mutableStateOf(LoginStatus(user = null))
 //    }
     var loginStatusResponse: LoginStatus by mutableStateOf(LoginStatus(user = null))
+
+    var registerStatusResponse: RegisterStatus by mutableStateOf(RegisterStatus(newUser = null))
+
     var errorMessage: String by mutableStateOf("")
     fun getLoginStatus() {
         viewModelScope.launch {
@@ -61,6 +60,20 @@ class LoginViewModel : ViewModel(){
                 cb.invoke(LoginStatus(user = null))
                 errorMessage = e.message.toString()
             }
+        }
+    }
+
+    // Registrer bruker
+    fun registerUser(UserRegisterInfo: UserRegisterInfo){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try {
+                val registerStatus = apiService
+            }
+            catch (e: Exception) {
+                errorMessage = e.message.toString()
+            }
+
         }
     }
 
