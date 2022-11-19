@@ -30,9 +30,7 @@ class MainActivity : ComponentActivity() {
             loginViewModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
             appViewModel = AppViewModel(
                 navController = navController,
-                loginVM = loginViewModel,
-                articleVM = ArticleViewModel(),
-                eventVM = EventViewModel()
+                loginVM = loginViewModel
             )
             MOB3000_ROOT_APPTheme {
                 Surface(

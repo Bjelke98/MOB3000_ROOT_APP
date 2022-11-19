@@ -9,6 +9,7 @@ class AppViewModel(
     var loginVM: LoginViewModel = LoginViewModel(),
     var articleVM: ArticleViewModel = ArticleViewModel(),
     var eventVM: EventViewModel = EventViewModel(),
+    var ppArticleVM: PostPutArticleVM = PostPutArticleVM(),
     val startDestination: String = Screen.Home.route,
 ) : ViewModel() {
 

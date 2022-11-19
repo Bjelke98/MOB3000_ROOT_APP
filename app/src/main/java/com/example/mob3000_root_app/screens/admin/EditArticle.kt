@@ -24,10 +24,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
@@ -38,9 +37,11 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditArticle(postPutArticleVM: PostPutArticleVM) {
-    var title by remember { mutableStateOf(postPutArticleVM.focusedArticle.title) }
-    var description by remember { mutableStateOf(postPutArticleVM.focusedArticle.description) }
+fun ArticleEditAdmin(appVM: AppViewModel) {
+
+    val ppArticleVM = appVM.ppArticleVM
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -133,8 +134,8 @@ fun EditArticle(postPutArticleVM: PostPutArticleVM) {
             Button(
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
-                        postPutArticleVM.updateArticle(title, description, postPutArticleVM.focusedArticle._id, imageUri, context)
-//                        postPutArticleVM.postArticle(title, description, imageUri, context)
+                        ppArticleVM.updateArticle(title, description, ppArticleVM.focusedArticle._id, imageUri, context)
+//                        ppArticleVM.postArticle(title, description, imageUri, context)
                     }
                     else
                         Log.i("Post","missing Info")
