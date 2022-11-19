@@ -2,7 +2,6 @@ package com.example.mob3000_root_app.screens.admin
 
 //import com.google.android.material.datepicker.MaterialDatePicker
 
-import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -20,7 +19,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -31,13 +29,12 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import java.io.File
 import java.util.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleEditAdmin(appVM: AppViewModel) {
+fun EditArticle(appVM: AppViewModel) {
 
     val ppArticleVM = appVM.ppArticleVM
     var title by remember { mutableStateOf("") }

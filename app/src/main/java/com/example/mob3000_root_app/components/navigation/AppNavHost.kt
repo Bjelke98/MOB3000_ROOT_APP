@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.PostPutArticleVM
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
 import com.example.mob3000_root_app.screens.admin.EditArticle
 import com.example.mob3000_root_app.screens.admin.EventAdmin
@@ -58,7 +57,7 @@ fun AppNavHost(
             ArticleAdmin(appVM)
         }
         composable( route = Screen.EditArticle .route ) {
-            EditArticle(postPutArticleVM)
+            EditArticle(appVM)
         }
 
         composable( route = Screen.EventAdmin.route ){
