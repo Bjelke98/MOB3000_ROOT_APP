@@ -34,7 +34,6 @@ class PostPutArticleVM: ViewModel() {
     fun focusArticle(focusArticle: ArticleData){
         focusedArticle = focusArticle
     }
-
     fun updateArticle(title: String, description: String, articleID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()

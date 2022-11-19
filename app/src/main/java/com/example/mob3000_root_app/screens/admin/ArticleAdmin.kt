@@ -57,7 +57,7 @@ fun ArticleAdmin(
                 }
                 items(items = appVM.articleVM.articleListResponse) { article ->
                     EditArticleCard(
-                        navHost = appVM.navController,
+                        appVM = appVM,
                         articleData = article,
                         editFocus = { appVM.ppArticleVM.focusArticle(article) }
                     )

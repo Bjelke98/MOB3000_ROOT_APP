@@ -1,7 +1,7 @@
 package com.example.mob3000_root_app.data
 
+import com.example.mob3000_root_app.data.apiRequest.*
 import com.example.mob3000_root_app.data.apiResponse.*
-import com.example.mob3000_root_app.screens.admin.apiRequest.*
 import com.squareup.moshi.Moshi
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -16,6 +16,15 @@ import java.net.CookiePolicy
 
 
 interface RootService {
+
+
+
+    // Article API
+    @GET("article")
+    suspend fun getArticles(): List<ArticleData>
+
+    @GET("article/{id}")
+    suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
 
     @Multipart
     @POST("article")
@@ -34,12 +43,9 @@ interface RootService {
         @Part body: MultipartBody.Part?,
     ) : ResponseStatus
 
-    // Article API
-    @GET("article")
-    suspend fun getArticles(): List<ArticleData>
-
-    @GET("article/{id}")
-    suspend fun getArticleByID(@Path("id") articleid: String): ArticleData
+    @Headers("Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "article", hasBody = true)
+    suspend fun deleteArticleById(@Body articleid: ArticleID): ResponseStatus
 
     // Event API
     @GET("event")

@@ -25,7 +25,7 @@ import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.Comment
-import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 import com.example.mob3000_root_app.ui.theme.Underlined
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)

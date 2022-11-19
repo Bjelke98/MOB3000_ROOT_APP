@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
-import com.example.mob3000_root_app.screens.admin.apiRequest.NameChange
+import com.example.mob3000_root_app.data.apiRequest.NameChange
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.User
 import androidx.compose.foundation.layout.*

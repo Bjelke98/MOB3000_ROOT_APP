@@ -32,7 +32,7 @@ import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.screens.admin.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

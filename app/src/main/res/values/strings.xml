@@ -29,6 +29,8 @@
     <string name="confirm_delete">Er du sikker på av du vil slette:</string>
     <string name="delete_button">Slett</string>
     <string name="cancel_button">Avbryt</string>
+    <string name="edit_button">Rediger</string>
     <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
     <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
+    <string name="image_load_failed">Kunne ikke laste inn bilde</string>
 </resources>
