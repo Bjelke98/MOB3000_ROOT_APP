@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -62,7 +63,7 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                     label = { Text(text = "Fornavn") },
 
                     placeholder = { Text(text = "Skriv ditt etternavn") },
@@ -82,7 +83,7 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
                     label = { Text(text = "Etternavn") },
                     placeholder = { Text(text = "Skriv ditt etternavn") },
                     onValueChange = {
@@ -106,7 +107,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         epost = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
                 )
 
                 OutlinedTextField(
@@ -126,7 +127,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         password = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
                 )
 
                 OutlinedTextField(
@@ -146,7 +147,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         repeatPassword = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
                 )
 
                 Row(

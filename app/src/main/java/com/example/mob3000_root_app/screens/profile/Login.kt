@@ -21,10 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.components.navigation.Screen
@@ -75,7 +72,7 @@ fun Login(
                         .fillMaxWidth(),
                     label={Text(text="Epost")},
                     placeholder={Text(text="example@hotmail.com")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email, imeAction = ImeAction.Send),
                     onValueChange={
                         epost=it
                     }
@@ -109,7 +106,7 @@ fun Login(
                         .fillMaxWidth(),
                     label={Text(text="Password")},
                     // placeholder={Text(text="********")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Send),
                     onValueChange={
                         password=it
                     },
