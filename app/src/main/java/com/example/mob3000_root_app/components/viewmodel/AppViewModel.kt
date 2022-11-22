@@ -10,7 +10,8 @@ class AppViewModel(
     var articleVM: ArticleViewModel = ArticleViewModel(),
     var eventVM: EventViewModel = EventViewModel(),
     var ppArticleVM: PostPutArticleVM = PostPutArticleVM(),
-    val startDestination: String = Screen.Home.route,
+    var ppEventVM: PostPutEventVM = PostPutEventVM(),
+    val startDestination: String = Screen.Home.route
 ) : ViewModel() {
 
 }

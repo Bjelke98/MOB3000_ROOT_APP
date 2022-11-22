@@ -35,7 +35,8 @@ fun Articles(
                 items(items = articleVM.articleListResponse){ article ->
                     ArticleCard(
                         navController,
-                        articleData = article, ArticleType.VERTICAL_ARTICLE,
+                        articleData = article,
+                        ArticleType.VERTICAL_ARTICLE,
                         { articleVM.focusArticle(article) }
                     )
                 }
