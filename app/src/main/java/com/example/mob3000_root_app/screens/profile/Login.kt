@@ -72,7 +72,7 @@ fun Login(
                         .fillMaxWidth(),
                     label={Text(text="Epost")},
                     placeholder={Text(text="example@hotmail.com")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email, imeAction = ImeAction.Send),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Email, imeAction = ImeAction.Next),
                     onValueChange={
                         epost=it
                     }
@@ -106,7 +106,7 @@ fun Login(
                         .fillMaxWidth(),
                     label={Text(text="Password")},
                     // placeholder={Text(text="********")},
-                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Send),
+                    keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Done),
                     onValueChange={
                         password=it
                     },

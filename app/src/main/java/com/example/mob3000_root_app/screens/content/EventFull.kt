@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.CalendarViewMonth
-import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -77,6 +76,8 @@ fun EventFull(
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
     val dateFormatFull = DateTimeFormatter.ofPattern("dd.MM.yyyy") //
+
+    var eventJoined by remember { mutableStateOf(true) }
 
     Surface(
         Modifier
@@ -181,8 +182,23 @@ fun EventFull(
                 mapIntent.setPackage("com.google.android.apps.maps")
                 startActivity(context,mapIntent,null)
             }) {
+                Icon(
+                    Icons.Filled.LocationOn, "map")
                 Text(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp),
+                    textAlign = TextAlign.Start,
                     text = "$adresse"
+                )
+            }
+            Button(onClick = { }) {
+                Icon(
+                    Icons.Filled.People, "map")
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp),
+                    textAlign = TextAlign.Start,
+                    text = eventData.participants.size.toString()+" er interessert"
                 )
             }
 
@@ -190,16 +206,25 @@ fun EventFull(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp),
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp),
                 onClick = {
+                          eventJoined = !eventJoined
+                },
+                shape = RoundedCornerShape(25.dp),
 
-            },
-            shape = RoundedCornerShape(25.dp),
+                ) {
+                Text(text = (
+                        if(eventJoined) {
+                            "bli med"
+                        } else {
+                            "meld av"
+                        }
+                        ).uppercase(),
 
-            ) {
-                Text(text = ("bli med").uppercase())
+                )
                 // OnClick text blir til "Meld av".uppercase()
             }
 

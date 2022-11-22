@@ -63,7 +63,7 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                     label = { Text(text = "Fornavn") },
 
                     placeholder = { Text(text = "Skriv ditt etternavn") },
@@ -83,7 +83,7 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Send),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                     label = { Text(text = "Etternavn") },
                     placeholder = { Text(text = "Skriv ditt etternavn") },
                     onValueChange = {
@@ -107,7 +107,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         epost = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next)
                 )
 
                 OutlinedTextField(
@@ -127,7 +127,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         password = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next)
                 )
 
                 OutlinedTextField(
@@ -147,7 +147,7 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         repeatPassword = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done)
                 )
 
                 Row(
