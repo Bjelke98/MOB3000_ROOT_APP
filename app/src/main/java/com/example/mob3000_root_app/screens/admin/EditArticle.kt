@@ -37,8 +37,8 @@ import java.util.*
 fun EditArticle(appVM: AppViewModel) {
 
     val ppArticleVM = appVM.ppArticleVM
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(appVM.ppArticleVM.focusedArticle.title) }
+    var description by remember { mutableStateOf(appVM.ppArticleVM.focusedArticle.description) }
     val context = LocalContext.current
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -131,6 +131,7 @@ fun EditArticle(appVM: AppViewModel) {
             Button(
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
+                        
                         ppArticleVM.updateArticle(title, description, ppArticleVM.focusedArticle._id, imageUri, context)
 //                        ppArticleVM.postArticle(title, description, imageUri, context)
                     }
