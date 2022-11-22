@@ -7,11 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,11 +19,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.cards.showDate
+import com.example.mob3000_root_app.components.cards.showDateAndTime
+import com.example.mob3000_root_app.components.cards.showTime
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +39,16 @@ fun EditEvent(appVM: AppViewModel) {
 
     val eventData = ppEventVM.focusedEvent
 
+    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
+    val dateTimeTo = ZonedDateTime.parse(eventData.dateTo)
+
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
+
+    val dateFormatYear = DateTimeFormatter.ofPattern("yy")
+
+    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
+    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
 
     var title by remember { mutableStateOf(eventData.title) }
     var description by remember { mutableStateOf(eventData.description) }
@@ -118,16 +130,27 @@ fun EditEvent(appVM: AppViewModel) {
                 label = { Text(stringResource(id = R.string.edit_card_description)) }
             )
 
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .border(1.dp, MaterialTheme.colorScheme.primary)
+
+            ) {
+                showDateAndTime(eventData = eventData)
+            }
+
+
             Row() {
+                Button(onClick = {
+                    dateDialogState.show()
+                    Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
+                }) {
+                    Text(stringResource(R.string.datepicker_from_button))
+                }
 
             }
 
-            Button(onClick = {
-                dateDialogState.show()
-                Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
-            }) {
-                Text(stringResource(R.string.datepicker_from_button))
-            }
+
 
             Button(
                 onClick = {
@@ -151,7 +174,7 @@ fun EditEvent(appVM: AppViewModel) {
 
             Box(
                 modifier = Modifier
-                    .size(300.dp,250.dp)
+                    .size(300.dp, 250.dp)
                     .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
             ) {
                 imageUri?.let {

@@ -89,41 +89,7 @@ fun EventCard(
                             .fillMaxHeight(.5f)
                     )
 
-                    Column(
-                        Modifier
-                            .padding(15.dp)
-                            .width(50.dp)
-                            .background(Color.White).border(1.dp, MaterialTheme.colorScheme.primary),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-
-
-                        Text(
-                            modifier = Modifier
-                                .background(Color.White)
-                                .padding(0.dp),
-
-                            style = TextStyle(
-                                fontSize = 25.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            ),
-                            text = dateTimeFrom.format(dateFormatDay),
-                            textAlign = TextAlign.Center
-                        )
-
-                        Text(
-                            modifier = Modifier
-                                .padding(1.dp),
-
-                            color = MaterialTheme.colorScheme.primary,
-                            style = TextStyle(fontSize = 15.sp),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            text =  dateTimeFrom.format(dateFormatMonth).uppercase()
-
-                        )
-
-                    }
+                    showDate(eventData = event)
                 }
 
                 Column(

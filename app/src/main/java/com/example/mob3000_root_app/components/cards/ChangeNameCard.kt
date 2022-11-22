@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,18 +59,19 @@ fun changeName(
                 lastname = it
             }
         )
+        val context = LocalContext.current;
         Row(
             Modifier
                 .padding(5.dp)
                 .align(Alignment.End)){
             Button(onClick = {
                 loginViewModel.changeName(NameChange(firstname.text, lastname.text)){ status: ResponseStatus? ->
-                    if(status!=null){
-                        print(status)
-                        loginViewModel.getLoginStatus()
-                    } else {
-                        print(status)
-                        print("dsfg")
+                    if (status != null) {
+                        if(status.status!=210){
+                            Toast.makeText(context, "Navn endret", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                 }
