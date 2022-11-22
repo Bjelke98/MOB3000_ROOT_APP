@@ -151,7 +151,6 @@ fun CommentSectionEvent(isCommenting: Boolean,
                         keyboardController.hide()
                         eventVM.postComment(eventId, comment.text)
 
-//                      Recomposer ikke med ny data? TODO
                         eventVM.getEventByID(eventId)
                         commentList = eventVM.focusedEvent.comments
                         commentList.toString()
