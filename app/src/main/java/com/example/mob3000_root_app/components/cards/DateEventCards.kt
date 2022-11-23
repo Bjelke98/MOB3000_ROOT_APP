@@ -30,8 +30,8 @@ import java.time.format.DateTimeFormatter
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun showDateAndTime(
-    dateTimeTo: MutableState<OffsetDateTime>,
-    dateTimeFrom: MutableState<OffsetDateTime>
+    dateTimeTo: OffsetDateTime,
+    dateTimeFrom: OffsetDateTime
 ) {
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
         Column(
@@ -52,7 +52,7 @@ fun showDateAndTime(
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 ),
-                text = dateTimeFrom.value.dayOfMonth.toString(),
+                text = dateTimeFrom.dayOfMonth.toString(),
                 textAlign = TextAlign.Center
             )
 
@@ -64,7 +64,7 @@ fun showDateAndTime(
                 style = TextStyle(fontSize = 15.sp),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                text =  dateTimeFrom.value.format(dateFormatMonth).uppercase()
+                text =  dateTimeFrom.format(dateFormatMonth).uppercase()
 
             )
         }
@@ -75,8 +75,8 @@ fun showDateAndTime(
 
 @Composable
 fun showTime(
-    dateTimeTo: MutableState<OffsetDateTime>,
-    dateTimeFrom: MutableState<OffsetDateTime>
+    dateTimeTo: OffsetDateTime,
+    dateTimeFrom: OffsetDateTime
 ) {
     //val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
     val dateFormatHour = DateTimeFormatter.ofPattern("HH:mm")
@@ -91,7 +91,7 @@ fun showTime(
             modifier = Modifier
                 .padding(horizontal = 10.dp),
             textAlign = TextAlign.Start,
-            text = dateTimeFrom.value.format(dateFormatHour) + " - " + dateTimeTo.value.format(dateFormatHour)
+            text = dateTimeFrom.format(dateFormatHour) + " - " + dateTimeTo.format(dateFormatHour)
         )
     }
 }

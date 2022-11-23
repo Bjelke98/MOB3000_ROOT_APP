@@ -1,9 +1,11 @@
 package com.example.mob3000_root_app.screens.admin
 
+import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,13 +22,13 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.mob3000_root_app.MainActivity
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.showDateAndTime
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.Instant
@@ -67,28 +69,27 @@ fun EditEvent(appVM: AppViewModel) {
 
 
     //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU
-    if (isNewEvent){
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        var date by remember { mutableStateOf("") }
-    }else{
 
-    }
-
-    var dateTimeFrom = remember{ mutableStateOf(
+    var dateTimeFrom by remember{ mutableStateOf(
         if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
         else Instant.parse(ppEventVM.focusedEvent.dateFrom).atOffset(ZoneOffset.ofHours(2))
     ) }
-    var dateTimeTo = remember{ mutableStateOf(
+    var dateTimeTo by remember{ mutableStateOf(
         if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
         else Instant.parse(ppEventVM.focusedEvent.dateTo).atOffset(ZoneOffset.ofHours(2))
     ) }
 
 
-    val dateDialogState = rememberMaterialDialogState()
-    MaterialDialog(
+    val datePickerDialog = DatePickerDialog(
+        context,
+        0,
+        null,
+        dateTimeFrom.year,
+        dateTimeFrom.monthValue-1,
+        dateTimeFrom.dayOfMonth
+    )
+
+   /* MaterialDialog(
         dialogState = dateDialogState,
         buttons = {
             positiveButton("Ok")
@@ -98,7 +99,7 @@ fun EditEvent(appVM: AppViewModel) {
         datepicker { date ->
             print(date.toString())
         }
-    }
+    }*/
 
     val timeDialogState = rememberMaterialDialogState()
     MaterialDialog(
@@ -190,7 +191,7 @@ fun EditEvent(appVM: AppViewModel) {
 
             Row() {
                 Button(onClick = {
-                    dateDialogState.show()
+                    datePickerDialog.show()
                     Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.datepicker_select_date))
