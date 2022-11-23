@@ -30,14 +30,21 @@ class PostPutArticleVM: ViewModel() {
 
 
     var focusedArticle by mutableStateOf(emptyArticleData)
+    var isNewArticle by mutableStateOf(true)
 
-    fun focusArticle(focusArticle: ArticleData){
-        focusedArticle = focusArticle
+    fun focusArticle(article: ArticleData){
+        focusedArticle = article
+    }
+    fun newArticle(){
+        isNewArticle = true
+    }
+    fun editArticle(article: ArticleData){
+        focusArticle(article)
+        isNewArticle = false
     }
     fun updateArticle(title: String, description: String, articleID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
-            Log.i("UploadTest", "Start trycatch")
 
             var file: File? = null
 
@@ -48,27 +55,19 @@ class PostPutArticleVM: ViewModel() {
                 file = File.createTempFile("imagefile", ".jpeg")
                 if (Build.VERSION.SDK_INT >= 29) {
                     try {
-                        Log.i("Open FileDescriptor", "Opening..")
                         val imagePFD: ParcelFileDescriptor? =
                             context.contentResolver.openFileDescriptor(
                                 imageUri, "r"
                             )
-                        Log.i("Open FileDescriptor", "Done..")
 
                         if (imagePFD != null) {
-                            Log.i("Attemt DecoideFileDesc", "Decoding..")
                             val bitmap = BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
-                            Log.i("Attemt DecoideFileDesc", "Done")
 
 //                          Skriv bilde inn i filen
                             val byteArrOutStream = ByteArrayOutputStream()
-                            Log.i("Attemt Bitmap Compress", "Compressing..")
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrOutStream)
-                            Log.i("Attemt Bitmap Compress", "Done..")
 
-                            Log.i("Attemt write", "writing..")
                             file.writeBytes(byteArrOutStream.toByteArray())
-                            Log.i("Attemt write", "done")
                         }
                         imagePFD?.close()
 
@@ -85,7 +84,7 @@ class PostPutArticleVM: ViewModel() {
             try {
                 val body: MultipartBody.Part?
                 if(file != null) {
-                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull()) as RequestBody
+                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
                     body = MultipartBody.Part.createFormData("image", file.name, reqFile)
                     Log.i("File == null?", "Not Null")
                 }
@@ -120,27 +119,19 @@ class PostPutArticleVM: ViewModel() {
                 file = File.createTempFile("imagefile", ".jpeg")
                 if (Build.VERSION.SDK_INT >= 29) {
                     try {
-                        Log.i("Open FileDescriptor", "Opening..")
                         val imagePFD: ParcelFileDescriptor? =
                             context.contentResolver.openFileDescriptor(
                                 imageUri, "r"
                             )
-                        Log.i("Open FileDescriptor", "Done..")
 
                         if (imagePFD != null) {
-                            Log.i("Attemt DecoideFileDesc", "Decoding..")
                             val bitmap = BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
-                            Log.i("Attemt DecoideFileDesc", "Done")
 
 //                          Skriv bilde inn i filen
                             val byteArrOutStream = ByteArrayOutputStream()
-                            Log.i("Attemt Bitmap Compress", "Compressing..")
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrOutStream)
-                            Log.i("Attemt Bitmap Compress", "Done..")
 
-                            Log.i("Attemt write", "writing..")
                             file.writeBytes(byteArrOutStream.toByteArray())
-                            Log.i("Attemt write", "done")
                         }
                         imagePFD?.close()
 
@@ -157,13 +148,11 @@ class PostPutArticleVM: ViewModel() {
             try {
                 val body: MultipartBody.Part?
                 if(file != null) {
-                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull()) as RequestBody
+                    val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
                     body = MultipartBody.Part.createFormData("image", file.name, reqFile)
-                    Log.i("File == null?", "Not Null")
                 }
                 else {
                     body = null
-                    Log.i("File == null?", "Null")
                 }
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())

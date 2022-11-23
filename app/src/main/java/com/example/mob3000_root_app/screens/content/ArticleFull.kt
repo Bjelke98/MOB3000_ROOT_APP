@@ -72,7 +72,8 @@ fun ArticleFull(
                 Text(
                     text = articleData.title,
                     Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp),
                     style = MaterialTheme.typography.headlineLarge
                 )
             }
@@ -97,7 +98,7 @@ fun ArticleFull(
                 Modifier
                     .fillMaxWidth()
                     .padding(5.dp),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 overflow = TextOverflow.Ellipsis
             )
 

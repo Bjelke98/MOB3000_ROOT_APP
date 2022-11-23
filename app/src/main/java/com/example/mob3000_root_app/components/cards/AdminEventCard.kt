@@ -27,10 +27,9 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun EditableEvent(
+fun AdminEventCard(
     eventData : EventData,
     appVM: AppViewModel,
-    editFocus: () -> Unit
 ){
     val image = eventData.image ?: "defaultEvent.jpg"
 
@@ -41,7 +40,7 @@ fun EditableEvent(
         icon = painterResource(R.drawable.edit_icon),
         background = Color.Cyan,
         onSwipe = {
-            editFocus()
+            appVM.ppEventVM.editEvent(eventData)
             navigateUpTo(appVM.navController, Screen.EditEvent)
 
             // navigere til edit event

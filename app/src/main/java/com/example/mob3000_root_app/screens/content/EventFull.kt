@@ -93,22 +93,22 @@ fun EventFull(
                 .padding(15.dp)
                 .verticalScroll(scrollState), verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-            ) {
-                IconButton(
-                    onClick = { appVM.navController.popBackStack() },
-                    Modifier
-                        .padding(bottom = 5.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
-                        contentDescription = "BackArrow"
-                    )
-                }
-
-            }
+//            Row(
+//                Modifier
+//                    .fillMaxWidth()
+//            ) {
+//                IconButton(
+//                    onClick = { appVM.navController.popBackStack() },
+//                    Modifier
+//                        .padding(bottom = 5.dp)
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
+//                        contentDescription = "BackArrow"
+//                    )
+//                }
+//
+//            }
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)

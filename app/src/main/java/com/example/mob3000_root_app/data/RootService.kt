@@ -34,7 +34,7 @@ interface RootService {
     ) : ResponseStatus
 
     @Multipart
-    @POST("article")
+    @PUT("article")
     suspend fun updateArticle(
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
