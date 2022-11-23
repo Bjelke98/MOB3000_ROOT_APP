@@ -1,11 +1,9 @@
 package com.example.mob3000_root_app.screens.admin
 
-import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Log
-import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +20,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.commandiron.wheel_picker_compose.WheelTimePicker
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.showDateAndTime
 import com.example.mob3000_root_app.components.navigation.Screen
@@ -34,7 +31,6 @@ import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.Instant
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,6 +82,18 @@ fun EditEvent(appVM: AppViewModel) {
         }
     }
 
+    val timeDialogState = rememberMaterialDialogState()
+    MaterialDialog(
+        dialogState = timeDialogState,
+        buttons = {
+            positiveButton("Ok")
+            negativeButton("Cancel")
+        }
+    ) {
+        timepicker { time ->
+            // Do stuff with java.time.LocalDate object which is passed in
+        }
+    }
 
 
     val launcher = rememberLauncherForActivityResult(
@@ -173,7 +181,7 @@ fun EditEvent(appVM: AppViewModel) {
 
                 Button(onClick = {
                     // legge in timePicker
-
+                    timeDialogState.show()
                     Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.datepicker_hour))

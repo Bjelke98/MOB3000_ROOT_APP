@@ -30,7 +30,6 @@ import me.saket.swipe.SwipeableActionsBox
 fun AdminEventCard(
     eventData : EventData,
     appVM: AppViewModel,
-    editFocus: () -> Unit
 ){
     val image = eventData.image ?: "defaultEvent.jpg"
 

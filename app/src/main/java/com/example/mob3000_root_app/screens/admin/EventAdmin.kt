@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.components.cards.AdminEventCard
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 
 
@@ -25,13 +27,13 @@ fun EventAdmin (
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    //appVM.ppEventVM.newEvent()
-                    //navigateUpTo(navController = appVM.navController, Screen.EditEvent)
+                    appVM.ppEventVM.newEvent()
+                    navigateUpTo(navController = appVM.navController, Screen.EditEvent)
                 },
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Filled.Add, "New article")
+                Icon(Icons.Filled.Add, "New event")
             }
         }
     ) { padding ->
@@ -53,7 +55,6 @@ fun EventAdmin (
                     AdminEventCard(
                         eventData = event,
                         appVM = appVM,
-                        editFocus = {appVM.ppEventVM.focusEvent(event)}
                     )
                 }
                 item {
