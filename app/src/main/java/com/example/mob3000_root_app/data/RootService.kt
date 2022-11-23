@@ -7,7 +7,6 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.internal.JavaNetCookieJar
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -35,7 +34,7 @@ interface RootService {
     ) : ResponseStatus
 
     @Multipart
-    @POST("article")
+    @PUT("article")
     suspend fun updateArticle(
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,

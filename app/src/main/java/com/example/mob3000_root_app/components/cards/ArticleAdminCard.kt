@@ -1,7 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
@@ -26,14 +24,13 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 
 
 @Composable
-fun EditArticleCard(
+fun ArticleAdminCard(
     appVM: AppViewModel,
-    articleData : ArticleData,
-    editFocus: ()-> Unit
+    articleData : ArticleData
 ){
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
-    val image = articleData.image ?: "defaultArticle.jpg"
+    val image = articleData.image ?: "defaultArticle.png"
     val openDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -115,9 +112,10 @@ fun EditArticleCard(
                 }
 
                 OutlinedButton(
-                    onClick = { /*TODO*/
-                        editFocus()
+                    onClick = {
+                        appVM.ppArticleVM.editArticle(articleData)
                         navigateUpTo(appVM.navController, Screen.EditArticle)
+
                     },
                     Modifier.size(90.dp,40.dp)) {
                     Text(text  = stringResource(id = R.string.edit_button))

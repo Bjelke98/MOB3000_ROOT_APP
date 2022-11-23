@@ -33,4 +33,5 @@
     <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
     <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
     <string name="image_load_failed">Kunne ikke laste inn bilde</string>
+    <string name="fill_title_descr">Vennligst fyll alle felt</string>
 </resources>
