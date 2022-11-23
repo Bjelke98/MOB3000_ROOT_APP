@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mob3000_root_app.data.apiResponse.EventData
+import java.time.Instant
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -28,10 +30,11 @@ import java.time.format.DateTimeFormatter
 fun showDateAndTime(
     eventData: EventData
 ) {
-    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
 
+    //val dateTimeFrom by remember { mutableStateOf(ZonedDateTime.parse(eventData.dateFrom)) }
+    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(ZoneOffset.ofHours(2))
+    val dateFormatHours = DateTimeFormatter.ofPattern("HH")
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
-    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
         Column(
             Modifier
                 .padding(15.dp)
@@ -50,7 +53,7 @@ fun showDateAndTime(
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 ),
-                text = dateTimeFrom.format(dateFormatDay),
+                text = dateTimeFrom.dayOfMonth.toString(),
                 textAlign = TextAlign.Center
             )
 
@@ -73,12 +76,10 @@ fun showDateAndTime(
 
 @Composable
 fun showTime(eventData: EventData) {
-    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
-    val dateTimeTo = ZonedDateTime.parse(eventData.dateTo)
-
-    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
-    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
-
+    //val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
+    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(ZoneOffset.ofHours(2))
+    val dateTimeTo = Instant.parse(eventData.dateTo).atOffset(ZoneOffset.ofHours(2))
+    val dateFormatHour = DateTimeFormatter.ofPattern("HH:mm")
     Row(
         Modifier
             .padding(vertical = 2.dp)
@@ -90,7 +91,7 @@ fun showTime(eventData: EventData) {
             modifier = Modifier
                 .padding(horizontal = 10.dp),
             textAlign = TextAlign.Start,
-            text = dateTimeFrom.format(dateFormatFromHour) + " - " + dateTimeTo.format(dateFormatToHour)
+            text = dateTimeFrom.format(dateFormatHour) + " - " + dateTimeTo.format(dateFormatHour)
         )
     }
 }
@@ -99,7 +100,7 @@ fun showTime(eventData: EventData) {
 fun showDate(
     eventData: EventData
 ) {
-    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
+    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(ZoneOffset.ofHours(2))
 
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
