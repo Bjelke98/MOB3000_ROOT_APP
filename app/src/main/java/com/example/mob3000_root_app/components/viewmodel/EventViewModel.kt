@@ -68,6 +68,7 @@ class EventViewModel : ViewModel() {
             }
         }
     }
+
     fun leaveEvent(eventID: String){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
@@ -122,7 +123,11 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun focusEvent(focusEvent: EventData){
-        focusedEvent = focusEvent
+    fun focusEvent(event: EventData){
+        focusedEvent = event
+    }
+    fun prepFullEvent(event: EventData){
+        focusEvent(event)
+        getEventList()
     }
 }

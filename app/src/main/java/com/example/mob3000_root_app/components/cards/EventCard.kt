@@ -168,8 +168,7 @@ fun EventCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-                        appVM.eventVM.getJoinedEvents()
-                        appVM.eventVM.focusEvent(event)
+                        appVM.eventVM.prepFullEvent(event)
                         navigateUpTo(navController, Screen.EventFull)
                     }) {
                         Text(
