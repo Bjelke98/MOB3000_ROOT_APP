@@ -1,7 +1,6 @@
 package com.example.mob3000_root_app.components.viewmodel
 
 import android.util.Log
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -17,9 +16,9 @@ import com.example.mob3000_root_app.data.apiRequest.EventId
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
-//    var eventListResponse: List<EventData> by mutableStateOf(listOf())
     var eventListResponse = mutableStateListOf<EventData>()
     var eventByIDResponse by mutableStateOf(emptyEventData)
+    var joinedEvents = mutableListOf<String>()
     var errorMessage: String by mutableStateOf("")
     var focusedEvent by mutableStateOf(emptyEventData)
         private set
@@ -52,6 +51,44 @@ class EventViewModel : ViewModel() {
                 )
                 Log.i("CommentStatus", postedStatus.toString())
             } catch (e: Exception) {
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun joinEvent(eventID: String){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try{
+                val joinResponse = apiService.joinEvent(EventId(eventID))
+                Log.i("Join API Call: ", joinResponse.toString())
+            }
+            catch (e: Exception){
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+    fun leaveEvent(eventID: String){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try{
+                val leaveResponse = apiService.leaveEvent(EventId(eventID))
+                Log.i("leave API Call: ", leaveResponse.toString())
+            }
+            catch (e: Exception){
+                Log.i("Catch", e.message.toString())
+            }
+        }
+    }
+
+    fun getJoinedEvents(){
+        viewModelScope.launch {
+            val apiService = RootService.getInstance()
+            try{
+                joinedEvents = apiService.getJoinedEvents() as MutableList<String>
+                Log.i("Join API Call: ", joinedEvents.toString())
+            }
+            catch (e: Exception){
                 Log.i("Catch", e.message.toString())
             }
         }

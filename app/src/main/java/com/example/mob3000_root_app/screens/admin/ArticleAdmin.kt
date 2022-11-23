@@ -21,11 +21,6 @@ import com.example.mob3000_root_app.components.cards.EditArticleCard
 fun ArticleAdmin(
     appVM: AppViewModel
 ) {
-//    TODO Legge testcolors inn i ui.theme
-    val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background
-    )
-
     Scaffold(modifier = Modifier
         .background(MaterialTheme.colorScheme.surfaceVariant),
         floatingActionButton = {

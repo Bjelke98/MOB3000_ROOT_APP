@@ -62,7 +62,7 @@ fun Home(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 items(items = eventVM.eventListResponse){ event ->
-                    EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, { eventVM.focusEvent(event)})
+                    EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, appVM)
                 }
             }
         }
