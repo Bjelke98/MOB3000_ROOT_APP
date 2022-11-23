@@ -33,8 +33,9 @@ fun Events(
             ) {
                 items(items = eventVM.eventListResponse){ event ->
                     EventCard(
-                        appVM.navController,
-                        event = event, ArticleType.HORIZONTAL_ARTICLE,
+                        navController = appVM.navController,
+                        event = event,
+                        type = ArticleType.VERTICAL_ARTICLE,
                         { eventVM.focusEvent(event) }
                     )
                 }
