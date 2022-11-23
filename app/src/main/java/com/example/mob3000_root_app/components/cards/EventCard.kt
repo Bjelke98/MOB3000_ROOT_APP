@@ -31,6 +31,8 @@ import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.apiResponse.EventData
+import java.time.Instant
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -48,11 +50,12 @@ fun EventCard(
     val address: String = if (event.address == null)  "Adresse" else event.address
     val image = event.image ?: "defaultEvent.jpg"
 
-    val dateTimeFrom = ZonedDateTime.parse(event.dateFrom)
-    val dateTimeTo = ZonedDateTime.parse(event.dateTo)
+    val dateTimeFrom = Instant.parse(event.dateFrom).atOffset(
+        ZoneOffset.ofHours(2))
+    val dateTimeTo = Instant.parse(event.dateTo).atOffset(ZoneOffset.ofHours(2))
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("HH:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("HH:mm")
 
-    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
-    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
 
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")

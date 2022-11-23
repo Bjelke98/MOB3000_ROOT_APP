@@ -39,6 +39,8 @@ import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -67,11 +69,11 @@ fun EventFull(
     //animasjon for kommentarer
     val density = LocalDensity.current
 
-    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
-    val dateTimeTo = ZonedDateTime.parse(eventData.dateTo)
-
-    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
-    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
+    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(
+        ZoneOffset.ofHours(2))
+    val dateTimeTo = Instant.parse(eventData.dateTo).atOffset(ZoneOffset.ofHours(2))
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("HH:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("HH:mm")
 
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
