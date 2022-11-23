@@ -13,6 +13,7 @@ import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
+import com.example.mob3000_root_app.dateTest.DateScrollerView
 import com.example.mob3000_root_app.template.Template
 import com.example.mob3000_root_app.ui.theme.MOB3000_ROOT_APPTheme
 
@@ -37,7 +38,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Template(appViewModel)
+                    //Template(appViewModel)
+                    DateScrollerView()
                 }
             }
         }
