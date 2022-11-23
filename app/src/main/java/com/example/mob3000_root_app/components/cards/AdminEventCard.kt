@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import me.saket.swipe.SwipeAction
@@ -28,7 +29,8 @@ import me.saket.swipe.SwipeableActionsBox
 @Composable
 fun EditableEvent(
     eventData : EventData,
-    appVM: AppViewModel
+    appVM: AppViewModel,
+    editFocus: () -> Unit
 ){
     val image = eventData.image ?: "defaultEvent.jpg"
 
@@ -39,7 +41,8 @@ fun EditableEvent(
         icon = painterResource(R.drawable.edit_icon),
         background = Color.Cyan,
         onSwipe = {
-
+            editFocus()
+            navigateUpTo(appVM.navController, Screen.EditEvent)
 
             // navigere til edit event
         }

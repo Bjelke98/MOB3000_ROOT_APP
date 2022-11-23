@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.screens.admin.ArticleAdmin
 import com.example.mob3000_root_app.screens.admin.EditArticle
+import com.example.mob3000_root_app.screens.admin.EditEvent
 import com.example.mob3000_root_app.screens.admin.EventAdmin
 import com.example.mob3000_root_app.screens.content.*
 import com.example.mob3000_root_app.screens.profile.*
@@ -59,6 +60,11 @@ fun AppNavHost(
         composable( route = Screen.EditArticle .route ) {
             EditArticle(appVM)
         }
+
+        composable( route = Screen.EditEvent .route ) {
+            EditEvent(appVM)
+        }
+
 
         composable( route = Screen.EventAdmin.route ){
             eventVM.getEventList()
