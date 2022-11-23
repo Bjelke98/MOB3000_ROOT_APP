@@ -207,7 +207,7 @@ fun EventFull(
 
 
             Spacer(modifier = Modifier.weight(1f))
-
+            // Sørge for at påmelding lagrer seg $TODO
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
