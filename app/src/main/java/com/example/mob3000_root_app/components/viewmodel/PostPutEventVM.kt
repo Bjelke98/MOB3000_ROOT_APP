@@ -48,7 +48,7 @@ class PostPutEventVM: ViewModel() {
         isNewEvent = false
     }
 
-    fun updateEvent(title: String, description: String, dateFrom: Instant, dateTo: ZonedDateTime, eventID: String, imageUri: Uri?, context: Context){
+    fun updateEvent(title: String, description: String, dateFrom: Instant, dateTo: Instant, eventID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -109,8 +109,9 @@ class PostPutEventVM: ViewModel() {
                 }
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-                val idPart: RequestBody = eventID.toRequestBody("text/plain".toMediaTypeOrNull())
-                val response: ResponseStatus = apiService.updateArticle(titlePart, descriptionPart, idPart, body)
+                val dateFromPart: RequestBody = dateFrom.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
             }
             catch (e: Exception) {
@@ -120,7 +121,7 @@ class PostPutEventVM: ViewModel() {
         }
     }
 
-    fun postEvent(title: String, description: String, dateFrom: Instant, dateTo: ZonedDateTime, imageUri: Uri?, context: Context) {
+    fun postEvent(title: String, description: String, dateFrom: Instant, dateTo: Instant, imageUri: Uri?, context: Context) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -181,7 +182,9 @@ class PostPutEventVM: ViewModel() {
                 }
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-                val response: ResponseStatus = apiService.postArticle(titlePart, descriptionPart, body)
+                val dateFromPart: RequestBody = dateFrom.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
             }
             catch (e: Exception) {

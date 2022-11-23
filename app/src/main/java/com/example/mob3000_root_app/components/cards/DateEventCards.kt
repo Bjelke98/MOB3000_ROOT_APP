@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -22,18 +23,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import java.time.Instant
+import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun showDateAndTime(
-    eventData: EventData
+    dateTimeTo: MutableState<OffsetDateTime>,
+    dateTimeFrom: MutableState<OffsetDateTime>
 ) {
-
-    //val dateTimeFrom by remember { mutableStateOf(ZonedDateTime.parse(eventData.dateFrom)) }
-    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(ZoneOffset.ofHours(2))
-    val dateFormatHours = DateTimeFormatter.ofPattern("HH")
     val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
         Column(
             Modifier
@@ -53,7 +52,7 @@ fun showDateAndTime(
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 ),
-                text = dateTimeFrom.dayOfMonth.toString(),
+                text = dateTimeFrom.value.dayOfMonth.toString(),
                 textAlign = TextAlign.Center
             )
 
@@ -65,20 +64,21 @@ fun showDateAndTime(
                 style = TextStyle(fontSize = 15.sp),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                text =  dateTimeFrom.format(dateFormatMonth).uppercase()
+                text =  dateTimeFrom.value.format(dateFormatMonth).uppercase()
 
             )
         }
         
-        showTime(eventData = eventData)
+        showTime(dateTimeTo, dateTimeFrom)
     
 }
 
 @Composable
-fun showTime(eventData: EventData) {
+fun showTime(
+    dateTimeTo: MutableState<OffsetDateTime>,
+    dateTimeFrom: MutableState<OffsetDateTime>
+) {
     //val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
-    val dateTimeFrom = Instant.parse(eventData.dateFrom).atOffset(ZoneOffset.ofHours(2))
-    val dateTimeTo = Instant.parse(eventData.dateTo).atOffset(ZoneOffset.ofHours(2))
     val dateFormatHour = DateTimeFormatter.ofPattern("HH:mm")
     Row(
         Modifier
@@ -91,7 +91,7 @@ fun showTime(eventData: EventData) {
             modifier = Modifier
                 .padding(horizontal = 10.dp),
             textAlign = TextAlign.Start,
-            text = dateTimeFrom.format(dateFormatHour) + " - " + dateTimeTo.format(dateFormatHour)
+            text = dateTimeFrom.value.format(dateFormatHour) + " - " + dateTimeTo.value.format(dateFormatHour)
         )
     }
 }

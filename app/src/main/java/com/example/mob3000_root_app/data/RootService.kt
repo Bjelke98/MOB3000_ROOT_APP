@@ -50,6 +50,27 @@ interface RootService {
     @GET("event")
     suspend fun getEvents(): List<EventData>
 
+    @Multipart
+    @POST("event")
+    suspend fun postEvent(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("dateFrom") dateFrom: RequestBody,
+        @Part("dateTo") dateTo: RequestBody,
+        @Part body: MultipartBody.Part?,
+    ) : ResponseStatus
+
+    @Multipart
+    @PUT("event")
+    suspend fun updateEvent(
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("dateFrom") dateFrom: RequestBody,
+        @Part("dateTo") dateTo: RequestBody,
+        @Part("articleid") articleID: RequestBody,
+        @Part body: MultipartBody.Part?,
+    ) : ResponseStatus
+
     @Headers("Content-Type: application/json")
     @HTTP(method = "DELETE", path = "event", hasBody = true)
     suspend fun deleteEventById(@Body eventid: EventId): ResponseStatus

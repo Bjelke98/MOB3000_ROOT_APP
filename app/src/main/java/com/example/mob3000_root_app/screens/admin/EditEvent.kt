@@ -30,32 +30,36 @@ import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.Instant
-import java.time.ZonedDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditEvent(appVM: AppViewModel) {
 
+    val isNewEvent = appVM.ppEventVM.isNewEvent
     val ppEventVM = appVM.ppEventVM
     var title by remember { mutableStateOf(
-        if( appVM.ppEventVM.isNewEvent) ""
+        if( isNewEvent) ""
         else appVM.ppEventVM.focusedEvent.title
     )}
+
     var description by remember { mutableStateOf(
-        if( appVM.ppArticleVM.isNewArticle) ""
-        else appVM.ppArticleVM.focusedArticle.description
+        if( isNewEvent) ""
+        else appVM.ppEventVM.focusedEvent.description
+    )}
+
+    var dateFrom by remember { mutableStateOf(
+        if(isNewEvent) Instant.now()
+        else Instant.parse(ppEventVM.focusedEvent.dateFrom)
+    )}
+
+    var dateTo by remember { mutableStateOf(
+        if(isNewEvent) Instant.now()
+        else Instant.parse(ppEventVM.focusedEvent.dateTo)
     )}
 
     val context = LocalContext.current
-    val eventData = ppEventVM.focusedEvent
-
-
-    val dates = Instant.parse(eventData.dateFrom)
-
-
-    var dateFrom by remember { mutableStateOf(dates) }
-    var dateTo by remember { mutableStateOf(ZonedDateTime.parse(eventData.dateTo)) }
 
 
     var imageUri by remember { mutableStateOf<Uri?>( null) }
@@ -63,11 +67,25 @@ fun EditEvent(appVM: AppViewModel) {
 
 
     //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU
-    val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-    var date by remember { mutableStateOf("") }
+    if (isNewEvent){
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        var date by remember { mutableStateOf("") }
+    }else{
+
+    }
+
+    var dateTimeFrom = remember{ mutableStateOf(
+        if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
+        else Instant.parse(ppEventVM.focusedEvent.dateFrom).atOffset(ZoneOffset.ofHours(2))
+    ) }
+    var dateTimeTo = remember{ mutableStateOf(
+        if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
+        else Instant.parse(ppEventVM.focusedEvent.dateTo).atOffset(ZoneOffset.ofHours(2))
+    ) }
+
 
     val dateDialogState = rememberMaterialDialogState()
     MaterialDialog(
@@ -91,10 +109,9 @@ fun EditEvent(appVM: AppViewModel) {
         }
     ) {
         timepicker { time ->
-            // Do stuff with java.time.LocalDate object which is passed in
+
         }
     }
-
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -167,7 +184,7 @@ fun EditEvent(appVM: AppViewModel) {
                     .border(1.dp, MaterialTheme.colorScheme.primary)
 
             ) {
-                showDateAndTime(eventData = eventData)
+                showDateAndTime(dateTimeTo, dateTimeFrom)
             }
 
 
