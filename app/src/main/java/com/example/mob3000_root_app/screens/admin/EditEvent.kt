@@ -1,14 +1,18 @@
 package com.example.mob3000_root_app.screens.admin
 
+import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,15 +22,17 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.commandiron.wheel_picker_compose.WheelTimePicker
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.cards.showDate
 import com.example.mob3000_root_app.components.cards.showDateAndTime
-import com.example.mob3000_root_app.components.cards.showTime
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import java.time.Instant
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -36,23 +42,25 @@ import java.util.*
 fun EditEvent(appVM: AppViewModel) {
 
     val ppEventVM = appVM.ppEventVM
+    var title by remember { mutableStateOf(
+        if( appVM.ppEventVM.isNewEvent) ""
+        else appVM.ppEventVM.focusedEvent.title
+    )}
+    var description by remember { mutableStateOf(
+        if( appVM.ppArticleVM.isNewArticle) ""
+        else appVM.ppArticleVM.focusedArticle.description
+    )}
 
+    val context = LocalContext.current
     val eventData = ppEventVM.focusedEvent
 
-    val dateTimeFrom = ZonedDateTime.parse(eventData.dateFrom)
-    val dateTimeTo = ZonedDateTime.parse(eventData.dateTo)
 
-    val dateFormatFromHour = DateTimeFormatter.ofPattern("hh:mm")
-    val dateFormatToHour = DateTimeFormatter.ofPattern("hh:mm")
+    val dates = Instant.parse(eventData.dateFrom)
 
-    val dateFormatYear = DateTimeFormatter.ofPattern("yy")
 
-    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
-    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
+    var dateFrom by remember { mutableStateOf(dates) }
+    var dateTo by remember { mutableStateOf(ZonedDateTime.parse(eventData.dateTo)) }
 
-    var title by remember { mutableStateOf(eventData.title) }
-    var description by remember { mutableStateOf(eventData.description) }
-    val context = LocalContext.current
 
     var imageUri by remember { mutableStateOf<Uri?>( null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -74,22 +82,11 @@ fun EditEvent(appVM: AppViewModel) {
         }
     ) {
         datepicker { date ->
-            // Do stuff with java.time.LocalDate object which is passed in
+            print(date.toString())
         }
     }
 
-    val timeDialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = timeDialogState,
-        buttons = {
-            positiveButton("Ok")
-            negativeButton("Cancel")
-        }
-    ) {
-        timepicker { time ->
-            // Do stuff with java.time.LocalDate object which is passed in
-        }
-    }
+
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -100,24 +97,50 @@ fun EditEvent(appVM: AppViewModel) {
             }
         }
     }
-
+    val incompleteFieldsToast = Toast.makeText(context, stringResource(id = R.string.fill_title_descr), Toast.LENGTH_SHORT)
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    if(title.isNotBlank() && description.isNotBlank()) {
+                        if(appVM.ppEventVM.isNewEvent)
+                            ppEventVM.postEvent(title, description, dateFrom, dateTo, imageUri, context)
+                        else
+                            ppEventVM.updateEvent(
+                                title,
+                                description,
+                                dateFrom,
+                                dateTo,
+                                ppEventVM.focusedEvent._id,
+                                imageUri,
+                                context
+                            )
 
-    Box(
-        Modifier
-//            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .fillMaxSize()
-            .padding(20.dp),
-    ) {
+                        navigateUpTo(appVM.navController, Screen.EventAdmin)
+                    }
+                    else {
+                        incompleteFieldsToast.show()
+                        Log.i("Post", "missing Info")
+                    }
+                },
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(Icons.Filled.Send, "Edit Event")
+            }
+        }
+    ){ padding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(20.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             TextField(
                 value = title,
                 onValueChange = { title = it },
@@ -145,24 +168,17 @@ fun EditEvent(appVM: AppViewModel) {
                     dateDialogState.show()
                     Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
                 }) {
-                    Text(stringResource(R.string.datepicker_from_button))
+                    Text(stringResource(R.string.datepicker_select_date))
                 }
 
-            }
+                Button(onClick = {
+                    // legge in timePicker
 
-
-
-            Button(
-                onClick = {
-                    if(title.isNotBlank() && description.isNotBlank()) {
-                        ppEventVM.updateEvent(title, description, ppEventVM.focusedEvent._id, imageUri, context)
-//                        ppArticleVM.postArticle(title, description, imageUri, context)
-                    }
-                    else
-                        Log.i("Post","missing Info")
+                    Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
+                }) {
+                    Text(stringResource(R.string.datepicker_hour))
                 }
-            ) {
-                Text(stringResource(R.string.post_article_button))
+
             }
 
             Button(onClick = {
@@ -171,6 +187,7 @@ fun EditEvent(appVM: AppViewModel) {
             }) {
                 Text(stringResource(R.string.upload_picture_button))
             }
+
 
             Box(
                 modifier = Modifier
@@ -193,5 +210,5 @@ fun EditEvent(appVM: AppViewModel) {
                 }
             }
         }
-    }
+        }
 }

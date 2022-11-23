@@ -7,10 +7,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.mob3000_root_app.components.cards.EditableEvent
+import com.example.mob3000_root_app.components.cards.AdminEventCard
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.EventViewModel
 
 
 @Composable
@@ -33,7 +31,7 @@ fun EventAdmin (
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 items(items = appVM.eventVM.eventListResponse) { event ->
-                    EditableEvent(
+                    AdminEventCard(
                         eventData = event,
                         appVM = appVM,
                         editFocus = {appVM.ppEventVM.focusEvent(event)}

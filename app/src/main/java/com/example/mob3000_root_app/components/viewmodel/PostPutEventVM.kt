@@ -26,16 +26,29 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.time.Instant
+import java.time.ZonedDateTime
 
 class PostPutEventVM: ViewModel() {
 
 
     var focusedEvent by mutableStateOf(emptyEventData)
+    var isNewEvent by mutableStateOf(true)
 
     fun focusEvent(focusEvent: EventData){
         focusedEvent = focusEvent
     }
-    fun updateEvent(title: String, description: String, eventID: String, imageUri: Uri?, context: Context){
+
+    fun newEvent(){
+        isNewEvent = true
+    }
+
+    fun editEvent(eventData: EventData){
+        focusEvent(eventData)
+        isNewEvent = false
+    }
+
+    fun updateEvent(title: String, description: String, dateFrom: Instant, dateTo: ZonedDateTime, eventID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -107,7 +120,7 @@ class PostPutEventVM: ViewModel() {
         }
     }
 
-    fun postArticle(title: String, description: String, imageUri: Uri?, context: Context) {
+    fun postEvent(title: String, description: String, dateFrom: Instant, dateTo: ZonedDateTime, imageUri: Uri?, context: Context) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
