@@ -196,10 +196,10 @@ fun EditEvent(appVM: AppViewModel) {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            TextField(
+            OutlinedTextField(
                 value = title,
-                onValueChange = { title = it },
-                label = { Text(stringResource(id = R.string.edit_card_title)) },
+                onValueChange = {title = it},
+                label = { Text(stringResource(id = R.string.edit_card_title)) }
             )
 
             TextField(

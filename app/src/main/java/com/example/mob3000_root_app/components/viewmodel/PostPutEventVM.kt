@@ -105,11 +105,12 @@ class PostPutEventVM: ViewModel() {
                     body = null
                     Log.i("File == null?", "Null")
                 }
+                val eventIDPart: RequestBody = eventID.toRequestBody("text/plain".toMediaTypeOrNull())
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
                 val dateFromPart: RequestBody = dateFrom.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                 val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-                val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, dateFromPart, dateToPart, body)
+                val response: ResponseStatus = apiService.updateEvent(eventIDPart, titlePart, descriptionPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
             }
             catch (e: Exception) {

@@ -63,11 +63,11 @@ interface RootService {
     @Multipart
     @PUT("event")
     suspend fun updateEvent(
+        @Part("eventid") eventid : RequestBody,
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
         @Part("dateFrom") dateFrom: RequestBody,
         @Part("dateTo") dateTo: RequestBody,
-        @Part("articleid") articleID: RequestBody,
         @Part body: MultipartBody.Part?,
     ) : ResponseStatus
 
