@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 fun Template(
     appVM: AppViewModel
 ) {
+    val loginVM = appVM.loginVM
     var expanded by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -45,13 +46,13 @@ fun Template(
         .offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             // Profile
-//            if(loginViewModel.loginStatusResponse.user==null){
+//            if(loginVM.loginStatusResponse.user==null){
 //                DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
 //                DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
 //            } else {
 //                DropdownMenuItem(text = { Text(text = "Profil") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
 //                DropdownMenuItem(text = { Text(text = "Instillinger") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
-//                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginViewModel.logoutUser() ;navigateUpTo(navController, Screen.Home) })
+//                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginVM.logoutUser() ;navigateUpTo(navController, Screen.Home) })
 //            }
             DropdownMenuItem(text = { Text(text = "Login") }, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
             DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
@@ -77,7 +78,7 @@ fun Template(
                     RootDrawerItem(R.string.nav_label_about_us, navBackStackEntry, Screen.About, navController, ::closeDrawer)
 
                     // Admin
-//                    if(loginViewModel.loginStatusResponse.user?.editor == true){
+//                    if(loginVM.loginStatusResponse.user?.editor == true){
 //                        RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
 //                        RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
 //                    }

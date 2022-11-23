@@ -169,7 +169,8 @@ fun Register(appVM: AppViewModel) {
                                 password.text
                             )) {
                                 if(it == null) {
-                                    navigateUpTo(appVM.navController, Screen.Login)
+                                    appVM.loginVM.getLoginStatus()
+                                    navigateUpTo(appVM.navController, Screen.Home)
                                 }
                                 else {
                                     Toast.makeText(context, it, Toast.LENGTH_LONG).show()
@@ -177,7 +178,7 @@ fun Register(appVM: AppViewModel) {
                             }
                         },
                     ) {
-                        Text("Registrer bruker")
+                        Text("Registrer")
                     }
                 }
             }
