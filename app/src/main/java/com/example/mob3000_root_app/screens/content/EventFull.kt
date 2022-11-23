@@ -78,7 +78,9 @@ fun EventFull(
     val dateFormatFull = DateTimeFormatter.ofPattern("dd.MM.yyyy") //
 
     var eventJoined by remember { mutableStateOf(true) }
-
+    var count by remember {
+        mutableStateOf(eventData.participants.size)
+    }
     Surface(
         Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -198,7 +200,7 @@ fun EventFull(
                     modifier = Modifier
                         .padding(horizontal = 10.dp),
                     textAlign = TextAlign.Start,
-                    text = eventData.participants.size.toString()+" er interessert"
+                    text = "$count er interessert"
                 )
             }
 
@@ -212,6 +214,11 @@ fun EventFull(
                     .padding(start = 20.dp, end = 20.dp),
                 onClick = {
                           eventJoined = !eventJoined
+                        if(!eventJoined) {
+                            count++
+                        } else {
+                            count--
+                        }
                 },
                 shape = RoundedCornerShape(25.dp),
 
@@ -221,6 +228,7 @@ fun EventFull(
                             "bli med"
                         } else {
                             "meld av"
+
                         }
                         ).uppercase(),
 
