@@ -42,6 +42,7 @@ fun ArticleFull(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     var scrollState = rememberScrollState()
+    val image = articleVM.focusedArticle.image ?: "defaultArticle.png"
 
     val articleData = articleVM.focusedArticle
     val coroutineScope = rememberCoroutineScope()
@@ -80,7 +81,7 @@ fun ArticleFull(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://linrik.herokuapp.com/api/resources/" + articleData.image)
+                    .data("https://linrik.herokuapp.com/api/resources/$image")
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.sauce),
