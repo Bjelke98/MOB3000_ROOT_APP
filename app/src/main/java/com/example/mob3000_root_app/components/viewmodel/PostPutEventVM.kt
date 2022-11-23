@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mob3000_root_app.data.RootService
-import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyEventData
@@ -26,8 +25,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
-import java.time.Instant
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 class PostPutEventVM: ViewModel() {
 
@@ -48,7 +46,7 @@ class PostPutEventVM: ViewModel() {
         isNewEvent = false
     }
 
-    fun updateEvent(title: String, description: String, dateFrom: Instant, dateTo: Instant, eventID: String, imageUri: Uri?, context: Context){
+    fun updateEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, eventID: String, imageUri: Uri?, context: Context){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -121,7 +119,7 @@ class PostPutEventVM: ViewModel() {
         }
     }
 
-    fun postEvent(title: String, description: String, dateFrom: Instant, dateTo: Instant, imageUri: Uri?, context: Context) {
+    fun postEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, imageUri: Uri?, context: Context) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")

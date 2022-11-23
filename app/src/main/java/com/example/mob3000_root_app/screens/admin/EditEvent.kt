@@ -1,11 +1,13 @@
 package com.example.mob3000_root_app.screens.admin
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Log
 import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,10 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.mob3000_root_app.MainActivity
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.showDateAndTime
 import com.example.mob3000_root_app.components.navigation.Screen
@@ -32,6 +37,7 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.Instant
+import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.util.*
 
@@ -51,24 +57,15 @@ fun EditEvent(appVM: AppViewModel) {
         else appVM.ppEventVM.focusedEvent.description
     )}
 
-    var dateFrom by remember { mutableStateOf(
-        if(isNewEvent) Instant.now()
-        else Instant.parse(ppEventVM.focusedEvent.dateFrom)
-    )}
-
-    var dateTo by remember { mutableStateOf(
-        if(isNewEvent) Instant.now()
-        else Instant.parse(ppEventVM.focusedEvent.dateTo)
-    )}
-
     val context = LocalContext.current
 
 
     var imageUri by remember { mutableStateOf<Uri?>( null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    var changePicture by remember { mutableStateOf(false) }
 
 
-    //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU
+    //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU+
 
     var dateTimeFrom by remember{ mutableStateOf(
         if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
@@ -79,40 +76,72 @@ fun EditEvent(appVM: AppViewModel) {
         else Instant.parse(ppEventVM.focusedEvent.dateTo).atOffset(ZoneOffset.ofHours(2))
     ) }
 
-
     val datePickerDialog = DatePickerDialog(
         context,
         0,
-        null,
+        {_:DatePicker, year: Int, month: Int,dayOfMonth: Int ->
+            dateTimeFrom = OffsetDateTime.of(
+                year,
+                month+1,
+                dayOfMonth,
+                dateTimeFrom.hour,
+                dateTimeFrom.minute,
+                dateTimeFrom.second,
+                dateTimeFrom.nano,
+                ZoneOffset.ofHours(0))
+            dateTimeTo = OffsetDateTime.of(
+                year,
+                month+1,
+                dayOfMonth,
+                dateTimeTo.hour,
+                dateTimeTo.minute,
+                dateTimeTo.second,
+                dateTimeTo.nano,
+                ZoneOffset.ofHours(0)
+            )
+        },
         dateTimeFrom.year,
         dateTimeFrom.monthValue-1,
         dateTimeFrom.dayOfMonth
     )
 
-   /* MaterialDialog(
-        dialogState = dateDialogState,
-        buttons = {
-            positiveButton("Ok")
-            negativeButton("Cancel")
-        }
-    ) {
-        datepicker { date ->
-            print(date.toString())
-        }
-    }*/
+    val timePickerStateTo = TimePickerDialog(
+        context,
+        {_: TimePicker, hour: Int, minute: Int ->
+            dateTimeTo = OffsetDateTime.of(
+                dateTimeTo.year,
+                dateTimeTo.monthValue,
+                dateTimeTo.dayOfMonth,
+                hour,
+                minute,
+                dateTimeTo.second,
+                dateTimeTo.nano,
+                ZoneOffset.ofHours(0))
+        },
+        dateTimeTo.hour,
+        dateTimeTo.minute,
+        true
+    )
 
-    val timeDialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = timeDialogState,
-        buttons = {
-            positiveButton("Ok")
-            negativeButton("Cancel")
-        }
-    ) {
-        timepicker { time ->
+    val timePickerState = TimePickerDialog(
+        context,
+        {_: TimePicker, hour: Int, minute: Int ->
+            dateTimeFrom = OffsetDateTime.of(
+                dateTimeFrom.year,
+                dateTimeFrom.monthValue,
+                dateTimeFrom.dayOfMonth,
+                hour,
+                minute,
+                dateTimeFrom.second,
+                dateTimeFrom.nano,
+                ZoneOffset.ofHours(0))
+            timePickerStateTo.show()
+        },
+        dateTimeFrom.hour,
+        dateTimeFrom.minute,
+        true
+    )
 
-        }
-    }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -132,13 +161,13 @@ fun EditEvent(appVM: AppViewModel) {
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
                         if(appVM.ppEventVM.isNewEvent)
-                            ppEventVM.postEvent(title, description, dateFrom, dateTo, imageUri, context)
+                            ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context)
                         else
                             ppEventVM.updateEvent(
                                 title,
                                 description,
-                                dateFrom,
-                                dateTo,
+                                dateTimeFrom,
+                                dateTimeTo,
                                 ppEventVM.focusedEvent._id,
                                 imageUri,
                                 context
@@ -192,15 +221,12 @@ fun EditEvent(appVM: AppViewModel) {
             Row() {
                 Button(onClick = {
                     datePickerDialog.show()
-                    Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.datepicker_select_date))
                 }
 
                 Button(onClick = {
-                    // legge in timePicker
-                    timeDialogState.show()
-                    Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
+                    timePickerState.show()
                 }) {
                     Text(stringResource(R.string.datepicker_hour))
                 }
@@ -209,7 +235,7 @@ fun EditEvent(appVM: AppViewModel) {
 
             Button(onClick = {
                 launcher.launch("image/*")
-
+                changePicture = true;
             }) {
                 Text(stringResource(R.string.upload_picture_button))
             }
@@ -220,19 +246,33 @@ fun EditEvent(appVM: AppViewModel) {
                     .size(300.dp, 250.dp)
                     .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
             ) {
-                imageUri?.let {
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver,it)
+                if (isNewEvent || changePicture){
+                    imageUri?.let {
+                        val source = ImageDecoder
+                            .createSource(context.contentResolver,it)
 
-                    bitmap = ImageDecoder.decodeBitmap(source)
+                        bitmap = ImageDecoder.decodeBitmap(source)
 
-                    bitmap?.let {  btm ->
-                        Image(
-                            bitmap = btm.asImageBitmap(),
-                            contentDescription =null,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        bitmap?.let {  btm ->
+                            Image(
+                                bitmap = btm.asImageBitmap(),
+                                contentDescription =null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                     }
+                }else{
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://linrik.herokuapp.com/api/resources/${ppEventVM.focusedEvent.image}")
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.testing),
+                        contentDescription = (stringResource(id = R.string.image_load_failed)),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
                 }
             }
         }
