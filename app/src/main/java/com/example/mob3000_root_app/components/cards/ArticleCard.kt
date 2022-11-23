@@ -38,7 +38,7 @@ fun ArticleCard(
     focusArticle: () -> Unit
 ) {
 
-    val image = articleData.image ?: "defaultArticle.jpg"
+    val image = articleData.image ?: "defaultArticle.png"
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)

@@ -5,7 +5,7 @@ data class ArticleData(
     val _id: String,
     val comments: List<Comment>,
     val description: String,
-    val image: String,
+    val image: String?,
     val postedAt: String,
     val title: String
 )
