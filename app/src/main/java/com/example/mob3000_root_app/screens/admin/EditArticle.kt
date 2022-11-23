@@ -54,6 +54,7 @@ fun EditArticle(appVM: AppViewModel) {
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    var isImageChosen by remember { mutableStateOf(false) }
 
     val incompleteFieldsToast = Toast.makeText(context, stringResource(id = R.string.fill_title_descr), Toast.LENGTH_SHORT)
 
@@ -97,6 +98,7 @@ fun EditArticle(appVM: AppViewModel) {
         run {
             if (uri != null) {
                 imageUri = uri
+                isImageChosen = true
             }
         }
     }
@@ -194,24 +196,7 @@ fun EditArticle(appVM: AppViewModel) {
                     .size(300.dp, 250.dp)
                     .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
             ) {
-                if(appVM.ppArticleVM.isNewArticle) {
-
-                    imageUri?.let {
-                        val source = ImageDecoder
-                            .createSource(context.contentResolver, it)
-
-                        bitmap = ImageDecoder.decodeBitmap(source)
-
-                        bitmap?.let { btm ->
-                            Image(
-                                bitmap = btm.asImageBitmap(),
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                }
-                else {
+                if(!appVM.ppArticleVM.isNewArticle && !isImageChosen) {
 
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
@@ -224,6 +209,21 @@ fun EditArticle(appVM: AppViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                     )
+                }
+
+                imageUri?.let {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver, it)
+
+                    bitmap = ImageDecoder.decodeBitmap(source)
+
+                    bitmap?.let { btm ->
+                        Image(
+                            bitmap = btm.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
             }
         }

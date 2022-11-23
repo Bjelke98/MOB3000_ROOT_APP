@@ -127,7 +127,10 @@ fun Template(
                     },
                     navigationIcon = {
                         val list: List<String> = listOf(
-                            Screen.ArticleFull.route
+                            Screen.ArticleFull.route,
+                            Screen.EventFull.route,
+                            Screen.EditArticle.route,
+                            Screen.EditEvent.route
                         )
                         if(list.contains(currentRoute)){
                             IconButton(onClick = { navigateUp(navController) }) {
