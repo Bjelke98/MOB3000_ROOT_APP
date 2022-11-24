@@ -36,16 +36,13 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-
-
 @Composable
 fun EventCard(
     navController: NavHostController,
     event: EventData,
     type: ArticleType,
     focusEvent: () -> Unit
-    )
-{
+) {
 
     val address: String = if (event.address == null)  "Adresse" else event.address
     val image = event.image ?: "defaultEvent.jpg"
@@ -55,11 +52,6 @@ fun EventCard(
     val dateTimeTo = Instant.parse(event.dateTo).atOffset(ZoneOffset.ofHours(2))
     val dateFormatFromHour = DateTimeFormatter.ofPattern("HH:mm")
     val dateFormatToHour = DateTimeFormatter.ofPattern("HH:mm")
-
-
-    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
-    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
-    val dateFormatFull = DateTimeFormatter.ofPattern("dd-mm-yyyy")
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)

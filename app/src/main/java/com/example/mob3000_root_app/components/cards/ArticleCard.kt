@@ -15,20 +15,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.image.DefaultAsyncImage
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
-
-
-//class FocusedArticleModel : ViewModel() {
-//    var focusedArticle by mutableStateOf<ArticleData?>(null)
-//        private set
-//
-//    fun focusArticle(focusArticle: ArticleData){
-//        focusedArticle = focusArticle
-//    }
-//}
 
 @Composable
 fun ArticleCard(
@@ -52,6 +43,13 @@ fun ArticleCard(
     val horizontalColAndViewMods = Modifier.width(contentWidth60per)
     val verticalColMods = Modifier.fillMaxWidth()
 
+    val horizontalImageModifier = Modifier
+        .fillMaxWidth(.4f)
+        .fillMaxHeight()
+    val verticalImageModifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(.5f)
+
     Card(
         Modifier
             .fillMaxWidth()
@@ -60,7 +58,7 @@ fun ArticleCard(
         BoxWithConstraints(Modifier.fillMaxSize()) {
             if(maxHeight>400.dp) {
                 Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
-                    VerticalAsyncImage(image = image)
+                    DefaultAsyncImage(image = image, modifier = verticalImageModifier)
                     Column(
                         Modifier
                             .fillMaxHeight(.75f)
@@ -80,7 +78,7 @@ fun ArticleCard(
                 }
             } else {
                 Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColAndViewMods) {
-                    HorizontalAsyncImage(image = image)
+                    DefaultAsyncImage(image = image, modifier = horizontalImageModifier)
                     Column(
                         Modifier
                             .fillMaxHeight()
@@ -125,38 +123,6 @@ fun DescriptionVertical(text:String) {
             .fillMaxWidth()
             .padding(5.dp), style = MaterialTheme.typography.bodyMedium,
         overflow = TextOverflow.Ellipsis
-    )
-}
-
-@Composable
-fun VerticalAsyncImage(image: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data("https://linrik.herokuapp.com/api/resources/$image")
-            .crossfade(true)
-            .build(),
-        placeholder = painterResource(R.drawable.testing),
-        contentDescription = ("Image could not load"),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(.5f)
-    )
-}
-
-@Composable
-fun HorizontalAsyncImage(image: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data("https://linrik.herokuapp.com/api/resources/$image")
-            .crossfade(true)
-            .build(),
-        placeholder = painterResource(R.drawable.testing),
-        contentDescription = ("Image could not load"),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxWidth(.4f)
-            .fillMaxHeight()
     )
 }
 
