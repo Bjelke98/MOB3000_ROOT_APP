@@ -246,7 +246,7 @@ fun EditEvent(appVM: AppViewModel) {
                     .size(300.dp, 250.dp)
                     .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
             ) {
-                if (isNewEvent || !changePicture){
+                if (!isNewEvent && !changePicture){
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data("https://linrik.herokuapp.com/api/resources/${ppEventVM.focusedEvent.image}")
