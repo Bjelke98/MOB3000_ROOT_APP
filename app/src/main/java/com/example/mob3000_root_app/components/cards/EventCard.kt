@@ -65,7 +65,7 @@ fun EventCard(
         containerColor = MaterialTheme.colorScheme.background)
 
     val configuration = LocalConfiguration.current
-    val contentHeight60per = (configuration.screenHeightDp.dp/2)
+    val contentHeight60per = (configuration.screenHeightDp.dp/3)*2
     val contentWidth80per = (configuration.screenWidthDp.dp/10)*8
 
     val horizontalColMods = Modifier.width(contentWidth80per)

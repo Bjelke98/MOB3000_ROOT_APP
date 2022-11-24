@@ -149,6 +149,7 @@ fun EditEvent(appVM: AppViewModel) {
         run {
             if (uri != null) {
                 imageUri = uri
+                changePicture = true;
             }
         }
     }
@@ -235,7 +236,6 @@ fun EditEvent(appVM: AppViewModel) {
 
             Button(onClick = {
                 launcher.launch("image/*")
-                changePicture = true;
             }) {
                 Text(stringResource(R.string.upload_picture_button))
             }
@@ -246,22 +246,7 @@ fun EditEvent(appVM: AppViewModel) {
                     .size(300.dp, 250.dp)
                     .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
             ) {
-                if (isNewEvent || changePicture){
-                    imageUri?.let {
-                        val source = ImageDecoder
-                            .createSource(context.contentResolver,it)
-
-                        bitmap = ImageDecoder.decodeBitmap(source)
-
-                        bitmap?.let {  btm ->
-                            Image(
-                                bitmap = btm.asImageBitmap(),
-                                contentDescription =null,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                }else{
+                if (isNewEvent || !changePicture){
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data("https://linrik.herokuapp.com/api/resources/${ppEventVM.focusedEvent.image}")
@@ -273,6 +258,20 @@ fun EditEvent(appVM: AppViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                     )
+                }
+                imageUri?.let {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver,it)
+
+                    bitmap = ImageDecoder.decodeBitmap(source)
+
+                    bitmap?.let {  btm ->
+                        Image(
+                            bitmap = btm.asImageBitmap(),
+                            contentDescription =null,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
             }
         }
