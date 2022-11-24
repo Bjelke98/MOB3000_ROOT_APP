@@ -92,6 +92,7 @@ fun changePassword(
                         }
                     }
                 } else{
+                    Toast.makeText(context, "må skrive likt passord", Toast.LENGTH_SHORT).show()
                     //må skrive likt passord
                 }
 
