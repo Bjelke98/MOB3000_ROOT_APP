@@ -18,12 +18,13 @@ import kotlinx.coroutines.launch
 class EventViewModel : ViewModel() {
     var eventListResponse = mutableStateListOf<EventData>()
     var eventByIDResponse by mutableStateOf(emptyEventData)
-    var joinedEvents = mutableListOf<String>()
+
+    var joinedEvents = mutableListOf<EventData>()
+
     var errorMessage: String by mutableStateOf("")
     var focusedEvent by mutableStateOf(emptyEventData)
         private set
     val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
-
 
     fun getEventList() {
         viewModelScope.launch {
@@ -82,15 +83,17 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun getJoinedEvents(){
+    fun getJoinedEvents(cb: () -> Unit){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
-                joinedEvents = apiService.getJoinedEvents() as MutableList<String>
+                joinedEvents = apiService.getJoinedEvents() as MutableList<EventData>
                 Log.i("Join API Call: ", joinedEvents.toString())
+                cb.invoke()
             }
             catch (e: Exception){
-                Log.i("Catch", e.message.toString())
+                Log.i("Catch Joined", e.message.toString())
+                cb.invoke()
             }
         }
     }
@@ -126,8 +129,11 @@ class EventViewModel : ViewModel() {
     fun focusEvent(event: EventData){
         focusedEvent = event
     }
-    fun prepFullEvent(event: EventData){
+    fun prepFullEvent(event: EventData, cb: () -> Unit){
         focusEvent(event)
         getEventList()
+        getJoinedEvents(){
+            cb.invoke()
+        }
     }
 }

@@ -168,8 +168,9 @@ fun EventCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-                        appVM.eventVM.prepFullEvent(event)
-                        navigateUpTo(navController, Screen.EventFull)
+                        appVM.eventVM.prepFullEvent(event){
+                            navigateUpTo(navController, Screen.EventFull)
+                        }
                     }) {
                         Text(
                             text = ("detaljer").uppercase()

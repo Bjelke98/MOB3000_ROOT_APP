@@ -64,7 +64,7 @@ interface RootService {
     suspend fun leaveEvent(@Body eventid: EventId): ResponseStatus
 
     @GET("event/participants")
-    suspend fun getJoinedEvents(): List<String>
+    suspend fun getJoinedEvents(): List<EventData>
 
     // For både article og event basert på @path
     @Headers("Content-Type: application/json")
