@@ -78,12 +78,19 @@ interface RootService {
     @GET("event/id/{path}")
     suspend fun getEventByID(@Path("path") eventid: String): EventData
 
+    @PUT("event/participants")
+    suspend fun joinEvent(@Body eventid: EventId): ResponseStatus
 
+    @HTTP(method = "DELETE", path = "event/participants", hasBody = true)
+    suspend fun leaveEvent(@Body eventid: EventId): ResponseStatus
+
+    @GET("event/participants")
+    suspend fun getJoinedEvents(): List<EventData>
 
     // For både article og event basert på @path
     @Headers("Content-Type: application/json")
     @POST("comment/{path}")
-    suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData) : ResponseStatus
+    suspend fun postComment(@Path("path") path: String, @Body commentData: CommentData): ResponseStatus
 
 
     // bruker API

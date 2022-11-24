@@ -22,6 +22,7 @@ import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.ArticleType
 import com.example.mob3000_root_app.data.apiResponse.EventData
 import java.time.Instant
@@ -35,12 +36,12 @@ fun EventCard(
     navController: NavHostController,
     event: EventData,
     type: ArticleType,
-    focusEvent: () -> Unit
+    appVM: AppViewModel
     )
 {
 
     val address: String = if (event.address == null)  "Adresse" else event.address
-    val image = event.image ?: "defaultEvent.jpg"
+    val image = event.image ?: "defaultEvent.png"
 
     val dateTimeFrom = Instant.parse(event.dateFrom).atOffset(
         ZoneOffset.ofHours(2))
@@ -162,13 +163,9 @@ fun EventCard(
                         .padding(5.dp)
                         .align(Alignment.End)){
                     Button(onClick = {
-/*
-                        focusArticle()
-                        navigateUpTo(navController, Screen.ArticleFull)
-*/
-
-                        focusEvent()
-                        navigateUpTo(navController, Screen.EventFull)
+                        appVM.eventVM.prepFullEvent(event){
+                            navigateUpTo(navController, Screen.EventFull)
+                        }
                     }) {
                         Text(
                             text = ("detaljer").uppercase()

@@ -3,11 +3,11 @@ import android.content.pm.*
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -24,20 +24,15 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.CommentSectionEvent
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.EventViewModel
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
-import com.example.mob3000_root_app.data.apiResponse.EventData
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneOffset
@@ -79,7 +74,11 @@ fun EventFull(
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
     val dateFormatFull = DateTimeFormatter.ofPattern("dd.MM.yyyy") //
 
-    var eventJoined by remember { mutableStateOf(true) }
+    print("Her")
+    var eventJoined: Boolean by remember { mutableStateOf(eventVM.joinedEvents.contains(eventData)) }
+    print("Ikke her")
+
+    Log.i("EventJoined","$eventJoined")
     var count by remember {
         mutableStateOf(eventData.participants.size)
     }
@@ -88,7 +87,7 @@ fun EventFull(
             .background(MaterialTheme.colorScheme.background)
             .clickable(
                 interactionSource = interactionSource,
-                indication = null    // this gets rid of the ripple effect
+                indication = null    // skjuler unødvendig visuell indikasjon
             ) {
                 focusManager.clearFocus(true)
                 keyboardController?.hide()
@@ -195,9 +194,10 @@ fun EventFull(
                     text = "$adresse"
                 )
             }
-            Button(onClick = { }) {
+            Button(onClick = {
+            }) {
                 Icon(
-                    Icons.Filled.People, "map")
+                    Icons.Filled.People, "participants")
                 Text(
                     modifier = Modifier
                         .padding(horizontal = 10.dp),
@@ -215,24 +215,26 @@ fun EventFull(
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp),
                 onClick = {
-                          eventJoined = !eventJoined
-                        if(!eventJoined) {
+                        eventJoined = if(!eventJoined) {
                             count++
+                            eventVM.joinEvent(appVM.eventVM.focusedEvent._id)
+                            true
                         } else {
                             count--
+                            eventVM.leaveEvent(appVM.eventVM.focusedEvent._id)
+                            false
                         }
                 },
                 shape = RoundedCornerShape(25.dp),
 
                 ) {
                 Text(text = (
-                        if(eventJoined) {
-                            "bli med"
-                        } else {
-                            "meld av"
-
-                        }
-                        ).uppercase(),
+                    if(!eventJoined) {
+                        "bli med"
+                    } else {
+                        "meld av"
+                    }
+                    ).uppercase(),
 
                 )
                 // OnClick text blir til "Meld av".uppercase()
@@ -275,12 +277,12 @@ fun EventFull(
                 Icon(
                     painter = painterResource(
                         id = (
-                                if (!openComments) {
-                                    R.drawable.ic_baseline_chat_bubble_outline_24
-                                } else {
-                                    R.drawable.ic_baseline_arrow_back_ios_24
-                                }
-                                )
+                            if (!openComments) {
+                                R.drawable.ic_baseline_chat_bubble_outline_24
+                            } else {
+                                R.drawable.ic_baseline_arrow_back_ios_24
+                            }
+                        )
                     ),
                     contentDescription = "Comments"
                 )
