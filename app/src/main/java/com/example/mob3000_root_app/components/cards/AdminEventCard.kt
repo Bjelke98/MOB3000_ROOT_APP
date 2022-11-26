@@ -70,6 +70,7 @@ fun AdminEventCard(
                     onClick = {
                         appVM.eventVM.deleteEventById(eventData._id){ status: ResponseStatus? ->
                             if(status!=null){
+                                Toast.makeText(context, "Arrangement slettet", Toast.LENGTH_SHORT).show()
                                 appVM.eventVM.getEventList()
                             } else {
                                 Toast.makeText(context, "Error deleting event", Toast.LENGTH_LONG).show()

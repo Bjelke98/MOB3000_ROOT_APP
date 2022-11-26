@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.icu.text.TimeZoneFormat
 import android.net.Uri
 import android.util.Log
 import android.widget.DatePicker
@@ -33,9 +34,7 @@ import com.example.mob3000_root_app.components.cards.showDateAndTime
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -104,6 +103,7 @@ fun EditEvent(appVM: AppViewModel) {
         dateTimeFrom.monthValue-1,
         dateTimeFrom.dayOfMonth
     )
+    datePickerDialog.setTitle("dfsgsdfg")
 
     val timePickerStateTo = TimePickerDialog(
         context,
@@ -142,6 +142,27 @@ fun EditEvent(appVM: AppViewModel) {
         true
     )
 
+//    val timeFrom = MaterialTimePicker.Builder() venter på at det kommer til compose :)
+//        .setTimeFormat(CLOCK_24H)
+//        .setHour(dateTimeFrom.hour)
+//        .setMinute(dateTimeFrom.minute)
+//        .setTitleText("Fra")
+//        .setInputMode(INPUT_MODE_KEYBOARD)
+//        .build()
+//
+//    timeFrom.addOnPositiveButtonClickListener(){
+//        dateTimeFrom = OffsetDateTime.of(
+//            dateTimeFrom.year,
+//            dateTimeFrom.monthValue,
+//            dateTimeFrom.dayOfMonth,
+//            timeFrom.hour,
+//            timeFrom.minute,
+//            dateTimeFrom.second,
+//            dateTimeFrom.nano,
+//            ZoneOffset.ofHours(0))
+//        timePickerStateTo.setTitle("Til")
+//        timePickerStateTo.show()
+//    }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -162,7 +183,15 @@ fun EditEvent(appVM: AppViewModel) {
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
                         if(appVM.ppEventVM.isNewEvent)
-                            ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context)
+                            ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
+                                if (status != null) {
+                                    if(status.status!=210){
+                                        Toast.makeText(context, "Arrangement oprettet", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "Noe gikk galt under oppretning", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else Toast.makeText(context, "Noe gikk galt under oppretning", Toast.LENGTH_SHORT).show()
+                            }
                         else
                             ppEventVM.updateEvent(
                                 title,
@@ -172,9 +201,17 @@ fun EditEvent(appVM: AppViewModel) {
                                 ppEventVM.focusedEvent._id,
                                 imageUri,
                                 context
-                            )
-
+                            ){ status: ResponseStatus? ->
+                                if (status != null) {
+                                    if(status.status!=210){
+                                        Toast.makeText(context, "Arrangement endret", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "Noe gikk galt under endring", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else Toast.makeText(context, "Noe gikk galt under endring", Toast.LENGTH_SHORT).show()
+                            }
                         navigateUpTo(appVM.navController, Screen.EventAdmin)
+
                     }
                     else {
                         incompleteFieldsToast.show()
@@ -198,12 +235,16 @@ fun EditEvent(appVM: AppViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 value = title,
                 onValueChange = {title = it},
                 label = { Text(stringResource(id = R.string.edit_card_title)) }
             )
 
             TextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 value = description,
                 onValueChange = { description = it },
                 label = { Text(stringResource(id = R.string.edit_card_description)) }

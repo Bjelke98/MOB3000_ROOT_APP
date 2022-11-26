@@ -61,6 +61,7 @@ dependencies {
     //swipeable
     implementation "me.saket.swipe:swipe:1.0.0"
 
+
     //bilder
     implementation("io.coil-kt:coil-compose:2.2.2")
 

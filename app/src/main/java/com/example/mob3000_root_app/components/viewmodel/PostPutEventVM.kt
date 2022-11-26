@@ -46,7 +46,7 @@ class PostPutEventVM: ViewModel() {
         isNewEvent = false
     }
 
-    fun updateEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, eventID: String, imageUri: Uri?, context: Context){
+    fun updateEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, eventID: String, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -112,15 +112,17 @@ class PostPutEventVM: ViewModel() {
                 val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                 val response: ResponseStatus = apiService.updateEvent(eventIDPart, titlePart, descriptionPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
+                cb.invoke(response)
             }
             catch (e: Exception) {
+                cb.invoke(null)
                 val errorMessage = e.message.toString()
                 Log.i("UploadTest", errorMessage)
             }
         }
     }
 
-    fun postEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, imageUri: Uri?, context: Context) {
+    fun postEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -185,8 +187,10 @@ class PostPutEventVM: ViewModel() {
                 val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                 val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
+                cb.invoke(response)
             }
             catch (e: Exception) {
+                cb.invoke(null)
                 val errorMessage = e.message.toString()
                 Log.i("UploadTest", errorMessage)
             }
