@@ -74,11 +74,8 @@ fun EventFull(
     val dateFormatDay = DateTimeFormatter.ofPattern("dd")
     val dateFormatFull = DateTimeFormatter.ofPattern("dd.MM.yyyy") //
 
-    print("Her")
     var eventJoined: Boolean by remember { mutableStateOf(eventVM.joinedEvents.contains(eventData)) }
-    print("Ikke her")
 
-    Log.i("EventJoined","$eventJoined")
     var count by remember {
         mutableStateOf(eventData.participants.size)
     }

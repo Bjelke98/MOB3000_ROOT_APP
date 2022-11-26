@@ -1,5 +1,6 @@
 package com.example.mob3000_root_app.components.cards
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -58,6 +60,7 @@ fun deleteUser(
                 confirmPassword=it
             }
         )
+        val context = LocalContext.current
         Row(
             Modifier
                 .padding(5.dp)
@@ -65,11 +68,13 @@ fun deleteUser(
             Button(onClick = {
                 if (password.text.equals(confirmPassword.text)){
                     loginViewModel.deleteUser(DeleteUser(password.text)){ status: ResponseStatus? ->
-                        if(status!=null){
-                            print(status)
-                        } else {
-
-                        }
+                        if (status != null) {
+                            if(status.status!=210){
+                                Toast.makeText(context, "Bruker Slettet", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                            }
+                        } else Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
                     }
                 }
             }) {

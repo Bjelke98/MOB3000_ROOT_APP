@@ -117,9 +117,7 @@ fun Login(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     TextButton(onClick = {
-                        Log.i("loginStatus", loginVM.loginStatusResponse.toString())
                         navigateUpTo(navController, Screen.Register)
-                        //Log.i("loginStatus", loginViewModel.getLoginStatus().toString())
                     }) {
                         Text("Create new user")
                     }

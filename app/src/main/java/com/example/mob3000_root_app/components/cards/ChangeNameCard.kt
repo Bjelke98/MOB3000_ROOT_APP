@@ -59,7 +59,7 @@ fun changeName(
                 lastname = it
             }
         )
-        val context = LocalContext.current;
+        val context = LocalContext.current
         Row(
             Modifier
                 .padding(5.dp)
