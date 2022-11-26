@@ -11,12 +11,12 @@
     <string name="email">Epost</string>
     <string name="login">Log inn</string>
     <string name="roles">Roller</string>
-    <string name="admin_role">Administrator, </string>
-    <string name="editor_role">Redaktør, </string>
-    <string name="root_role">Root medlem, </string>
+    <string name="admin_role">Administrator,&#160;</string>
+    <string name="editor_role">Redaktør,&#160;</string>
+    <string name="root_role">Root medlem,&#160;</string>
     <string name="example_mail">eksempel@hotmail.com</string>
     <string name="write_lastname">Skriv etternavn</string>
-    <string name="write_firstname">Skriv førstenavn</string>
+    <string name="write_firstname">Skriv fornavn</string>
     <string name="password">Passord</string>
     <string name="firstname">Fornavn</string>
     <string name="lastname">Etternavn</string>
