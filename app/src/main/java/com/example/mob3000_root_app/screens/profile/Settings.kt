@@ -4,28 +4,18 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.changeName
 import com.example.mob3000_root_app.components.cards.changePassword
 import com.example.mob3000_root_app.components.cards.deleteUser
-import com.example.mob3000_root_app.components.navigation.Screen
-import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable

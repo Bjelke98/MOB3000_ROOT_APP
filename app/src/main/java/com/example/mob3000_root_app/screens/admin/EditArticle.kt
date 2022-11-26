@@ -1,6 +1,5 @@
 package com.example.mob3000_root_app.screens.admin
 
-//import com.google.android.material.datepicker.MaterialDatePicker
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -30,10 +29,6 @@ import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.util.*
 
 
@@ -59,39 +54,6 @@ fun EditArticle(appVM: AppViewModel) {
     val incompleteFieldsToast = Toast.makeText(context, stringResource(id = R.string.fill_title_descr), Toast.LENGTH_SHORT)
 
 
-    //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU
-    val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-    var date by remember { mutableStateOf("") }
-
-    val dateDialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = dateDialogState,
-        buttons = {
-            positiveButton("Ok")
-            negativeButton("Cancel")
-        }
-    ) {
-        datepicker { date ->
-            // Do stuff with java.time.LocalDate object which is passed in
-        }
-    }
-
-    val timeDialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = timeDialogState,
-        buttons = {
-            positiveButton("Ok")
-            negativeButton("Cancel")
-        }
-    ) {
-        timepicker { time ->
-            // Do stuff with java.time.LocalDate object which is passed in
-        }
-    }
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -102,7 +64,6 @@ fun EditArticle(appVM: AppViewModel) {
             }
         }
     }
-
 
         Scaffold(
             floatingActionButton = {
@@ -144,11 +105,6 @@ fun EditArticle(appVM: AppViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            // Send button
-//            Button(
-//            ) {
-//                Text(stringResource(R.string.post_article_button))
-//            }
 
             //Title textfield
             TextField(
@@ -168,18 +124,6 @@ fun EditArticle(appVM: AppViewModel) {
                 maxLines = 5,
                 modifier = Modifier.fillMaxWidth()
             )
-            
-            Row() {
-                
-            }
-
-//            Button(onClick = {
-//                dateDialogState.show()
-//                Toast.makeText(context, "This function is coming soon™", Toast.LENGTH_SHORT).show()
-//            }) {
-//                Text(stringResource(R.string.datepicker_from_button))
-//            }
-
 
 
             // Image button

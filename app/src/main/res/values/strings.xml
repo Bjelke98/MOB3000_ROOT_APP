@@ -6,33 +6,59 @@
     <string name="nav_label_articles">Artikkler</string>
     <string name="nav_label_events">Arrangementer</string>
     <string name="nav_label_manage_articles">Håndter Artikkler</string>
-    <string name="nav_label_manage_events">Håndter Arrangementer</string>
     <string name="comment_textfield_placeholder">Skriv hva nå enn du tenker!</string>
+    <!-- User -->
+    <string name="email">Epost</string>
+    <string name="login">Log inn</string>
+    <string name="roles">Roller</string>
+    <string name="admin_role">Administrator, </string>
+    <string name="editor_role">Redaktør, </string>
+    <string name="root_role">Root medlem, </string>
+    <string name="example_mail">eksempel@hotmail.com</string>
+    <string name="write_lastname">Skriv etternavn</string>
+    <string name="write_firstname">Skriv førstenavn</string>
+    <string name="password">Passord</string>
+    <string name="firstname">Fornavn</string>
+    <string name="lastname">Etternavn</string>
+    <string name="register">Registrer</string>
+    <string name="already_user">Har bruker allerede? Login her.</string>
+    <string name="setting_delete_user">Slett bruker</string>
     <string name="setting_change_name">Endre navn</string>
     <string name="setting_change_password">Endre passord</string>
     <string name="setting_new_password">Nytt Passord</string>
     <string name="setting_confirm_password">Bekreft Passord</string>
     <string name="setting_old_password">Gammelt Passord</string>
-    <string name="password">Passord</string>
-    <string name="firstname">Fornavn</string>
-    <string name="lastname">Etternavn</string>
-    <string name="setting_delete_user">Slett bruker</string>
+    <string name="show_password">vis passord</string>
+    <string name="hide_password">gjem passord</string>
+
+    <!-- Article -->
+    <string name="post_article_button">Publiser Artikkel!</string>
+    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
+    <string name="recent_articles">Nylige Artikkler</string>
+
+    <!-- Events -->
+    <string name="join">Bli med</string>
+    <string name="sign_off">Meld av</string>
+    <string name="interested">er interessert</string>
+    <string name="recent_events">Nylig Arrangementer</string>
+    <string name="nav_label_manage_events">Håndter Arrangementer</string>
     <string name="datepicker_select_date">Velg Dato</string>
     <string name="datepicker_from_button">Velg Dato Fra</string>
     <string name="datepicker_to_button">Velg Dato Til</string>
     <string name="datepicker_hour">Velg Klokkeslett</string>
+    <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
+
+    <!-- general -->
+    <string name="positive_button">Ok</string>
+    <string name="negative_button">Avbryt</string>
+    <string name="exempel">Eksempel</string>
     <string name="upload_picture_button">Velg Bilde</string>
-    <string name="post_article_button">Publiser Artikkel!</string>
     <string name="edit_card_title">Tittel</string>
     <string name="edit_card_description">Beskrivelse</string>
-    <string name="show_password">vis passord</string>
-    <string name="hide_password">gjem passord</string>
-    <string name="confirm_delete">Er du sikker på av du vil slette:</string>
     <string name="delete_button">Slett</string>
     <string name="cancel_button">Avbryt</string>
     <string name="edit_button">Rediger</string>
-    <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
-    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
-    <string name="image_load_failed">Kunne ikke laste inn bilde</string>
+    <string name="confirm_delete">Er du sikker på av du vil slette:</string>
     <string name="fill_title_descr">Vennligst fyll alle felt</string>
+    <string name="image_load_failed">Kunne ikke laste inn bilde</string>
 </resources>

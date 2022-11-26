@@ -11,10 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
-import com.example.mob3000_root_app.components.viewmodel.ArticleViewModel
 import com.example.mob3000_root_app.data.*
 
 @Composable
