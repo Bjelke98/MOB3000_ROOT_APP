@@ -33,25 +33,25 @@ fun About() {
             stringResource(R.string.name_olav),
             stringResource(R.string.title_vice_principal),
             stringResource(R.string.title_vice_principal) + " " + stringResource(R.string.desc_vice_principal_education),
-            R.drawable.rektor
+            R.drawable.testing
         ),
         AboutData(
             stringResource(R.string.name_john),
             stringResource(R.string.title_vice_principal),
             stringResource(R.string.title_vice_principal) + " " + stringResource(R.string.desc_vice_principal_research),
-            R.drawable.rektor
+            R.drawable.testing
         ),
         AboutData(
             stringResource(R.string.name_krister),
             stringResource(R.string.title_cto),
             stringResource(R.string.title_cto) + " " + stringResource(R.string.desc_cto),
-            R.drawable.rektor
+            R.drawable.wow
         ),
         AboutData(
             stringResource(R.string.name_herman),
             stringResource(R.string.title_cto),
             stringResource(R.string.title_cto) + " " + stringResource(R.string.desc_cto),
-            R.drawable.rektor
+            R.drawable.wow
         )
     )
 
