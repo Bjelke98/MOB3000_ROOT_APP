@@ -13,8 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.cards.ArticleCard
 import com.example.mob3000_root_app.components.cards.EventCard
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
@@ -40,7 +42,7 @@ fun Home(
                 verticalArrangement = Arrangement.spacedBy(15.dp))
         {
 
-            Text(text = "Recent Articles",
+            Text(text = stringResource(id = R.string.recent_articles),
                 Modifier.fillMaxWidth(),
                 style =  MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center
@@ -53,7 +55,7 @@ fun Home(
                 }
             }
 
-            Text(   text = "Recent Events",
+            Text(   text = stringResource(id = R.string.recent_events),
                     Modifier.fillMaxWidth(),
                     style =  MaterialTheme.typography.headlineLarge,
                     textAlign = TextAlign.Center

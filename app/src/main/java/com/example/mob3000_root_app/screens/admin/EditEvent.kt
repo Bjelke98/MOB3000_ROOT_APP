@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.icu.text.TimeZoneFormat
 import android.net.Uri
 import android.util.Log
 import android.widget.DatePicker
@@ -64,8 +63,6 @@ fun EditEvent(appVM: AppViewModel) {
     var changePicture by remember { mutableStateOf(false) }
 
 
-    //  Lært herfra https://www.youtube.com/watch?v=cJxo96eTHVU+
-
     var dateTimeFrom by remember{ mutableStateOf(
         if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
         else Instant.parse(ppEventVM.focusedEvent.dateFrom).atOffset(ZoneOffset.ofHours(2))
@@ -103,7 +100,6 @@ fun EditEvent(appVM: AppViewModel) {
         dateTimeFrom.monthValue-1,
         dateTimeFrom.dayOfMonth
     )
-    datePickerDialog.setTitle("dfsgsdfg")
 
     val timePickerStateTo = TimePickerDialog(
         context,
@@ -175,8 +171,6 @@ fun EditEvent(appVM: AppViewModel) {
         }
     }
     val incompleteFieldsToast = Toast.makeText(context, stringResource(id = R.string.fill_title_descr), Toast.LENGTH_SHORT)
-    val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background)
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -259,7 +253,6 @@ fun EditEvent(appVM: AppViewModel) {
                 showDateAndTime(dateTimeTo, dateTimeFrom)
             }
 
-
             Row() {
                 Button(onClick = {
                     datePickerDialog.show()
@@ -272,7 +265,6 @@ fun EditEvent(appVM: AppViewModel) {
                 }) {
                     Text(stringResource(R.string.datepicker_hour))
                 }
-
             }
 
             Button(onClick = {
@@ -280,7 +272,6 @@ fun EditEvent(appVM: AppViewModel) {
             }) {
                 Text(stringResource(R.string.upload_picture_button))
             }
-
 
             Box(
                 modifier = Modifier
@@ -300,6 +291,7 @@ fun EditEvent(appVM: AppViewModel) {
                             .fillMaxWidth()
                     )
                 }
+
                 imageUri?.let {
                     val source = ImageDecoder
                         .createSource(context.contentResolver,it)

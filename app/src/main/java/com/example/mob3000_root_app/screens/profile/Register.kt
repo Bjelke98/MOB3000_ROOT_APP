@@ -7,7 +7,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -16,18 +15,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.apiResponse.NewUser
-
-//import androidx.compose.foundation.layout.BoxScopeInstance.align
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +49,7 @@ fun Register(appVM: AppViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(6.dp).verticalScroll(rememberScrollState())
             ) {
-                Text(text = "Registrer", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
+                Text(text = stringResource(id = R.string.register), fontSize = MaterialTheme.typography.headlineLarge.fontSize)
                 OutlinedTextField(
                     value = firstname,
                     leadingIcon = {
@@ -64,9 +62,9 @@ fun Register(appVM: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
-                    label = { Text(text = "Fornavn") },
+                    label = { Text(stringResource(id = R.string.firstname)) },
 
-                    placeholder = { Text(text = "Skriv ditt etternavn") },
+                    placeholder = { Text(stringResource(id = R.string.write_firstname)) },
                     onValueChange = {
                         firstname = it
                     }
@@ -84,8 +82,8 @@ fun Register(appVM: AppViewModel) {
                         .padding(8.dp)
                         .fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
-                    label = { Text(text = "Etternavn") },
-                    placeholder = { Text(text = "Skriv ditt etternavn") },
+                    label = { Text(stringResource(id = R.string.lastname)) },
+                    placeholder = { Text(stringResource(id = R.string.write_lastname)) },
                     onValueChange = {
                         lastname = it
                     }
@@ -102,8 +100,8 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    label = { Text(text = "Epost*") },
-                    placeholder = { Text(text = "eksempel@hotmail.com") },
+                    label = { Text(stringResource(id = R.string.email)) },
+                    placeholder = { Text(stringResource(id = R.string.example_mail)) },
                     onValueChange = {
                         epost = it
                     },
@@ -121,8 +119,8 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    label = { Text(text = "Passord*") },
-                    placeholder = { Text(text = "Eksempel") },
+                    label = { Text(stringResource(id = R.string.password)) },
+                    placeholder = { stringResource(id = R.string.exempel) },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
                         password = it
@@ -141,8 +139,8 @@ fun Register(appVM: AppViewModel) {
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
-                    label = { Text(text = "Gjenta passord*") },
-                    placeholder = { Text(text = "Eksempel") },
+                    label = { Text(stringResource(id = R.string.setting_confirm_password)) },
+                    placeholder = { Text(stringResource(id = R.string.exempel)) },
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
                         repeatPassword = it
@@ -157,7 +155,7 @@ fun Register(appVM: AppViewModel) {
                         onClick = {
                             navigateUpTo(appVM.navController, Screen.Login)
                         }) {
-                        Text("Har bruker allerede? Login her.")
+                        Text(stringResource(id = R.string.already_user))
                     }
                     val context = LocalContext.current
                     Button(
@@ -178,7 +176,7 @@ fun Register(appVM: AppViewModel) {
                             }
                         },
                     ) {
-                        Text("Registrer")
+                        Text(stringResource(id = R.string.register))
                     }
                 }
             }

@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -94,22 +95,6 @@ fun EventFull(
                 .padding(15.dp)
                 .verticalScroll(scrollState), verticalArrangement = Arrangement.SpaceBetween
         ) {
-//            Row(
-//                Modifier
-//                    .fillMaxWidth()
-//            ) {
-//                IconButton(
-//                    onClick = { appVM.navController.popBackStack() },
-//                    Modifier
-//                        .padding(bottom = 5.dp)
-//                ) {
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
-//                        contentDescription = "BackArrow"
-//                    )
-//                }
-//
-//            }
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -198,7 +183,7 @@ fun EventFull(
                     modifier = Modifier
                         .padding(horizontal = 10.dp),
                     textAlign = TextAlign.Start,
-                    text = "$count er interessert"
+                    text = ""+count + " " + stringResource(id = R.string.interested)
                 )
             }
 
@@ -226,9 +211,9 @@ fun EventFull(
                 ) {
                 Text(text = (
                     if(!eventJoined) {
-                        "bli med"
+                        stringResource(id = R.string.join)
                     } else {
-                        "meld av"
+                        stringResource(id = R.string.sign_off)
                     }
                     ).uppercase(),
 
