@@ -104,21 +104,20 @@ fun ArticleAdminCard(
             Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 OutlinedButton(
                     onClick = {
-                          openDialog.value = true
-                    },
-                    Modifier.size(90.dp,40.dp)
-                ) {
-                    Text(text  = stringResource(id = R.string.delete_button))
-                }
-
-                OutlinedButton(
-                    onClick = {
                         appVM.ppArticleVM.editArticle(articleData)
                         navigateUpTo(appVM.navController, Screen.EditArticle)
 
                     },
                     Modifier.size(90.dp,40.dp)) {
                     Text(text  = stringResource(id = R.string.edit_button))
+                }
+                OutlinedButton(
+                    onClick = {
+                          openDialog.value = true
+                    },
+                    Modifier.size(90.dp,40.dp)
+                ) {
+                    Text(text  = stringResource(id = R.string.delete_button))
                 }
             }
         }

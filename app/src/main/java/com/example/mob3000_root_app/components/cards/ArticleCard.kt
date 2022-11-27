@@ -21,15 +21,6 @@ import com.example.mob3000_root_app.data.apiResponse.ArticleData
 import com.example.mob3000_root_app.data.ArticleType
 
 
-//class FocusedArticleModel : ViewModel() {
-//    var focusedArticle by mutableStateOf<ArticleData?>(null)
-//        private set
-//
-//    fun focusArticle(focusArticle: ArticleData){
-//        focusedArticle = focusArticle
-//    }
-//}
-
 @Composable
 fun ArticleCard(
     navController: NavHostController,
@@ -58,6 +49,7 @@ fun ArticleCard(
             .height(contentHeight60per)
         , colors = testColors){
         BoxWithConstraints(Modifier.fillMaxSize()) {
+            // Vertical phone
             if(maxHeight>400.dp) {
                 Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
                     VerticalAsyncImage(image = image)
@@ -79,6 +71,7 @@ fun ArticleCard(
                     }
                 }
             } else {
+                // Horizontal phone
                 Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColAndViewMods) {
                     HorizontalAsyncImage(image = image)
                     Column(
