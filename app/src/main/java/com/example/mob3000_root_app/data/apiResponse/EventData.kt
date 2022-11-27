@@ -8,7 +8,7 @@ data class EventData(
     val dateTo: String,
     val address: String?,
     val description: String,
-    val image: String,
+    val image: String?,
     val participants: List<Participant>,
     val postedAt: String,
     val title: String

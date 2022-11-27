@@ -41,7 +41,7 @@ fun ArticleFull(
 
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    var scrollState = rememberScrollState()
+    val scrollState = rememberScrollState()
     val image = articleVM.focusedArticle.image ?: "defaultArticle.png"
 
     val articleData = articleVM.focusedArticle
@@ -120,6 +120,7 @@ fun ArticleFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
+                        focusManager = focusManager,
                         appVM = appVM,
                         articleID = articleData._id
                     )

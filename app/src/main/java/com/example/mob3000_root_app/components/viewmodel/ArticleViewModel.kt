@@ -35,7 +35,7 @@ class ArticleViewModel : ViewModel() {
         }
     }
 
-    fun postComment(articleID: String, text: String) {
+    fun postComment(articleID: String, text: String, cb: (status: ResponseStatus?) -> Unit) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
@@ -43,9 +43,11 @@ class ArticleViewModel : ViewModel() {
                     "article",
                     CommentData(articleID, text)
                 )
+                cb.invoke( postedStatus )
                 Log.i("CommentStatus", postedStatus.toString())
             } catch (e: Exception) {
-                Log.i("Catch", e.message.toString())
+                cb.invoke( null )
+                Log.i("Post Comment: Catch", e.message.toString())
             }
         }
     }
@@ -78,16 +80,18 @@ class ArticleViewModel : ViewModel() {
 
     }
 
-    fun focusArticleByID(articleid: String){
+    fun focusArticleByID(articleid: String, cb: (Boolean) -> Unit){
 
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
                 focusedArticle = apiService.getArticleByID(articleid)
+                cb.invoke(true)
                 Log.i("Try: FocusArticleByID API Call", focusedArticle.toString())
             }
             catch (e: Exception){
-                Log.i("Catch", e.message.toString())
+                cb.invoke(false)
+                Log.i("Catch: ArticleByID", e.message.toString())
             }
         }
     }

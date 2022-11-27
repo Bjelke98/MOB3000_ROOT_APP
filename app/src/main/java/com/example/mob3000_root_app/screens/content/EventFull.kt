@@ -58,6 +58,7 @@ fun EventFull(
     var scrollState = rememberScrollState()
 
     val eventData = eventVM.focusedEvent
+    val image = eventVM.focusedEvent.image ?: "defaultEvent.png"
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -97,7 +98,7 @@ fun EventFull(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://linrik.herokuapp.com/api/resources/" + eventData.image)
+                    .data("https://linrik.herokuapp.com/api/resources/$image")
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.sauce),
@@ -235,6 +236,7 @@ fun EventFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
+                        focusManager = focusManager,
                         appVM = appVM,
                         eventId = eventData._id
                     )
