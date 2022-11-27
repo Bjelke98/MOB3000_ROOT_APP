@@ -262,7 +262,7 @@ fun EventFull(
                             if (!openComments) {
                                 R.drawable.ic_baseline_chat_bubble_outline_24
                             } else {
-                                R.drawable.ic_baseline_arrow_back_ios_24
+                                R.drawable.ic_baseline_keyboard_arrow_down_24
                             }
                         )
                     ),
