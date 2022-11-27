@@ -13,6 +13,7 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import com.example.mob3000_root_app.data.apiResponse.emptyEventData
 import com.example.mob3000_root_app.data.apiRequest.CommentData
 import com.example.mob3000_root_app.data.apiRequest.EventId
+import com.example.mob3000_root_app.data.apiResponse.Comment
 import kotlinx.coroutines.launch
 
 class EventViewModel : ViewModel() {
@@ -42,7 +43,7 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun postComment(eventID: String, text: String) {
+    fun postComment(eventID: String, text: String, cb:(ResponseStatus?) -> Unit) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
@@ -50,8 +51,10 @@ class EventViewModel : ViewModel() {
                     "event",
                     CommentData(eventID, text)
                 )
+                cb.invoke( postedStatus )
                 Log.i("CommentStatus", postedStatus.toString())
             } catch (e: Exception) {
+                cb.invoke( null )
                 Log.i("Catch", e.message.toString())
             }
         }
@@ -98,16 +101,20 @@ class EventViewModel : ViewModel() {
         }
     }
 
-    fun getEventByID(eventId: String){
+    fun getEventByID(eventId: String, cb: (Boolean) -> Unit){
 
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try{
                 eventByIDResponse = apiService.getEventByID(eventId)
+
+                Log.i("Try: Event API Call", "before Invoke")
+                cb.invoke(true)
                 Log.i("Try: Event API Call", eventByIDResponse.toString())
             }
             catch (e: Exception){
-                Log.i("Catch", e.message.toString())
+                cb.invoke(false)
+                Log.i("Catch: EventByID", e.message.toString())
             }
         }
     }
@@ -120,7 +127,7 @@ class EventViewModel : ViewModel() {
                 Log.i("adminLog", "event ble slettet")
                 cb.invoke(responseStatus)
             } catch (e: Exception){
-                Log.i("Error", e.message.toString())
+                Log.i("Catch: DeleteByID", e.message.toString())
                 cb.invoke(null)
             }
         }
@@ -129,6 +136,18 @@ class EventViewModel : ViewModel() {
     fun focusEvent(event: EventData){
         focusedEvent = event
     }
+
+    fun focusEventByID(eventID: String, cb: (Boolean) -> Unit){
+        getEventByID(eventID){ response ->
+            if(response) {
+                focusedEvent = eventByIDResponse
+                cb.invoke(true)
+            }
+            else
+                cb.invoke(false)
+        }
+    }
+
     fun prepFullEvent(event: EventData, cb: () -> Unit){
         focusEvent(event)
         getEventList()

@@ -3,7 +3,6 @@ import android.content.pm.*
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -36,7 +35,6 @@ import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 
@@ -59,6 +57,7 @@ fun EventFull(
     var scrollState = rememberScrollState()
 
     val eventData = eventVM.focusedEvent
+    val image = eventVM.focusedEvent.image ?: "defaultEvent.png"
     val coroutineScope = rememberCoroutineScope()
 
     //animasjon for kommentarer
@@ -114,7 +113,7 @@ fun EventFull(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://linrik.herokuapp.com/api/resources/" + eventData.image)
+                    .data("https://linrik.herokuapp.com/api/resources/$image")
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.sauce),
@@ -252,6 +251,7 @@ fun EventFull(
                         onCommentingChanged = { isCommenting = !isCommenting },
                         isCommenting = isCommenting,
                         keyboardController = keyboardController,
+                        focusManager = focusManager,
                         appVM = appVM,
                         eventId = eventData._id
                     )
