@@ -61,4 +61,31 @@
     <string name="confirm_delete">Er du sikker på av du vil slette:</string>
     <string name="fill_title_descr">Vennligst fyll alle felt</string>
     <string name="image_load_failed">Kunne ikke laste inn bilde</string>
+
+    <!-- AboutUs -->
+    <string name="name_adrian">Adrian Dahl</string>
+    <string name="name_henrik">Henrik Lindam</string>
+    <string name="name_olav">Olav Pålerud Lille-Østerholt</string>
+    <string name="name_john">John Ivar Hagene Lilleørene</string>
+    <string name="name_krister">Krister Iversen</string>
+    <string name="name_herman">Herman Firing Simonsen</string>
+
+    <string name="title_ceo">Direktør</string>
+    <string name="title_vice_principal">Viserektor</string>
+    <string name="title_cto">CTO</string>
+
+    <string name="desc_ceo">for Root</string>
+    <string name="desc_vice_principal_research">for forskning</string>
+    <string name="desc_vice_principal_education">for utdanning</string>
+    <string name="desc_cto">for Root IT-organisasjon</string>
+
+    <string name="faq_root">Hvem er Root?</string>
+    <string name="faq_comment">Hvor kommenterer jeg på artikkler?</string>
+    <string name="faq_event">Hvordan melder jeg meg på et arrangement?</string>
+    <string name="faq_regards">Vi ønsker deg en god dag!</string>
+
+    <string name="faq_root_answer">Linjeforening for IT og Informasjonssystemer</string>
+    <string name="faq_comment_answer">Klikk på en artikkel, så klikk på pilen i bunnen og et tekstfelt skal dukke opp!</string>
+    <string name="faq_event_answer">Du går på enten arrangement siden eller hjem siden og klikker på Bli med</string>
+    <string name="faq_regards_answer">Hilsen MOB3000 Gruppe 2 :)</string>
 </resources>
