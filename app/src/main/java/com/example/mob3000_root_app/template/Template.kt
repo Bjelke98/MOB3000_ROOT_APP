@@ -47,12 +47,12 @@ fun Template(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             // Profile
             if(loginVM.loginStatusResponse.user==null){
-                DropdownMenuItem(text = {stringResource(id = R.string.login)}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
-                DropdownMenuItem(text = { stringResource(id = R.string.register) }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+                DropdownMenuItem(text = { Text(stringResource(id = R.string.login))}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+                DropdownMenuItem(text = { Text( stringResource(id = R.string.register)) }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
             } else {
-                DropdownMenuItem(text = { Text(stringResource(id = R.string.profile)) }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
-                DropdownMenuItem(text = { Text(stringResource(id = R.string.settings)) }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
-                DropdownMenuItem(text = { Text(stringResource(id = R.string.log_out)) }, onClick = { expanded = false; loginVM.logoutUser() ;navigateUpTo(navController, Screen.Home) })
+                DropdownMenuItem(text = { Text(text = stringResource(id = R.string.profile)) }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
+                DropdownMenuItem(text = { Text(text = stringResource(id = R.string.settings)) }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+                DropdownMenuItem(text = { Text(text = stringResource(id = R.string.log_out)) }, onClick = { expanded = false; loginVM.logoutUser() ;navigateUpTo(navController, Screen.Home) })
             }
 //            DropdownMenuItem(text = { Text(text = "Login") }, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
 //            DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
