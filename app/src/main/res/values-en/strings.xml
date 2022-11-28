@@ -28,7 +28,7 @@
     <string name="setting_delete_user">Delete User</string>
     <string name="setting_change_name">Change Name</string>
     <string name="setting_change_password">Change Password</string>
-    <string name="setting_new_password">Nytt Passord</string>
+    <string name="setting_new_password">New Password</string>
     <string name="setting_confirm_password">Confirm Password</string>
     <string name="setting_old_password">Old Password</string>
     <string name="show_password">show password</string>
