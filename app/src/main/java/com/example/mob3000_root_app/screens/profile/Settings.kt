@@ -93,7 +93,7 @@ fun Settings(appVM: AppViewModel) {
                 if (passwordSelected){ changePassword(loginVM) }
 
                 // column for å slette bruker
-                if (deleteUserSelected){ deleteUser(loginVM) }
+                if (deleteUserSelected){ deleteUser(appVM) }
                 }
             }
         }

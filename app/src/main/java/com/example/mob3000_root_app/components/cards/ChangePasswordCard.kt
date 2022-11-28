@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.getSelectedText
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
@@ -85,7 +86,7 @@ fun changePassword(
                 .align(Alignment.End)){
             Button(onClick = {
                 if (password.text.equals(confirmPassword.text)){
-                    loginViewModel.changePassword(PasswordChange(password.text, oldPassword.text)){ status: ResponseStatus? ->
+                    loginViewModel.changePassword(PasswordChange(password = oldPassword.text, newPassword = password.text)){ status: ResponseStatus? ->
                         if (status != null) {
                             if(status.status!=210){
                                 Toast.makeText(context, passwordChangeToastText, Toast.LENGTH_SHORT).show()

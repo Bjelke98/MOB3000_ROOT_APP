@@ -107,7 +107,8 @@ interface RootService {
     @PUT("user/all")
     suspend fun updateUser(@Body nameChange: NameChange): ResponseStatus// trenger samme data som registrer
 
-    @DELETE("user")
+    @Headers("Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
     suspend fun deleteUser(@Body deleteUser: DeleteUser): ResponseStatus // trenger passord
 
     @GET("user/logout")

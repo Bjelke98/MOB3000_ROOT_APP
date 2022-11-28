@@ -19,6 +19,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.data.apiRequest.DeleteUser
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
@@ -26,8 +29,9 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun deleteUser(
-    loginViewModel: LoginViewModel
+    appVM: AppViewModel
 ) {
+    val loginViewModel = appVM.loginVM
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -63,6 +67,7 @@ fun deleteUser(
         val context = LocalContext.current
         val userDeletedToastText = stringResource(id = R.string.toast_user_deleted)
         val somethingWentWrongToastText = stringResource(id = R.string.toast_something_went_wrong)
+        val writeSamePasswordToastText = stringResource(id = R.string.toast_write_same_password)
         Row(
             Modifier
                 .padding(5.dp)
@@ -72,13 +77,15 @@ fun deleteUser(
                     loginViewModel.deleteUser(DeleteUser(password.text)){ status: ResponseStatus? ->
                         if (status != null) {
                             if(status.status!=210){
+                                loginViewModel.getLoginStatus()
+                                navigateUpTo(appVM.navController, Screen.Home)
                                 Toast.makeText(context, userDeletedToastText, Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                             }
                         } else Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                     }
-                }
+                } else Toast.makeText(context, writeSamePasswordToastText, Toast.LENGTH_SHORT).show()
             }) {
                 Text(stringResource(id = R.string.setting_delete_user))
             }

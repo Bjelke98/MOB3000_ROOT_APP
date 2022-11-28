@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             navController = rememberNavController()
             loginViewModel = LoginViewModel()
+            loginViewModel.loginUser(UserLoginInfo("slett@mail.no", "1234"))
             loginViewModel.getLoginStatus()
             appViewModel = AppViewModel(
                 navController = navController,
