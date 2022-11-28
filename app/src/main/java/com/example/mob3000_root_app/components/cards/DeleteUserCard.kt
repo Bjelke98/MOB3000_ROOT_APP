@@ -21,21 +21,25 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
+import com.example.mob3000_root_app.components.navigation.Screen
+import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.apiRequest.DeleteUser
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeleteUser(
-    loginViewModel: LoginViewModel
+    appVM: AppViewModel
 ) {
+    val loginViewModel = appVM.loginVM
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
 
     val context = LocalContext.current
     val successToast = Toast.makeText(context, stringResource(id = R.string.toast_user_deleted), Toast.LENGTH_SHORT)
     val errorToast = Toast.makeText(context, stringResource(id = R.string.toast_something_went_wrong), Toast.LENGTH_SHORT)
+    val writeSamePassToast = Toast.makeText(context, stringResource(id = R.string.toast_user_deleted), Toast.LENGTH_SHORT)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall)
@@ -64,7 +68,7 @@ fun DeleteUser(
             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    DeleteUser(loginViewModel,password, confirmPassword, successToast, errorToast)
+                    deleteUser(appVM,password, confirmPassword, successToast, errorToast, writeSamePassToast)
                 }
             ),
             visualTransformation= PasswordVisualTransformation(),
@@ -72,13 +76,12 @@ fun DeleteUser(
                 confirmPassword=it
             }
         )
-
         Row(
             Modifier
                 .padding(5.dp)
                 .align(Alignment.End)){
             Button(onClick = {
-                DeleteUser(loginViewModel,password, confirmPassword, successToast, errorToast)
+                deleteUser(appVM,password, confirmPassword, successToast, errorToast,writeSamePassToast)
             }) {
                 Text(stringResource(id = R.string.setting_delete_user))
             }
@@ -86,17 +89,20 @@ fun DeleteUser(
     }
 }
 
-private fun DeleteUser(
-    loginVN: LoginViewModel,
+private fun deleteUser(
+    appVM: AppViewModel,
     password: TextFieldValue,
     confirmPassword: TextFieldValue,
     successToast:Toast,
-    errorToast: Toast
+    errorToast: Toast,
+    writeSamePassToast:Toast
 ){
     if (password.text.equals(confirmPassword.text)) {
-        loginVN.deleteUser(DeleteUser(password.text)) { status: ResponseStatus? ->
+        appVM.loginVM.deleteUser(DeleteUser(password.text)) { status: ResponseStatus? ->
             if (status != null) {
                 if (status.status != 210) {
+                    appVM.loginVM.getLoginStatus()
+                    navigateUpTo(appVM.navController, Screen.Home)
                     successToast.show()
                 } else {
                     errorToast.show()
@@ -104,4 +110,5 @@ private fun DeleteUser(
             } else errorToast.show()
         }
     }
+    else writeSamePassToast.show()
 }

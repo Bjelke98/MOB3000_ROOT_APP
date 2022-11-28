@@ -16,8 +16,6 @@ import java.net.CookiePolicy
 
 interface RootService {
 
-
-
     // Article API
     @GET("article")
     suspend fun getArticles(): List<ArticleData>
@@ -55,6 +53,7 @@ interface RootService {
     suspend fun postEvent(
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
+        @Part("address") address: RequestBody?,
         @Part("dateFrom") dateFrom: RequestBody,
         @Part("dateTo") dateTo: RequestBody,
         @Part body: MultipartBody.Part?,
@@ -66,6 +65,7 @@ interface RootService {
         @Part("eventid") eventid : RequestBody,
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
+        @Part("address") address: RequestBody?,
         @Part("dateFrom") dateFrom: RequestBody,
         @Part("dateTo") dateTo: RequestBody,
         @Part body: MultipartBody.Part?,
@@ -107,7 +107,8 @@ interface RootService {
     @PUT("user/all")
     suspend fun updateUser(@Body nameChange: NameChange): ResponseStatus// trenger samme data som registrer
 
-    @DELETE("user")
+    @Headers("Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
     suspend fun deleteUser(@Body deleteUser: DeleteUser): ResponseStatus // trenger passord
 
     @GET("user/logout")

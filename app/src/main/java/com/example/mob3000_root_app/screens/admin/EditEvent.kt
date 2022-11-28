@@ -33,7 +33,6 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,10 +53,16 @@ fun EditEvent(appVM: AppViewModel) {
             else appVM.ppEventVM.focusedEvent.description
         )
     }
+    var address by remember {
+        mutableStateOf(
+            if (isNewEvent) ""
+            else appVM.ppEventVM.focusedEvent.address
+        )
+    }
     val image = if(!ppEventVM.isNewEvent)
     {ppEventVM.focusedEvent.image ?: "defaultEvent.png" }
     else
-        { "defaultArticle.png" }
+        { "defaultEvent.png" }
     var isImageChosen by remember { mutableStateOf(false) }
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -147,8 +152,10 @@ fun EditEvent(appVM: AppViewModel) {
         dateTimeFrom.minute,
         true
     )
+// Kode for å prøve å legge til overskrift når man setter inn tid. (Fra/Til tid)
+// venter på at det kommer til compose :)
 
-//    val timeFrom = MaterialTimePicker.Builder() venter på at det kommer til compose :)
+//    val timeFrom = MaterialTimePicker.Builder()
 //        .setTimeFormat(CLOCK_24H)
 //        .setHour(dateTimeFrom.hour)
 //        .setMinute(dateTimeFrom.minute)
@@ -194,7 +201,7 @@ fun EditEvent(appVM: AppViewModel) {
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
                         if(appVM.ppEventVM.isNewEvent)
-                            ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
+                            ppEventVM.postEvent(title, description, address, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
                                 if (status != null) {
                                     if(status.status!=210){
                                         toastSuccessCreate.show()
@@ -207,6 +214,7 @@ fun EditEvent(appVM: AppViewModel) {
                             ppEventVM.updateEvent(
                                 title,
                                 description,
+                                address,
                                 dateTimeFrom,
                                 dateTimeTo,
                                 ppEventVM.focusedEvent._id,
@@ -267,21 +275,19 @@ fun EditEvent(appVM: AppViewModel) {
                         label = { Text(stringResource(id = R.string.edit_card_description)) }
                     )
 
-                    ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
 
-                    Row() {
-                        Button(onClick = {
-                            datePickerDialog.show()
-                        }) {
-                            Text(stringResource(R.string.datepicker_select_date))
-                        }
-
-                        Button(onClick = {
-                            timePickerDialog.show()
-                        }) {
-                            Text(stringResource(R.string.datepicker_hour))
-                        }
+                    if(address==null)address=""
+                    address?.let {
+                        TextField(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            value = it,
+                            onValueChange = { address = it },
+                            label = { Text(stringResource(id = R.string.address)) }
+                        )
                     }
+
+                    ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
 
                     Button(onClick = {
                         launcher.launch("image/*")

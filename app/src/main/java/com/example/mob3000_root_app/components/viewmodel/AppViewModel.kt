@@ -35,6 +35,7 @@ class AppViewModel(
 }
 
 // Kilde: https://stackoverflow.com/questions/67768746/chaining-modifier-based-on-certain-conditions-in-android-compose
+// Metode som legger til et alternativ for if/else i modifier (Design)
 fun Modifier.conditional(
     condition: Boolean,
     ifTrue: Modifier.() -> Modifier,

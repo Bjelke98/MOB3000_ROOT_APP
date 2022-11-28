@@ -21,7 +21,6 @@ class ArticleViewModel : ViewModel() {
     var errorMessage: String by mutableStateOf("")
     var focusedArticle by mutableStateOf(emptyArticleData)
         private set
-    val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
     fun getArticleList() {
         viewModelScope.launch {

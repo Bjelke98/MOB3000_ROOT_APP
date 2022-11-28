@@ -25,7 +25,6 @@ class EventViewModel : ViewModel() {
     var errorMessage: String by mutableStateOf("")
     var focusedEvent by mutableStateOf(emptyEventData)
         private set
-    val postedStatus: ResponseStatus by mutableStateOf(ResponseStatus(0))
 
     fun getEventList() {
         viewModelScope.launch {

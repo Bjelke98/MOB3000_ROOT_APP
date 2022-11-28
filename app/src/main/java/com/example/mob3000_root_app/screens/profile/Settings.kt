@@ -79,9 +79,10 @@ fun Settings(appVM: AppViewModel) {
                     Button(
                         onClick = {
                             deleteUserSelected = !deleteUserSelected
-                            if(deleteUserSelected)
+                            if(deleteUserSelected) {
                                 nameSelected = false
-                            passwordSelected = false
+                                passwordSelected = false
+                            }
                         },
                     ) {
                         Text(stringResource(id = R.string.setting_delete_user))
@@ -96,7 +97,7 @@ fun Settings(appVM: AppViewModel) {
                 if (passwordSelected){ ChangePassword(loginVM) }
 
                 // column for å slette bruker
-                if (deleteUserSelected){ DeleteUser(loginVM) }
+                if (deleteUserSelected){ DeleteUser(appVM) }
                 }
             }
         }

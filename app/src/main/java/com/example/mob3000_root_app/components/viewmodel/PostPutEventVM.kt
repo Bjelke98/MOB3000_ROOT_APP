@@ -46,7 +46,7 @@ class PostPutEventVM: ViewModel() {
         isNewEvent = false
     }
 
-    fun updateEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, eventID: String, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit){
+    fun updateEvent(title: String, description: String, address: String?, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, eventID: String, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit){
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -108,9 +108,12 @@ class PostPutEventVM: ViewModel() {
                 val eventIDPart: RequestBody = eventID.toRequestBody("text/plain".toMediaTypeOrNull())
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+                var addressPart: RequestBody?
+                addressPart = address?.toRequestBody("text/plain".toMediaTypeOrNull())
+                if(address==null || address.isEmpty()) addressPart=null
                 val dateFromPart: RequestBody = dateFrom.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                 val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-                val response: ResponseStatus = apiService.updateEvent(eventIDPart, titlePart, descriptionPart, dateFromPart, dateToPart, body)
+                val response: ResponseStatus = apiService.updateEvent(eventIDPart, titlePart, descriptionPart, addressPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
                 cb.invoke(response)
             }
@@ -122,7 +125,7 @@ class PostPutEventVM: ViewModel() {
         }
     }
 
-    fun postEvent(title: String, description: String, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit) {
+    fun postEvent(title: String, description: String, address: String?, dateFrom: OffsetDateTime, dateTo: OffsetDateTime, imageUri: Uri?, context: Context, cb: (status: ResponseStatus?)->Unit) {
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             Log.i("UploadTest", "Start trycatch")
@@ -164,7 +167,6 @@ class PostPutEventVM: ViewModel() {
                         Log.i("Catch", ex.toString())
                     }
                 } else {
-
                     Log.i("Catch", "Old Version of Android")
 //                eventuell håndtering av gamle versjoner
                 }
@@ -183,9 +185,12 @@ class PostPutEventVM: ViewModel() {
                 }
                 val titlePart: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                 val descriptionPart: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+                var addressPart: RequestBody?
+                addressPart = address?.toRequestBody("text/plain".toMediaTypeOrNull())
+                if(address==null || address.isEmpty()) addressPart=null
                 val dateFromPart: RequestBody = dateFrom.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                 val dateToPart: RequestBody = dateTo.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-                val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, dateFromPart, dateToPart, body)
+                val response: ResponseStatus = apiService.postEvent(titlePart, descriptionPart, addressPart, dateFromPart, dateToPart, body)
                 Log.i("UploadTest", response.toString())
                 cb.invoke(response)
             }

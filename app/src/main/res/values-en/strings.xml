@@ -28,7 +28,7 @@
     <string name="setting_delete_user">Delete User</string>
     <string name="setting_change_name">Change Name</string>
     <string name="setting_change_password">Change Password</string>
-    <string name="setting_new_password">Nytt Passord</string>
+    <string name="setting_new_password">New Password</string>
     <string name="setting_confirm_password">Confirm Password</string>
     <string name="setting_old_password">Old Password</string>
     <string name="show_password">show password</string>
@@ -39,6 +39,9 @@
     <string name="post_article_button">Post Article!</string>
     <string name="recent_articles">Recent Articles</string>
     <string name="read_more">READ MORE</string>
+    <string name="single_article">Article</string>
+    <string name="article_admin">Article Admin</string>
+    <string name="edit_article">Edit Article</string>
 
     <!-- Events -->
     <string name="join">Join</string>
@@ -53,6 +56,9 @@
     <string name="edit_event_lead_text">Edit Event</string>
     <string name="details_event">DETAILS</string>
     <string name="address">Address</string>
+    <string name="single_event">Event</string>
+    <string name="event_admin">Event Admin</string>
+    <string name="edit_event">Edit Event</string>
 
     <!-- Toast -->
     <string name="toast_name_changed">Navn endret</string>

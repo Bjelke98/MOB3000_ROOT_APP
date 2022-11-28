@@ -94,7 +94,15 @@ fun ChangePassword(
                 .padding(5.dp)
                 .align(Alignment.End)){
             Button(onClick = {
-                ChangePassword(loginViewModel, password, confirmPassword,oldPassword,successToast,errorToast,samePassToast)
+                ChangePassword(
+                    loginViewModel,
+                    password,
+                    confirmPassword,
+                    oldPassword,
+                    successToast,
+                    errorToast,
+                    samePassToast
+                )
             }) {
                 Text(stringResource(id = R.string.setting_change_password))
             }
@@ -112,7 +120,7 @@ private fun ChangePassword(
     samePassToast: Toast
 ){
     if (password.text.equals(confirmPassword.text)){
-        loginViewModel.changePassword(PasswordChange(password.text, oldPassword.text)){ status: ResponseStatus? ->
+        loginViewModel.changePassword(PasswordChange(oldPassword.text, password.text)){ status: ResponseStatus? ->
             if (status != null) {
                 if(status.status!=210){
                     successToast.show()
