@@ -57,7 +57,7 @@ fun EditEvent(appVM: AppViewModel) {
     val image = if(!ppEventVM.isNewEvent)
     {ppEventVM.focusedEvent.image ?: "defaultEvent.png" }
     else
-        { "defaultArticle.png" }
+        { "defaultEvent.png" }
     var isImageChosen by remember { mutableStateOf(false) }
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -269,19 +269,6 @@ fun EditEvent(appVM: AppViewModel) {
 
                     ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
 
-                    Row() {
-                        Button(onClick = {
-                            datePickerDialog.show()
-                        }) {
-                            Text(stringResource(R.string.datepicker_select_date))
-                        }
-
-                        Button(onClick = {
-                            timePickerDialog.show()
-                        }) {
-                            Text(stringResource(R.string.datepicker_hour))
-                        }
-                    }
 
                     Button(onClick = {
                         launcher.launch("image/*")
