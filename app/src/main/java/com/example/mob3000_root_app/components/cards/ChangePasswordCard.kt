@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.getSelectedText
 import androidx.compose.ui.unit.dp
 import com.example.mob3000_root_app.R
 import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
