@@ -1,5 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--  Legg til engelsk oversettelse  -->
+    <!--  Legg til engelsk oversettelse  -->
     <string name="nav_label_home">Home</string>
+    <string name="nav_label_about_us">About us</string>
+    <string name="nav_label_articles">Articles</string>
+    <string name="nav_label_events">Events</string>
+    <string name="nav_label_manage_articles">Handle Articles</string>
+    <string name="comment_textfield_placeholder">Write what you think!</string>
+    <!-- User -->
+    <string name="email">Email</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="login">Login</string>
+    <string name="log_out">Logout</string>
+    <string name="roles">Roles</string>
+    <string name="admin_role">Admin,&#160;</string>
+    <string name="editor_role">Editor,&#160;</string>
+    <string name="root_role">Root member,&#160;</string>
+    <string name="example_mail">example@hotmail.com</string>
+    <string name="write_lastname">Write lastname</string>
+    <string name="write_firstname">Write firstname</string>
+    <string name="password">Password</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="register">Register</string>
+    <string name="already_user">Already user? Login here.</string>
+    <string name="setting_delete_user">Delete User</string>
+    <string name="setting_change_name">Change Name</string>
+    <string name="setting_change_password">Change Password</string>
+    <string name="setting_new_password">Nytt Passord</string>
+    <string name="setting_confirm_password">Confirm Password</string>
+    <string name="setting_old_password">Old Password</string>
+    <string name="show_password">show password</string>
+    <string name="hide_password">hide password</string>
+    <string name="placeholder_pw">********</string>
+
+    <!-- Article -->
+    <string name="post_article_button">Post Article!</string>
+    <string name="recent_articles">Recent Articles</string>
+    <string name="read_more">READ MORE</string>
+
+    <!-- Events -->
+    <string name="join">Join</string>
+    <string name="sign_off">Joined</string>
+    <string name="interested">is interested</string>
+    <string name="recent_events">Recent Events</string>
+    <string name="nav_label_manage_events">Handle Events</string>
+    <string name="datepicker_select_date">Pick Date</string>
+    <string name="datepicker_from_button">Pick Date From</string>
+    <string name="datepicker_to_button">Pick Date To</string>
+    <string name="datepicker_hour">Pick Time</string>
+    <string name="edit_event_lead_text">Edit Event</string>
+    <string name="details_event">DETAILS</string>
+    <string name="address">Address</string>
+
+    <!-- Toast -->
+    <string name="toast_name_changed">Navn endret</string>
+    <string name="toast_write_same_password">Må skrive likt passord</string>
+    <string name="toast_password_changed">Passord endret</string>
+    <string name="toast_something_went_wrong">Noe gikk galt</string>
+    <string name="toast_user_deleted">Bruker slettet</string>
+    <string name="toast_login_error">Login error, please try again</string>
+    <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
+    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
+    <string name="toast_error_update_toast">Noe gikk galt under endring</string>
+    <string name="toast_success_update_toast">Noe gikk galt under endring</string>
+    <string name="toast_error_create_toast">Noe gikk galt under oppretning</string>
+    <string name="toast_success_create_toast">Arrangement opprettet!</string>
+    <string name="toast_event_deleted">Arrangement slettet</string>
+
+    <!-- general -->
+    <string name="positive_button">OK</string>
+    <string name="negative_button">Avbryt</string>
+    <string name="exempel">Eksempel</string>
+    <string name="upload_picture_button">Velg Bilde</string>
+    <string name="edit_card_title">Tittel</string>
+    <string name="edit_card_description">Beskrivelse</string>
+    <string name="delete_button">Slett</string>
+    <string name="cancel_button">Avbryt</string>
+    <string name="edit_button">Rediger</string>
+    <string name="confirm_delete">Er du sikker på av du vil slette:</string>
+    <string name="fill_title_descr">Vennligst fyll alle felt</string>
+    <string name="image_load_failed">Kunne ikke laste inn bilde</string>
+
+    <!-- AboutUs -->
+    <string name="name_adrian">Adrian Dahl</string>
+    <string name="name_henrik">Henrik Lindam</string>
+    <string name="name_olav">Olav Pålerud Lille-Østerholt</string>
+    <string name="name_john">John Ivar Hagene Lilleørene</string>
+    <string name="name_krister">Krister Iversen</string>
+    <string name="name_herman">Herman Firing Simonsen</string>
+
+    <string name="title_ceo">Direktør</string>
+    <string name="title_vice_principal">Viserektor</string>
+    <string name="title_cto">CTO</string>
+
+    <string name="desc_ceo">for Root</string>
+    <string name="desc_vice_principal_research">for forskning</string>
+    <string name="desc_vice_principal_education">for utdanning</string>
+    <string name="desc_cto">for Root IT-organisasjon</string>
+
+    <string name="faq_root">Hvem er Root?</string>
+    <string name="faq_comment">Hvor kommenterer jeg på artikkler?</string>
+    <string name="faq_event">Hvordan melder jeg meg på et arrangement?</string>
+    <string name="faq_regards">Vi ønsker deg en god dag!</string>
+
+    <string name="faq_root_answer">Linjeforening for IT og Informasjonssystemer</string>
+    <string name="faq_comment_answer">Klikk på en artikkel, så klikk på pilen i bunnen og et tekstfelt skal dukke opp!</string>
+    <string name="faq_event_answer">Du går på enten arrangement siden eller hjem siden og klikker på Bli med</string>
+    <string name="faq_regards_answer">Hilsen MOB3000 Gruppe 2 :)</string>
 </resources>
