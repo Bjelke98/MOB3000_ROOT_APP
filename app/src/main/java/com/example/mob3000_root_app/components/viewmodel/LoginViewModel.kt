@@ -108,7 +108,6 @@ class LoginViewModel : ViewModel(){
     }
 
     fun deleteUser(deleteUser: DeleteUser, cb: (status: ResponseStatus)-> Unit){
-        print("Start")
         viewModelScope.launch {
             val apiService = RootService.getInstance()
             try {
