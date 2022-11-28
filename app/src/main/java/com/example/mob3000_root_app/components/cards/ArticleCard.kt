@@ -9,7 +9,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -148,6 +150,6 @@ fun ReadMoreButton(navController: NavHostController, focusArticle: () -> Unit) {
         focusArticle()
         navigateUpTo(navController, Screen.ArticleFull)
     }) {
-        Text(text = ("les mer").uppercase())
+        Text(stringResource(id = R.string.read_more))
     }
 }

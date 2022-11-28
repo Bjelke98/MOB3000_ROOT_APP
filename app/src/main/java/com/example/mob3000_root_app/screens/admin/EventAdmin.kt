@@ -20,9 +20,6 @@ import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 fun EventAdmin (
     appVM: AppViewModel,
 ) {
-    val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background)
-
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

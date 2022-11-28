@@ -34,6 +34,9 @@ fun ArticleAdminCard(
     val openDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
 
+
+    val errorDeletingArticle = stringResource(id = R.string.toast_error_delete_article)
+
     if (openDialog.value){
         AlertDialog(
             onDismissRequest = {
@@ -52,7 +55,8 @@ fun ArticleAdminCard(
                             if(status!=null){
                                 appVM.articleVM.getArticleList()
                             } else {
-                                Toast.makeText(context, "Error deleting event", Toast.LENGTH_LONG).show()
+
+                                Toast.makeText(context, errorDeletingArticle, Toast.LENGTH_LONG).show()
                             }
                         }
                         openDialog.value = false

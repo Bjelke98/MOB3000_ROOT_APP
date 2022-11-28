@@ -117,13 +117,14 @@ fun Login(
                         Text(stringResource(id = R.string.register))
                     }
                     val context = LocalContext.current
+                    val loginError = stringResource(id = R.string.toast_login_error)
                     Button(
                         onClick = {
                             loginVM.loginUser(UserLoginInfo(epost.text, password.text)){ cbLoginStatus->
                                 if(cbLoginStatus.loginStatus) {
                                     navigateUpTo(navController, Screen.Home)
                                 } else {
-                                    Toast.makeText(context, "Login error, please try again", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, loginError, Toast.LENGTH_LONG).show()
                                 }
                             }
                         },

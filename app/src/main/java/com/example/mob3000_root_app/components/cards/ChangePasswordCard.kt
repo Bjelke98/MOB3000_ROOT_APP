@@ -68,7 +68,7 @@ fun changePassword(
                 .padding(8.dp)
                 .fillMaxWidth(),
             label={ Text(text= stringResource(id = R.string.setting_old_password)) },
-            placeholder={ Text(text="********") },
+            placeholder={ Text(stringResource(id = R.string.placeholder_pw)) },
             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
             visualTransformation= PasswordVisualTransformation(),
             onValueChange={
@@ -76,6 +76,9 @@ fun changePassword(
             }
         )
         val context = LocalContext.current;
+        val passwordChangeToastText = stringResource(id = R.string.toast_password_changed)
+        val somethingWentWrongToastText = stringResource(id = R.string.toast_something_went_wrong)
+        val writeSamePasswordToastText = stringResource(id = R.string.toast_write_same_password)
         Row(
             Modifier
                 .padding(5.dp)
@@ -85,15 +88,14 @@ fun changePassword(
                     loginViewModel.changePassword(PasswordChange(password.text, oldPassword.text)){ status: ResponseStatus? ->
                         if (status != null) {
                             if(status.status!=210){
-                                Toast.makeText(context, "Passord endret", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, passwordChangeToastText, Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
                 } else{
-                    Toast.makeText(context, "må skrive likt passord", Toast.LENGTH_SHORT).show()
-                    //må skrive likt passord
+                    Toast.makeText(context, writeSamePasswordToastText, Toast.LENGTH_SHORT).show()
                 }
 
             }) {

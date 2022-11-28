@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -136,7 +137,7 @@ fun DetailsButton(appVM: AppViewModel, event: EventData) {
         }
     }) {
         Text(
-            text = ("detaljer").uppercase()
+            text = stringResource(id = R.string.details_event)
         )
     }
 }
@@ -171,7 +172,7 @@ fun EventImage(image: String, event: EventData, imageModifier: Modifier) {
 
 @Composable
 fun EventPreviewDetails(event: EventData) {
-    val address: String = if (event.address == null)  "Adresse" else event.address
+    val address: String = if (event.address == null)  stringResource(id = R.string.address) else event.address
     val dateTimeFrom = Instant.parse(event.dateFrom).atOffset(
         ZoneOffset.ofHours(2))
     val dateTimeTo = Instant.parse(event.dateTo).atOffset(ZoneOffset.ofHours(2))

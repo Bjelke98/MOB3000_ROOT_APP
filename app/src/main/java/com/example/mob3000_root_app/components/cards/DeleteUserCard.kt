@@ -53,7 +53,7 @@ fun deleteUser(
                 .padding(8.dp)
                 .fillMaxWidth(),
             label={ Text(text= stringResource(id = R.string.setting_confirm_password)) },
-            placeholder={ Text(text="********") },
+            placeholder={ Text(stringResource(id = R.string.placeholder_pw)) },
             keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
             visualTransformation= PasswordVisualTransformation(),
             onValueChange={
@@ -61,6 +61,8 @@ fun deleteUser(
             }
         )
         val context = LocalContext.current
+        val userDeletedToastText = stringResource(id = R.string.toast_user_deleted)
+        val somethingWentWrongToastText = stringResource(id = R.string.toast_something_went_wrong)
         Row(
             Modifier
                 .padding(5.dp)
@@ -70,11 +72,11 @@ fun deleteUser(
                     loginViewModel.deleteUser(DeleteUser(password.text)){ status: ResponseStatus? ->
                         if (status != null) {
                             if(status.status!=210){
-                                Toast.makeText(context, "Bruker Slettet", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, userDeletedToastText, Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                             }
-                        } else Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                        } else Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                     }
                 }
             }) {

@@ -9,7 +9,10 @@
     <string name="comment_textfield_placeholder">Skriv hva nå enn du tenker!</string>
     <!-- User -->
     <string name="email">Epost</string>
-    <string name="login">Log inn</string>
+    <string name="profile">Profil</string>
+    <string name="settings">Instillinger</string>
+    <string name="login">Logg inn</string>
+    <string name="log_out">Logg ut</string>
     <string name="roles">Roller</string>
     <string name="admin_role">Administrator,&#160;</string>
     <string name="editor_role">Redaktør,&#160;</string>
@@ -30,11 +33,12 @@
     <string name="setting_old_password">Gammelt Passord</string>
     <string name="show_password">vis passord</string>
     <string name="hide_password">gjem passord</string>
+    <string name="placeholder_pw">********</string>
 
     <!-- Article -->
     <string name="post_article_button">Publiser Artikkel!</string>
-    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
     <string name="recent_articles">Nylige Artikkler</string>
+    <string name="read_more">LES MER</string>
 
     <!-- Events -->
     <string name="join">Bli med</string>
@@ -47,12 +51,23 @@
     <string name="datepicker_to_button">Velg Dato Til</string>
     <string name="datepicker_hour">Velg Klokkeslett</string>
     <string name="edit_event_lead_text">Rediger Arrangement</string>
+    <string name="details_event">DETALJER</string>
+    <string name="address">Adresse</string>
 
+    <!-- Toast -->
+    <string name="toast_name_changed">Navn endret</string>
+    <string name="toast_write_same_password">Må skrive likt passord</string>
+    <string name="toast_password_changed">Passord endret</string>
+    <string name="toast_something_went_wrong">Noe gikk galt</string>
+    <string name="toast_user_deleted">Bruker slettet</string>
+    <string name="toast_login_error">Login error, please try again</string>
     <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
+    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
     <string name="toast_error_update_toast">Noe gikk galt under endring</string>
     <string name="toast_success_update_toast">Noe gikk galt under endring</string>
     <string name="toast_error_create_toast">Noe gikk galt under oppretning</string>
     <string name="toast_success_create_toast">Arrangement opprettet!</string>
+    <string name="toast_event_deleted">Arrangement slettet</string>
 
     <!-- general -->
     <string name="positive_button">OK</string>

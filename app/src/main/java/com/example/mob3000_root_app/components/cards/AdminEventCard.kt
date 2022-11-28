@@ -53,6 +53,8 @@ fun AdminEventCard(
             openDialog.value = true
         }
     )
+    val eventDeleted = stringResource(id = R.string.toast_event_deleted)
+    val eventDeleteError = stringResource(id = R.string.toast_error_delete_event)
     val context = LocalContext.current
     if (openDialog.value){
         AlertDialog(
@@ -70,10 +72,10 @@ fun AdminEventCard(
                     onClick = {
                         appVM.eventVM.deleteEventById(eventData._id){ status: ResponseStatus? ->
                             if(status!=null){
-                                Toast.makeText(context, "Arrangement slettet", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, eventDeleted, Toast.LENGTH_SHORT).show()
                                 appVM.eventVM.getEventList()
                             } else {
-                                Toast.makeText(context, "Error deleting event", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, eventDeleteError, Toast.LENGTH_LONG).show()
                             }
                         }
                         openDialog.value = false

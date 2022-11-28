@@ -60,6 +60,8 @@ fun changeName(
             }
         )
         val context = LocalContext.current
+        val nameChangedToastText = stringResource(id = R.string.toast_name_changed)
+        val somethingWentWrongToastText = stringResource(id = R.string.toast_something_went_wrong)
         Row(
             Modifier
                 .padding(5.dp)
@@ -68,11 +70,11 @@ fun changeName(
                 loginViewModel.changeName(NameChange(firstname.text, lastname.text)){ status: ResponseStatus? ->
                     if (status != null) {
                         if(status.status!=210){
-                            Toast.makeText(context, "Navn endret", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, nameChangedToastText, Toast.LENGTH_SHORT).show()
                         } else {
-                            Toast.makeText(context, "Noe gikk galt", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                         }
-                    }
+                    } else Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
 
                 }
             }) {
