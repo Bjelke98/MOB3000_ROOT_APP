@@ -71,7 +71,6 @@
 
     <!-- general -->
     <string name="positive_button">OK</string>
-    <string name="negative_button">Avbryt</string>
     <string name="exempel">Eksempel</string>
     <string name="upload_picture_button">Velg Bilde</string>
     <string name="edit_card_title">Tittel</string>

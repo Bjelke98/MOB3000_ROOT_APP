@@ -55,7 +55,7 @@ fun EditEvent(appVM: AppViewModel) {
         )
     }
     val image = if(!ppEventVM.isNewEvent)
-    {ppEventVM.focusedEvent.image ?: "defaultArticle.png" }
+    {ppEventVM.focusedEvent.image ?: "defaultEvent.png" }
     else
         { "defaultArticle.png" }
     var isImageChosen by remember { mutableStateOf(false) }

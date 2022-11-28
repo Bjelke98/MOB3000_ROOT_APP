@@ -31,7 +31,7 @@ fun AdminEventCard(
     eventData : EventData,
     appVM: AppViewModel,
 ){
-    val image = eventData.image ?: "defaultEvent.jpg"
+    val image = eventData.image ?: "defaultEvent.png"
 
     val testColors= MaterialTheme.colorScheme.background
     val openDialog = remember { mutableStateOf(false) }
