@@ -37,6 +37,7 @@
 
     <!-- Article -->
     <string name="post_article_button">Publiser Artikkel!</string>
+    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
     <string name="recent_articles">Nylige Artikkler</string>
     <string name="read_more">LES MER</string>
 
@@ -55,19 +56,12 @@
     <string name="address">Adresse</string>
 
     <!-- Toast -->
-    <string name="toast_name_changed">Navn endret</string>
-    <string name="toast_write_same_password">Må skrive likt passord</string>
-    <string name="toast_password_changed">Passord endret</string>
-    <string name="toast_something_went_wrong">Noe gikk galt</string>
-    <string name="toast_user_deleted">Bruker slettet</string>
-    <string name="toast_login_error">Login error, please try again</string>
+    <string name="login_error">Login error, please try again</string>
     <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
-    <string name="toast_error_delete_article">Kunne ikke slette artikkel</string>
     <string name="toast_error_update_toast">Noe gikk galt under endring</string>
     <string name="toast_success_update_toast">Noe gikk galt under endring</string>
     <string name="toast_error_create_toast">Noe gikk galt under oppretning</string>
     <string name="toast_success_create_toast">Arrangement opprettet!</string>
-    <string name="toast_event_deleted">Arrangement slettet</string>
 
     <!-- general -->
     <string name="positive_button">OK</string>
