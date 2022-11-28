@@ -2,8 +2,6 @@ package com.example.mob3000_root_app.screens.admin
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Log
 import android.widget.DatePicker
@@ -19,19 +17,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
-import com.example.mob3000_root_app.components.cards.showDateAndTime
+import com.example.mob3000_root_app.components.scrollbar.Carousel
+import com.example.mob3000_root_app.components.cards.ShowDateAndTime
+import com.example.mob3000_root_app.components.image.ImageDisplayBox
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
+import com.example.mob3000_root_app.components.scrollbar.rememberCarouselScrollState
+import com.example.mob3000_root_app.components.scrollbar.verticalScroll
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import java.time.Instant
@@ -45,49 +41,61 @@ fun EditEvent(appVM: AppViewModel) {
 
     val isNewEvent = appVM.ppEventVM.isNewEvent
     val ppEventVM = appVM.ppEventVM
-    var title by remember { mutableStateOf(
-        if( isNewEvent) ""
-        else appVM.ppEventVM.focusedEvent.title
-    )}
-
-    var description by remember { mutableStateOf(
-        if( isNewEvent) ""
-        else appVM.ppEventVM.focusedEvent.description
-    )}
-
     val context = LocalContext.current
+    var title by remember {
+        mutableStateOf(
+            if (isNewEvent) ""
+            else appVM.ppEventVM.focusedEvent.title
+        )
+    }
+    var description by remember {
+        mutableStateOf(
+            if (isNewEvent) ""
+            else appVM.ppEventVM.focusedEvent.description
+        )
+    }
+    val image = if(!ppEventVM.isNewEvent)
+    {ppEventVM.focusedEvent.image ?: "defaultArticle.png" }
+    else
+        { "defaultArticle.png" }
+    var isImageChosen by remember { mutableStateOf(false) }
 
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    var imageUri by remember { mutableStateOf<Uri?>( null) }
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var changePicture by remember { mutableStateOf(false) }
+    val scrollState = rememberCarouselScrollState()
 
+    //<editor-fold desc="Date&Time">
 
-    var dateTimeFrom by remember{ mutableStateOf(
-        if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
-        else Instant.parse(ppEventVM.focusedEvent.dateFrom).atOffset(ZoneOffset.ofHours(2))
-    ) }
-    var dateTimeTo by remember{ mutableStateOf(
-        if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
-        else Instant.parse(ppEventVM.focusedEvent.dateTo).atOffset(ZoneOffset.ofHours(2))
-    ) }
+    var dateTimeFrom by remember {
+        mutableStateOf(
+            if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
+            else Instant.parse(ppEventVM.focusedEvent.dateFrom).atOffset(ZoneOffset.ofHours(2))
+        )
+    }
+    var dateTimeTo by remember {
+        mutableStateOf(
+            if (isNewEvent) Instant.parse(Instant.now().toString()).atOffset(ZoneOffset.ofHours(1))
+            else Instant.parse(ppEventVM.focusedEvent.dateTo).atOffset(ZoneOffset.ofHours(2))
+        )
+    }
 
     val datePickerDialog = DatePickerDialog(
         context,
         0,
-        {_:DatePicker, year: Int, month: Int,dayOfMonth: Int ->
+        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             dateTimeFrom = OffsetDateTime.of(
                 year,
-                month+1,
+                month + 1,
                 dayOfMonth,
                 dateTimeFrom.hour,
                 dateTimeFrom.minute,
                 dateTimeFrom.second,
                 dateTimeFrom.nano,
-                ZoneOffset.ofHours(0))
+                ZoneOffset.ofHours(0)
+            )
             dateTimeTo = OffsetDateTime.of(
                 year,
-                month+1,
+                month + 1,
                 dayOfMonth,
                 dateTimeTo.hour,
                 dateTimeTo.minute,
@@ -97,13 +105,13 @@ fun EditEvent(appVM: AppViewModel) {
             )
         },
         dateTimeFrom.year,
-        dateTimeFrom.monthValue-1,
+        dateTimeFrom.monthValue - 1,
         dateTimeFrom.dayOfMonth
     )
 
     val timePickerStateTo = TimePickerDialog(
         context,
-        {_: TimePicker, hour: Int, minute: Int ->
+        { _: TimePicker, hour: Int, minute: Int ->
             dateTimeTo = OffsetDateTime.of(
                 dateTimeTo.year,
                 dateTimeTo.monthValue,
@@ -112,16 +120,17 @@ fun EditEvent(appVM: AppViewModel) {
                 minute,
                 dateTimeTo.second,
                 dateTimeTo.nano,
-                ZoneOffset.ofHours(0))
+                ZoneOffset.ofHours(0)
+            )
         },
         dateTimeTo.hour,
         dateTimeTo.minute,
         true
     )
 
-    val timePickerState = TimePickerDialog(
+    val timePickerDialog = TimePickerDialog(
         context,
-        {_: TimePicker, hour: Int, minute: Int ->
+        { _: TimePicker, hour: Int, minute: Int ->
             dateTimeFrom = OffsetDateTime.of(
                 dateTimeFrom.year,
                 dateTimeFrom.monthValue,
@@ -130,7 +139,8 @@ fun EditEvent(appVM: AppViewModel) {
                 minute,
                 dateTimeFrom.second,
                 dateTimeFrom.nano,
-                ZoneOffset.ofHours(0))
+                ZoneOffset.ofHours(0)
+            )
             timePickerStateTo.show()
         },
         dateTimeFrom.hour,
@@ -159,6 +169,7 @@ fun EditEvent(appVM: AppViewModel) {
 //        timePickerStateTo.setTitle("Til")
 //        timePickerStateTo.show()
 //    }
+    //</editor-fold>
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -166,12 +177,18 @@ fun EditEvent(appVM: AppViewModel) {
         run {
             if (uri != null) {
                 imageUri = uri
-                changePicture = true;
+                isImageChosen = true
             }
         }
     }
     val incompleteFieldsToast = Toast.makeText(context, stringResource(id = R.string.fill_title_descr), Toast.LENGTH_SHORT)
+    val toastErrUpdate = Toast.makeText(context, stringResource(R.string.toast_error_update_toast), Toast.LENGTH_SHORT)
+    val toastSuccessUpdate = Toast.makeText(context, stringResource(R.string.toast_success_update_toast), Toast.LENGTH_SHORT)
+    val toastErrCreate = Toast.makeText(context, stringResource(R.string.toast_error_create_toast), Toast.LENGTH_SHORT)
+    val toastSuccessCreate = Toast.makeText(context, stringResource(R.string.toast_success_create_toast), Toast.LENGTH_SHORT)
+
     Scaffold(
+        //<editor-fold desc="fab-newEvent">
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -180,11 +197,11 @@ fun EditEvent(appVM: AppViewModel) {
                             ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
                                 if (status != null) {
                                     if(status.status!=210){
-                                        Toast.makeText(context, "Arrangement oprettet", Toast.LENGTH_SHORT).show()
+                                        toastSuccessCreate.show()
                                     } else {
-                                        Toast.makeText(context, "Noe gikk galt under oppretning", Toast.LENGTH_SHORT).show()
+                                        toastErrCreate.show()
                                     }
-                                } else Toast.makeText(context, "Noe gikk galt under oppretning", Toast.LENGTH_SHORT).show()
+                                } else toastErrCreate.show()
                             }
                         else
                             ppEventVM.updateEvent(
@@ -198,11 +215,12 @@ fun EditEvent(appVM: AppViewModel) {
                             ){ status: ResponseStatus? ->
                                 if (status != null) {
                                     if(status.status!=210){
-                                        Toast.makeText(context, "Arrangement endret", Toast.LENGTH_SHORT).show()
+                                        toastSuccessUpdate.show()
                                     } else {
-                                        Toast.makeText(context, "Noe gikk galt under endring", Toast.LENGTH_SHORT).show()
+                                        toastErrUpdate.show()
                                     }
-                                } else Toast.makeText(context, "Noe gikk galt under endring", Toast.LENGTH_SHORT).show()
+                                } else
+                                    toastErrUpdate.show()
                             }
                         navigateUpTo(appVM.navController, Screen.EventAdmin)
 
@@ -215,98 +233,148 @@ fun EditEvent(appVM: AppViewModel) {
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Filled.Send, "Edit Event")
+                Icon(Icons.Filled.Send, stringResource(id = R.string.edit_event_lead_text))
             }
         }
+        //</editor-fold>
     ){ padding ->
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                value = title,
-                onValueChange = {title = it},
-                label = { Text(stringResource(id = R.string.edit_card_title)) }
-            )
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+// Vertical View
+            if(maxHeight>400.dp) {
 
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                value = description,
-                onValueChange = { description = it },
-                label = { Text(stringResource(id = R.string.edit_card_description)) }
-            )
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .border(1.dp, MaterialTheme.colorScheme.primary)
-
-            ) {
-                showDateAndTime(dateTimeTo, dateTimeFrom)
-            }
-
-            Row() {
-                Button(onClick = {
-                    datePickerDialog.show()
-                }) {
-                    Text(stringResource(R.string.datepicker_select_date))
-                }
-
-                Button(onClick = {
-                    timePickerState.show()
-                }) {
-                    Text(stringResource(R.string.datepicker_hour))
-                }
-            }
-
-            Button(onClick = {
-                launcher.launch("image/*")
-            }) {
-                Text(stringResource(R.string.upload_picture_button))
-            }
-
-            Box(
-                modifier = Modifier
-                    .size(300.dp, 250.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant, RectangleShape)
-            ) {
-                if (!isNewEvent && !changePicture){
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/${ppEventVM.focusedEvent.image}")
-                            .crossfade(true)
-                            .build(),
-                        placeholder = painterResource(R.drawable.testing),
-                        contentDescription = (stringResource(id = R.string.image_load_failed)),
-                        contentScale = ContentScale.Crop,
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    TextField(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        value = title,
+                        onValueChange = {title = it},
+                        label = { Text(stringResource(id = R.string.edit_card_title)) }
+                    )
+
+                    TextField(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        value = description,
+                        onValueChange = { description = it },
+                        label = { Text(stringResource(id = R.string.edit_card_description)) }
+                    )
+
+                    ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
+
+                    Row() {
+                        Button(onClick = {
+                            datePickerDialog.show()
+                        }) {
+                            Text(stringResource(R.string.datepicker_select_date))
+                        }
+
+                        Button(onClick = {
+                            timePickerDialog.show()
+                        }) {
+                            Text(stringResource(R.string.datepicker_hour))
+                        }
+                    }
+
+                    Button(onClick = {
+                        launcher.launch("image/*")
+                    }) {
+                        Text(stringResource(R.string.upload_picture_button))
+                    }
+
+                    ImageDisplayBox(
+                        width = 300.dp,
+                        height = 250.dp,
+                        imageUrl = image,
+                        uri = imageUri,
+                        context = context,
+                        isNew = isNewEvent,
+                        isChosen = isImageChosen,
+                        borderColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 }
+            }
+            else {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surface)
+                ){
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(20.dp),
+                        horizontalArrangement = Arrangement.spacedBy(15.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth(.5f)
+                                .verticalScroll(scrollState),
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            TextField(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                value = title,
+                                onValueChange = { title = it },
+                                label = { Text(stringResource(id = R.string.edit_card_title)) }
+                            )
 
-                imageUri?.let {
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver,it)
+                            TextField(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                value = description,
+                                onValueChange = { description = it },
+                                label = { Text(stringResource(id = R.string.edit_card_description)) }
+                            )
 
-                    bitmap = ImageDecoder.decodeBitmap(source)
 
-                    bitmap?.let {  btm ->
-                        Image(
-                            bitmap = btm.asImageBitmap(),
-                            contentDescription =null,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                            ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
+
+                            Button(onClick = {
+                                launcher.launch("image/*")
+                            }) {
+                                Text(stringResource(R.string.upload_picture_button))
+                            }
+                        }
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Box(
+                                modifier = Modifier.fillMaxHeight(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Carousel(
+                                    state = scrollState,
+                                    modifier = Modifier
+                                        .width(8.dp)
+                                        .fillMaxHeight(.9f)
+                                        .padding(end = 5.dp)
+                                )
+                            }
+                        }
+                        BoxWithConstraints(Modifier.fillMaxSize()) {
+                            ImageDisplayBox(
+                                width = maxWidth,
+                                height = maxHeight,
+                                imageUrl = image,
+                                uri = imageUri,
+                                context = context,
+                                isNew = isNewEvent,
+                                isChosen = isImageChosen,
+                                borderColor = MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        }
                     }
                 }
             }
         }
-        }
+    }
 }

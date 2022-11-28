@@ -85,7 +85,7 @@ fun EventCard(
                             .fillMaxHeight(.5f)
                     )
 
-                    showDate(eventData = event)
+                    ShowDate(eventData = event)
                 }
 
                 Column(

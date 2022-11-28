@@ -46,10 +46,16 @@
     <string name="datepicker_from_button">Velg Dato Fra</string>
     <string name="datepicker_to_button">Velg Dato Til</string>
     <string name="datepicker_hour">Velg Klokkeslett</string>
+    <string name="edit_event_lead_text">Rediger Arrangement</string>
+
     <string name="toast_error_delete_event">Kunne ikke slette arrangement</string>
+    <string name="toast_error_update_toast">Noe gikk galt under endring</string>
+    <string name="toast_success_update_toast">Noe gikk galt under endring</string>
+    <string name="toast_error_create_toast">Noe gikk galt under oppretning</string>
+    <string name="toast_success_create_toast">Arrangement opprettet!</string>
 
     <!-- general -->
-    <string name="positive_button">Ok</string>
+    <string name="positive_button">OK</string>
     <string name="negative_button">Avbryt</string>
     <string name="exempel">Eksempel</string>
     <string name="upload_picture_button">Velg Bilde</string>

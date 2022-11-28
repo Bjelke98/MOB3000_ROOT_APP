@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.image.ImageDisplayBox
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
@@ -211,60 +212,6 @@ fun EditArticle(appVM: AppViewModel) {
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ImageDisplayBox(width:Dp, height:Dp, imageUrl: String, uri: Uri?, context: Context,
-                    isNew: Boolean, isChosen: Boolean, borderColor: Color
-){
-    Box(
-        modifier = Modifier
-            .size(width, height)
-            .conditional(
-                isNew && !isChosen,
-                ifTrue = {border(2.dp, borderColor, RectangleShape)}
-            )
-    ) {
-        if(!isChosen) {
-            FullSizeAsyncImage(imageUrl)
-        }
-        else {
-            bitmapDisplay(uri, context)
-        }
-    }
-}
-@Composable
-fun FullSizeAsyncImage(path: String){
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(
-                "https://linrik.herokuapp.com/api/resources/$path"
-            )
-            .crossfade(true)
-            .build(),
-        placeholder = painterResource(R.drawable.testing),
-        contentDescription = (stringResource(id = R.string.image_load_failed)),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxWidth()
-    )
-}
-
-@Composable
-fun bitmapDisplay(uri: Uri?, context: Context){
-    var tempBitmap: Bitmap?
-    uri?.let {
-        val source = ImageDecoder.createSource(context.contentResolver, uri)
-
-        tempBitmap = ImageDecoder.decodeBitmap(source)
-
-        tempBitmap?.let {
-            Image(
-                bitmap = it.asImageBitmap(),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize()
-            )
         }
     }
 }
