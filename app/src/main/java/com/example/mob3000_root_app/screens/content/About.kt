@@ -76,10 +76,6 @@ fun About() {
 
     LazyColumn() {
 
-        item { Text(modifier = Modifier
-            .padding(5.dp),
-            text = "About us") }
-
         items(items = aboutList ) {
                 item -> AboutCard(item)
         }
