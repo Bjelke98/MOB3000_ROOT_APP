@@ -93,7 +93,7 @@ fun changePassword(
                             } else {
                                 Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                             }
-                        }
+                        } else Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
                     }
                 } else{
                     Toast.makeText(context, writeSamePasswordToastText, Toast.LENGTH_SHORT).show()
