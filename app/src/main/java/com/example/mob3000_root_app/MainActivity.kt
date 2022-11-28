@@ -26,8 +26,6 @@ class MainActivity : ComponentActivity() {
             navController = rememberNavController()
             loginViewModel = LoginViewModel()
             loginViewModel.getLoginStatus()
-            // Autologin for debug
-            loginViewModel.loginUser(UserLoginInfo("Kombo@mail.no", "PassordTilKombo"))
             appViewModel = AppViewModel(
                 navController = navController,
                 loginVM = loginViewModel
