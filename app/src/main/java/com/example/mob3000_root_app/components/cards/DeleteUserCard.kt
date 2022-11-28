@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -25,13 +27,18 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun deleteUser(
+fun DeleteUser(
     loginViewModel: LoginViewModel
 ) {
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
+
+    val context = LocalContext.current
+    val successToast = Toast.makeText(context, stringResource(id = R.string.toast_user_deleted), Toast.LENGTH_SHORT)
+    val errorToast = Toast.makeText(context, stringResource(id = R.string.toast_something_went_wrong), Toast.LENGTH_SHORT)
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall);
+        Text(text = stringResource(id = R.string.setting_delete_user), style = MaterialTheme.typography.headlineSmall)
         OutlinedTextField(
             value=password,
             leadingIcon={ Icon(imageVector= Icons.Default.Lock,contentDescription=null) },
@@ -40,7 +47,7 @@ fun deleteUser(
                 .fillMaxWidth(),
             label={ Text(text= stringResource(id = R.string.password)) },
             placeholder={ Text(text="********") },
-            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Next),
             visualTransformation= PasswordVisualTransformation(),
             onValueChange={
                 password=it
@@ -54,34 +61,47 @@ fun deleteUser(
                 .fillMaxWidth(),
             label={ Text(text= stringResource(id = R.string.setting_confirm_password)) },
             placeholder={ Text(stringResource(id = R.string.placeholder_pw)) },
-            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password),
+            keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    DeleteUser(loginViewModel,password, confirmPassword, successToast, errorToast)
+                }
+            ),
             visualTransformation= PasswordVisualTransformation(),
             onValueChange={
                 confirmPassword=it
             }
         )
-        val context = LocalContext.current
-        val userDeletedToastText = stringResource(id = R.string.toast_user_deleted)
-        val somethingWentWrongToastText = stringResource(id = R.string.toast_something_went_wrong)
+
         Row(
             Modifier
                 .padding(5.dp)
                 .align(Alignment.End)){
             Button(onClick = {
-                if (password.text.equals(confirmPassword.text)){
-                    loginViewModel.deleteUser(DeleteUser(password.text)){ status: ResponseStatus? ->
-                        if (status != null) {
-                            if(status.status!=210){
-                                Toast.makeText(context, userDeletedToastText, Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
-                            }
-                        } else Toast.makeText(context, somethingWentWrongToastText, Toast.LENGTH_SHORT).show()
-                    }
-                }
+                DeleteUser(loginViewModel,password, confirmPassword, successToast, errorToast)
             }) {
                 Text(stringResource(id = R.string.setting_delete_user))
             }
+        }
+    }
+}
+
+private fun DeleteUser(
+    loginVN: LoginViewModel,
+    password: TextFieldValue,
+    confirmPassword: TextFieldValue,
+    successToast:Toast,
+    errorToast: Toast
+){
+    if (password.text.equals(confirmPassword.text)) {
+        loginVN.deleteUser(DeleteUser(password.text)) { status: ResponseStatus? ->
+            if (status != null) {
+                if (status.status != 210) {
+                    successToast.show()
+                } else {
+                    errorToast.show()
+                }
+            } else errorToast.show()
         }
     }
 }

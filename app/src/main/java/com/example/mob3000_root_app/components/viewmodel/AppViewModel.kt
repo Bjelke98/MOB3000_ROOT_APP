@@ -34,6 +34,7 @@ class AppViewModel(
     }
 }
 
+// Kilde: https://stackoverflow.com/questions/67768746/chaining-modifier-based-on-certain-conditions-in-android-compose
 fun Modifier.conditional(
     condition: Boolean,
     ifTrue: Modifier.() -> Modifier,

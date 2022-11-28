@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -35,6 +36,9 @@ fun Register(appVM: AppViewModel) {
     var epost          by remember{ mutableStateOf(TextFieldValue("")) }
     var password       by remember{ mutableStateOf(TextFieldValue("")) }
     var repeatPassword by remember{ mutableStateOf(TextFieldValue("")) }
+
+
+    val context = LocalContext.current
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background);
@@ -145,7 +149,25 @@ fun Register(appVM: AppViewModel) {
                     onValueChange = {
                         repeatPassword = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            appVM.loginVM.registerUser(NewUser(
+                                firstname.text,
+                                lastname.text,
+                                epost.text,
+                                password.text
+                            )) {
+                                if(it == null) {
+                                    appVM.loginVM.getLoginStatus()
+                                    navigateUpTo(appVM.navController, Screen.Home)
+                                }
+                                else {
+                                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        }
+                    )
                 )
 
                 Row(
@@ -157,7 +179,6 @@ fun Register(appVM: AppViewModel) {
                         }) {
                         Text(stringResource(id = R.string.already_user))
                     }
-                    val context = LocalContext.current
                     Button(
                         onClick = {
                             appVM.loginVM.registerUser(NewUser(

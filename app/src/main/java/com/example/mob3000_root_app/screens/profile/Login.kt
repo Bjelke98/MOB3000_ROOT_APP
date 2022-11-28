@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -20,10 +21,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.mob3000_root_app.components.navigation.Screen
 import com.example.mob3000_root_app.components.navigation.navigateUpTo
 import com.example.mob3000_root_app.components.viewmodel.AppViewModel
 import com.example.mob3000_root_app.R
+import com.example.mob3000_root_app.components.viewmodel.LoginViewModel
 import com.example.mob3000_root_app.data.apiRequest.UserLoginInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,11 +41,14 @@ fun Login(
     var password by remember { mutableStateOf(TextFieldValue("")) }
 
     val testColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.background);
+        containerColor = MaterialTheme.colorScheme.background)
 
     var isPasswordHidden by remember {
         mutableStateOf(true)
     }
+
+    val context = LocalContext.current
+    val errorToast = Toast.makeText(context, stringResource(id = R.string.toast_login_error), Toast.LENGTH_LONG)
 
     Box(
         modifier = Modifier
@@ -102,6 +108,11 @@ fun Login(
                     label={Text(stringResource(id = R.string.password))},
                     // placeholder={Text(text="********")},
                     keyboardOptions= KeyboardOptions(keyboardType= KeyboardType.Password, imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            login(loginVM, epost,password,navController,errorToast)
+                        }
+                    ),
                     onValueChange={
                         password=it
                     },
@@ -116,23 +127,30 @@ fun Login(
                     }) {
                         Text(stringResource(id = R.string.register))
                     }
-                    val context = LocalContext.current
-                    val loginError = stringResource(id = R.string.toast_login_error)
                     Button(
                         onClick = {
-                            loginVM.loginUser(UserLoginInfo(epost.text, password.text)){ cbLoginStatus->
-                                if(cbLoginStatus.loginStatus) {
-                                    navigateUpTo(navController, Screen.Home)
-                                } else {
-                                    Toast.makeText(context, loginError, Toast.LENGTH_LONG).show()
-                                }
-                            }
+                            login(loginVM, epost,password,navController,errorToast)
                         },
                     ) {
                         Text(stringResource(id = R.string.login))
                     }
                 }
             }
+        }
+    }
+}
+
+private fun login(loginVM: LoginViewModel,
+                  epost: TextFieldValue,
+                  password: TextFieldValue,
+                  navController:NavHostController,
+                  errorToast: Toast
+){
+    loginVM.loginUser(UserLoginInfo(epost.text, password.text)){ cbLoginStatus->
+        if(cbLoginStatus.loginStatus) {
+            navigateUpTo(navController, Screen.Home)
+        } else {
+            errorToast.show()
         }
     }
 }

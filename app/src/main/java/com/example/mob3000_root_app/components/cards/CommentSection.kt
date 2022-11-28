@@ -178,7 +178,7 @@ fun CommentSectionEvent(isCommenting: Boolean,
                                     }
                                 }
                             }
-                    },
+                    }
                 )
             )
         }
