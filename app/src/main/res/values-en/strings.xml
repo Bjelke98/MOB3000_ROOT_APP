@@ -71,17 +71,16 @@
 
     <!-- general -->
     <string name="positive_button">OK</string>
-    <string name="negative_button">Avbryt</string>
-    <string name="exempel">Eksempel</string>
-    <string name="upload_picture_button">Velg Bilde</string>
-    <string name="edit_card_title">Tittel</string>
-    <string name="edit_card_description">Beskrivelse</string>
-    <string name="delete_button">Slett</string>
-    <string name="cancel_button">Avbryt</string>
-    <string name="edit_button">Rediger</string>
-    <string name="confirm_delete">Er du sikker på av du vil slette:</string>
-    <string name="fill_title_descr">Vennligst fyll alle felt</string>
-    <string name="image_load_failed">Kunne ikke laste inn bilde</string>
+    <string name="exempel">Exampel</string>
+    <string name="upload_picture_button">Pick image</string>
+    <string name="edit_card_title">Titel</string>
+    <string name="edit_card_description">Description</string>
+    <string name="delete_button">Delete</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="edit_button">Edit</string>
+    <string name="confirm_delete">Are you sure you want to delete:</string>
+    <string name="fill_title_descr">Please fill in all the fields</string>
+    <string name="image_load_failed">Cpuldnt load image</string>
 
     <!-- AboutUs -->
     <string name="name_adrian">Adrian Dahl</string>
