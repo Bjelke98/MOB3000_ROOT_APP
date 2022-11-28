@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.LayoutDirection.Ltr
 import androidx.compose.ui.unit.dp
 
+//hele filen er hentet fra https://github.com/sahruday/Carousel
 /**
  * Carousel View.
  *

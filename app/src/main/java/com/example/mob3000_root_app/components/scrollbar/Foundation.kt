@@ -50,6 +50,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+
+//hele filen er hentet fra https://github.com/sahruday/Carousel
+
 /**
  * Create and [remember] the [CarouselScrollState] based on the currently appropriate scroll
  * configuration to allow changing scroll position or observing scroll behavior.
