@@ -33,7 +33,6 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +51,12 @@ fun EditEvent(appVM: AppViewModel) {
         mutableStateOf(
             if (isNewEvent) ""
             else appVM.ppEventVM.focusedEvent.description
+        )
+    }
+    var address by remember {
+        mutableStateOf(
+            if (isNewEvent) ""
+            else appVM.ppEventVM.focusedEvent.address
         )
     }
     val image = if(!ppEventVM.isNewEvent)
@@ -196,7 +201,7 @@ fun EditEvent(appVM: AppViewModel) {
                 onClick = {
                     if(title.isNotBlank() && description.isNotBlank()) {
                         if(appVM.ppEventVM.isNewEvent)
-                            ppEventVM.postEvent(title, description, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
+                            ppEventVM.postEvent(title, description, address, dateTimeFrom, dateTimeTo, imageUri, context){ status: ResponseStatus? ->
                                 if (status != null) {
                                     if(status.status!=210){
                                         toastSuccessCreate.show()
@@ -209,6 +214,7 @@ fun EditEvent(appVM: AppViewModel) {
                             ppEventVM.updateEvent(
                                 title,
                                 description,
+                                address,
                                 dateTimeFrom,
                                 dateTimeTo,
                                 ppEventVM.focusedEvent._id,
@@ -269,8 +275,19 @@ fun EditEvent(appVM: AppViewModel) {
                         label = { Text(stringResource(id = R.string.edit_card_description)) }
                     )
 
-                    ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
 
+                    if(address==null)address=""
+                    address?.let {
+                        TextField(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            value = it,
+                            onValueChange = { address = it },
+                            label = { Text(stringResource(id = R.string.address)) }
+                        )
+                    }
+
+                    ShowDateAndTime(dateTimeTo, dateTimeFrom, datePickerDialog, timePickerDialog)
 
                     Button(onClick = {
                         launcher.launch("image/*")
