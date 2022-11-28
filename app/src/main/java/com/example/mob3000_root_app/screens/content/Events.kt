@@ -28,7 +28,6 @@ fun Events(
             ) {
                 items(items = eventVM.eventListResponse){ event ->
                     EventCard(
-                        appVM.navController,
                         event = event,
                         type = ArticleType.VERTICAL_ARTICLE,
                         appVM

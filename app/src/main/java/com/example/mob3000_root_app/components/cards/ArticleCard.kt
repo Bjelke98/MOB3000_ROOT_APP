@@ -43,6 +43,13 @@ fun ArticleCard(
     val horizontalColAndViewMods = Modifier.width(contentWidth60per)
     val verticalColMods = Modifier.fillMaxWidth()
 
+    val verticalImageModifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(.5f)
+    val horizontalImageModifier = Modifier
+        .fillMaxWidth(.4f)
+        .fillMaxHeight()
+
     Card(
         Modifier
             .fillMaxWidth()
@@ -52,7 +59,7 @@ fun ArticleCard(
             // Vertical phone
             if(maxHeight>400.dp) {
                 Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
-                    VerticalAsyncImage(image = image)
+                    ArticleAsyncImage(image = image, verticalImageModifier)
                     Column(
                         Modifier
                             .fillMaxHeight(.75f)
@@ -73,7 +80,7 @@ fun ArticleCard(
             } else {
                 // Horizontal phone
                 Row(modifier = if (type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColAndViewMods) {
-                    HorizontalAsyncImage(image = image)
+                    ArticleAsyncImage(image = image, horizontalImageModifier)
                     Column(
                         Modifier
                             .fillMaxHeight()
@@ -122,7 +129,7 @@ fun DescriptionVertical(text:String) {
 }
 
 @Composable
-fun VerticalAsyncImage(image: String) {
+fun ArticleAsyncImage(image: String, modifier: Modifier) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data("https://linrik.herokuapp.com/api/resources/$image")
@@ -131,25 +138,7 @@ fun VerticalAsyncImage(image: String) {
         placeholder = painterResource(R.drawable.testing),
         contentDescription = ("Image could not load"),
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(.5f)
-    )
-}
-
-@Composable
-fun HorizontalAsyncImage(image: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data("https://linrik.herokuapp.com/api/resources/$image")
-            .crossfade(true)
-            .build(),
-        placeholder = painterResource(R.drawable.testing),
-        contentDescription = ("Image could not load"),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxWidth(.4f)
-            .fillMaxHeight()
+        modifier = modifier
     )
 }
 

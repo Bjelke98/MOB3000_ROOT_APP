@@ -33,26 +33,17 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun EventCard(
-    navController: NavHostController,
     event: EventData,
     type: ArticleType,
     appVM: AppViewModel
     )
 {
-
-    val address: String = if (event.address == null)  "Adresse" else event.address
     val image = event.image ?: "defaultEvent.png"
 
-    val dateTimeFrom = Instant.parse(event.dateFrom).atOffset(
-        ZoneOffset.ofHours(2))
-    val dateTimeTo = Instant.parse(event.dateTo).atOffset(ZoneOffset.ofHours(2))
-    val dateFormatFromHour = DateTimeFormatter.ofPattern("HH:mm")
-    val dateFormatToHour = DateTimeFormatter.ofPattern("HH:mm")
-
-
-    val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
-    val dateFormatDay = DateTimeFormatter.ofPattern("dd")
-    val dateFormatFull = DateTimeFormatter.ofPattern("dd-mm-yyyy")
+    // Andre dato formateringer
+    // val dateFormatMonth = DateTimeFormatter.ofPattern("MMM")
+    // val dateFormatDay = DateTimeFormatter.ofPattern("dd")
+    // val dateFormatFull = DateTimeFormatter.ofPattern("dd-mm-yyyy")
 
     val testColors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.background)
@@ -60,121 +51,176 @@ fun EventCard(
     val configuration = LocalConfiguration.current
     val contentHeight60per = (configuration.screenHeightDp.dp/3)*2
     val contentWidth80per = (configuration.screenWidthDp.dp/10)*8
+    val contentWidth60per = (configuration.screenWidthDp.dp/10)*6
 
     val horizontalColMods = Modifier.width(contentWidth80per)
+    val horizontalColAndViewMods = Modifier.width(contentWidth60per)
     val verticalColMods = Modifier.fillMaxWidth()
+
+    val verticalImageModifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(.5f)
+    val horizontalImageModifier = Modifier
+        .fillMaxWidth(.4f)
+        .fillMaxHeight()
 
     Card(
         Modifier
             .fillMaxWidth()
             .height(contentHeight60per)
         , colors = testColors){
-        Box(Modifier.fillMaxSize()) {
-            Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
-                Box() {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://linrik.herokuapp.com/api/resources/$image")
-                            .crossfade(true)
-                            .build(),
-                        placeholder = painterResource(R.drawable.testing),
-                        contentDescription = ("Image could not load"),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+
+            if(maxHeight>400.dp){
+                //Vertical phone
+                Column(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColMods) {
+                    EventImage(image = image, event = event, imageModifier = verticalImageModifier)
+
+                    Column(
+                        Modifier
+                            .fillMaxHeight(.7f)
+                            .padding(5.dp)
+                    ) {
+                        EventTitle(title = event.title)
+                        EventPreviewDetails(event = event)
+                    }
+
+                    Row(
+                        Modifier
+                            .padding(5.dp)
                             .fillMaxWidth()
-                            .fillMaxHeight(.5f)
-                    )
-
-                    ShowDate(eventData = event)
-                }
-
-                Column(
-                    Modifier
-                        .fillMaxHeight(.7f)
-                        .padding(5.dp)
-                ) {
-                    Text(text = event.title,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Row(
-                        Modifier
-                            .padding(vertical = 2.dp)
-                    ) {
-                        Icon(Icons.Filled.People, "people",
-                            tint = MaterialTheme.colorScheme.primary)
-                        Text(
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp),
-                            textAlign = TextAlign.Start,
-                            text = event.participants.size.toString()
-                        )
-                        Text(
-                            text = "attending"
-                        )
-
-
+                            .align(Alignment.End)){
+                        DetailsButton(appVM = appVM, event = event)
                     }
-
-                    Row(
-                        Modifier
-                            .padding(vertical = 2.dp)
-                    ) {
-                        Icon(Icons.Filled.Timer, "timer",
-                            tint = MaterialTheme.colorScheme.primary)
-                        Text(
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp),
-                            textAlign = TextAlign.Start,
-                            text = dateTimeFrom.format(dateFormatFromHour) + " - " + dateTimeTo.format(dateFormatToHour)
-                        )
-                    }
-
-                    Row(
-                        Modifier
-                            .padding(vertical = 2.dp)
-                    ) {
-                        Icon(Icons.Filled.LocationOn, "location",
-                            tint = MaterialTheme.colorScheme.secondary)
-                        Text(
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp),
-                            textAlign = TextAlign.Start,
-                            text = address
-                        )
-                    }
-
-
 
                 }
+            } else {
+                // Horizontal phone
+                Row(modifier = if( type == (ArticleType.VERTICAL_ARTICLE)) verticalColMods else horizontalColAndViewMods){
 
-//              Bli med og kart-greie
+                    EventImage(image = image, event = event, imageModifier = horizontalImageModifier)
+                    Column (
+                        Modifier.fillMaxSize().padding(10.dp)
+                    ){
+                        Column(
+                            Modifier
+                                .fillMaxHeight(.75f)
+                        ) {
+                            EventTitle(title = event.title)
+                            EventPreviewDetails(event = event)
 
-
-
-
-//              Button
-                Row(
-                    Modifier
-                        .padding(5.dp)
-                        .align(Alignment.End)){
-                    Button(onClick = {
-                        appVM.eventVM.prepFullEvent(event){
-                            navigateUpTo(navController, Screen.EventFull)
                         }
-                    }) {
-                        Text(
-                            text = ("detaljer").uppercase()
-                        )
+                        Row(
+                            Modifier
+                                .padding(5.dp)
+                                .align(Alignment.End)
+                                .fillMaxHeight(),
+                            verticalAlignment = Alignment.Bottom
+                        ){
+                            DetailsButton(appVM = appVM, event = event)
+                        }
                     }
-                }
 
+                }
             }
 
+        }
+    }
+}
+
+@Composable
+fun DetailsButton(appVM: AppViewModel, event: EventData) {
+    Button(onClick = {
+        appVM.eventVM.prepFullEvent(event){
+            navigateUpTo(appVM.navController, Screen.EventFull)
+        }
+    }) {
+        Text(
+            text = ("detaljer").uppercase()
+        )
+    }
+}
+
+@Composable
+fun EventTitle(title: String) {
+    Text(text = title,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        modifier = Modifier
+            .padding(5.dp),
+        style = MaterialTheme.typography.headlineSmall
+    )
+}
+
+@Composable
+fun EventImage(image: String, event: EventData, imageModifier: Modifier) {
+    Box {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data("https://linrik.herokuapp.com/api/resources/$image")
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.testing),
+            contentDescription = ("Image could not load"),
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier
+        )
+        ShowDate(eventData = event)
+    }
+}
+
+@Composable
+fun EventPreviewDetails(event: EventData) {
+    val address: String = if (event.address == null)  "Adresse" else event.address
+    val dateTimeFrom = Instant.parse(event.dateFrom).atOffset(
+        ZoneOffset.ofHours(2))
+    val dateTimeTo = Instant.parse(event.dateTo).atOffset(ZoneOffset.ofHours(2))
+    val dateFormatFromHour = DateTimeFormatter.ofPattern("HH:mm")
+    val dateFormatToHour = DateTimeFormatter.ofPattern("HH:mm")
+    Column {
+        Row(
+            Modifier
+                .padding(vertical = 2.dp)
+        ) {
+            Icon(Icons.Filled.People, "people",
+                tint = MaterialTheme.colorScheme.primary)
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp),
+                textAlign = TextAlign.Start,
+                text = event.participants.size.toString()
+            )
+            Text(
+                text = "attending"
+            )
+        }
+
+        Row(
+            Modifier
+                .padding(vertical = 2.dp)
+        ) {
+            Icon(Icons.Filled.Timer, "timer",
+                tint = MaterialTheme.colorScheme.primary)
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp),
+                textAlign = TextAlign.Start,
+                text = dateTimeFrom.format(dateFormatFromHour) + " - " + dateTimeTo.format(dateFormatToHour)
+            )
+        }
+
+        Row(
+            Modifier
+                .padding(vertical = 2.dp)
+        ) {
+            Icon(Icons.Filled.LocationOn, "location",
+                tint = MaterialTheme.colorScheme.secondary)
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp),
+                textAlign = TextAlign.Start,
+                text = address
+            )
         }
     }
 }

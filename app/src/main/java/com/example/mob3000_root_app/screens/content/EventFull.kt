@@ -139,17 +139,6 @@ fun EventFull(
                 style = MaterialTheme.typography.headlineSmall
             )
 
-            // Day, Month, Year
-            // FromTime, ToTime
-
-            // Location, e.g. City
-            // StreetAddress
-            // ClickableText
-
-            // Participants attending will be here
-
-
-
             Text(
                 text = eventData.description,
                 Modifier

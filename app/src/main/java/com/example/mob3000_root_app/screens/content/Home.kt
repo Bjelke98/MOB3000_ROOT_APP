@@ -1,5 +1,3 @@
-@file:JvmName("HomeOldKt")
-
 package com.example.mob3000_root_app.screens.content
 
 import android.annotation.SuppressLint
@@ -36,6 +34,8 @@ fun Home(
     val scrollState = rememberCarouselScrollState()
     val scrollbarWidth = 32.dp // size + scrollbar-padding(10.dp) & firstCol-padding(10.dp)
     val screenWidth = LocalConfiguration.current.screenWidthDp
+
+    val screenHeight = LocalConfiguration.current.screenHeightDp
     Row(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -43,7 +43,7 @@ fun Home(
             Column(
                 Modifier
                     .padding(10.dp)
-                    .width(screenWidth.dp-scrollbarWidth)
+                    .width( if(screenHeight.dp > 400.dp) screenWidth.dp else screenWidth.dp-scrollbarWidth)
                     .fillMaxHeight()
                     .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
@@ -71,7 +71,7 @@ fun Home(
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
                     items(items = eventVM.eventListResponse){ event ->
-                        EventCard(navController, event = event, ArticleType.HORIZONTAL_ARTICLE, appVM)
+                        EventCard(event = event, ArticleType.HORIZONTAL_ARTICLE, appVM)
                     }
                 }
             }

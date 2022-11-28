@@ -46,18 +46,18 @@ fun Template(
         .offset(0.dp, 65.dp)){
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             // Profile
-//            if(loginVM.loginStatusResponse.user==null){
-//                DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
-//                DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
-//            } else {
-//                DropdownMenuItem(text = { Text(text = "Profil") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
-//                DropdownMenuItem(text = { Text(text = "Instillinger") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
-//                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginVM.logoutUser() ;navigateUpTo(navController, Screen.Home) })
-//            }
-            DropdownMenuItem(text = { Text(text = "Login") }, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
-            DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
-            DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
-            DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+            if(loginVM.loginStatusResponse.user==null){
+                DropdownMenuItem(text = {Text(text = "Login")}, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+                DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+            } else {
+                DropdownMenuItem(text = { Text(text = "Profil") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
+                DropdownMenuItem(text = { Text(text = "Instillinger") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
+                DropdownMenuItem(text = { Text(text = "Logg ut") }, onClick = { expanded = false; loginVM.logoutUser() ;navigateUpTo(navController, Screen.Home) })
+            }
+//            DropdownMenuItem(text = { Text(text = "Login") }, onClick = { expanded = false;  navigateUpTo(navController, Screen.Login)})
+//            DropdownMenuItem(text = { Text(text = "Registrer") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Register)})
+//            DropdownMenuItem(text = { Text(text = "Profile") }, onClick = {  expanded = false; navigateUpTo(navController, Screen.Profile)})
+//            DropdownMenuItem(text = { Text(text = "Settings") }, onClick = { expanded = false; navigateUpTo(navController, Screen.Settings) })
         }
     }
 
@@ -78,12 +78,12 @@ fun Template(
                     RootDrawerItem(R.string.nav_label_about_us, navBackStackEntry, Screen.About, navController, ::closeDrawer)
 
                     // Admin
-//                    if(loginVM.loginStatusResponse.user?.editor == true){
-//                        RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
-//                        RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
-//                    }
-                    RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
-                    RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
+                    if(loginVM.loginStatusResponse.user?.editor == true){
+                        RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
+                        RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
+                    }
+//                    RootDrawerItem(R.string.nav_label_manage_articles, navBackStackEntry, Screen.ArticleAdmin, navController, ::closeDrawer)
+//                    RootDrawerItem(R.string.nav_label_manage_events, navBackStackEntry, Screen.EventAdmin, navController, ::closeDrawer)
                 }
             }
         }

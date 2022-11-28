@@ -45,16 +45,9 @@ fun AboutFAQCARD(faq: AboutFAQ) {
 
     ) {
 
-        Column() {
+        Column {
             Row(modifier = Modifier
                 .padding(5.dp)
-                /*.clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource()},
-                    onClick = onClickItem
-                )
-                
-                 */
             )
             {
                 IconButton(
@@ -67,12 +60,12 @@ fun AboutFAQCARD(faq: AboutFAQ) {
                     Icon(
                         painter = painterResource(
                             id = (
-                                    if (!openFAQ) {
-                                        R.drawable.ic_baseline_keyboard_arrow_down_24
-                                    } else {
-                                        R.drawable.ic_baseline_keyboard_arrow_up_24
-                                    }
-                                    )
+                                if (!openFAQ) {
+                                    R.drawable.ic_baseline_keyboard_arrow_down_24
+                                } else {
+                                    R.drawable.ic_baseline_keyboard_arrow_up_24
+                                }
+                            )
                         ),
                         contentDescription = "FAQData"
                     )

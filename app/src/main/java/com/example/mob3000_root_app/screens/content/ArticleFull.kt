@@ -12,10 +12,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -60,97 +57,133 @@ fun ArticleFull(
                 focusManager.clearFocus(true)
                 keyboardController?.hide()
             }) {
-        Column(
-            Modifier
-                .fillMaxHeight()
-                .padding(top = 5.dp)
-                .verticalScroll(scrollState), verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
+        BoxWithConstraints(Modifier.fillMaxSize()){
+            val maxHeightOut = maxHeight
+            Column(
                 Modifier
-                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(top = 5.dp)
+                    .verticalScroll(scrollState), verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = articleData.title,
+    //            val configuration = LocalConfiguration.current
+    //            val contentHeight90per = (configuration.screenWidthDp.dp/10)*9
+                if(maxHeightOut>400.dp){
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = articleData.title,
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, end = 10.dp),
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                    }
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://linrik.herokuapp.com/api/resources/$image")
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.sauce),
+                        contentDescription = (articleData.description),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(.5f)
+                            .padding(bottom = 20.dp)
+                            .heightIn(200.dp, 420.dp)
+                    )
+                    Text(
+                        text = articleData.description,
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                } else {
+                    Row(Modifier.fillMaxWidth()){
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("https://linrik.herokuapp.com/api/resources/$image")
+                                .crossfade(true)
+                                .build(),
+                            placeholder = painterResource(R.drawable.sauce),
+                            contentDescription = (articleData.description),
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxWidth(.3f)
+                                .padding(bottom = 20.dp)
+                                .height(200.dp)
+                        )
+                        Column(Modifier.fillMaxWidth()) {
+                            Text(
+                                text = articleData.title,
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 10.dp, end = 10.dp),
+                                style = MaterialTheme.typography.headlineLarge
+                            )
+                            Text(
+                                text = articleData.description,
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp),
+                                style = MaterialTheme.typography.bodyLarge,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                }
+
+                AnimatedVisibility((openComments),
+                    enter = slideInVertically {
+                        with(density) { -30.dp.roundToPx() }
+                    } + expandVertically(
+                        expandFrom = Alignment.Bottom
+                    )
+                    ,
+                        exit = slideOutVertically() + shrinkVertically(shrinkTowards = Alignment.Top)/* + fadeOut()*/
+
+                        ){
+                    if (keyboardController != null) {
+                        CommentSectionArticle(
+                            onCommentingChanged = { isCommenting = !isCommenting },
+                            isCommenting = isCommenting,
+                            keyboardController = keyboardController,
+                            focusManager = focusManager,
+                            appVM = appVM,
+                            articleID = articleData._id
+                        )
+                    }
+                //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
+                // onclick fordi kommentarene ble ferdig composed etter launch ble ferdig
+                    coroutineScope.launch {
+                        scrollState.animateScrollTo(2000)
+                    }
+                }
+                IconButton(
+                    onClick = {
+                        openComments = !openComments
+                    },
                     Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp),
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            }
-
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://linrik.herokuapp.com/api/resources/$image")
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(R.drawable.sauce),
-                contentDescription = (articleData.description),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(.5f)
-                    .padding(bottom = 20.dp)
-                    .heightIn(200.dp, 420.dp)
-            )
-
-            Text(
-                text = articleData.description,
-                Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp),
-                style = MaterialTheme.typography.bodyLarge,
-                overflow = TextOverflow.Ellipsis
-            )
-
-
-
-            AnimatedVisibility((openComments),
-                enter = slideInVertically {
-                    with(density) { -30.dp.roundToPx() }
-                } + expandVertically(
-                    expandFrom = Alignment.Bottom
-                )
-                ,
-                    exit = slideOutVertically() + shrinkVertically(shrinkTowards = Alignment.Top)/* + fadeOut()*/
-
-                    ){
-                if (keyboardController != null) {
-                    CommentSectionArticle(
-                        onCommentingChanged = { isCommenting = !isCommenting },
-                        isCommenting = isCommenting,
-                        keyboardController = keyboardController,
-                        focusManager = focusManager,
-                        appVM = appVM,
-                        articleID = articleData._id
+                        .padding(4.dp, bottom = 1.dp)
+                        .align(CenterHorizontally)
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            id = (
+                                if (!openComments) {
+                                    R.drawable.ic_baseline_chat_bubble_outline_24
+                                } else {
+                                    R.drawable.ic_baseline_keyboard_arrow_down_24
+                                }
+                            )
+                        ),
+                        contentDescription = "Comments"
                     )
                 }
-            //Scroller ned til bunnen når kommentarer åpnes. Kunne ikke settes på
-            // onclick fordi kommentarene ble ferdig composed etter launch ble ferdig
-                coroutineScope.launch {
-                    scrollState.animateScrollTo(2000)
-                }
-            }
-            IconButton(
-                onClick = {
-                    openComments = !openComments
-                },
-                Modifier
-                    .padding(4.dp, bottom = 1.dp)
-                    .align(CenterHorizontally)
-            ) {
-                Icon(
-                    painter = painterResource(
-                        id = (
-                            if (!openComments) {
-                                R.drawable.ic_baseline_chat_bubble_outline_24
-                            } else {
-                                R.drawable.ic_baseline_keyboard_arrow_down_24
-                            }
-                        )
-                    ),
-                    contentDescription = "Comments"
-                )
             }
         }
     }

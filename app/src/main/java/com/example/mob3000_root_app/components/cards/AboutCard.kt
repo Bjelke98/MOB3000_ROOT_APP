@@ -28,51 +28,44 @@ fun AboutCard(person: AboutData) {
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
-
-
     ) {
-        Column() {
-
-        Row(modifier = Modifier
-            .height(115.dp)
-            .padding(horizontal = 15.dp, vertical = 15.dp)
-        ) {
-            Image(
-                painter = painterResource(person.image), "Dog",
-                modifier = Modifier
-                    .size(84.dp)
-                    .clip(CircleShape)                       // clip to the circle shape
-                    .border(1.dp, MaterialTheme.colorScheme.secondary, CircleShape),
-                contentScale = ContentScale.Crop,
-            )
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 15.dp)
+        Column {
+            Row(modifier = Modifier
+                .height(115.dp)
+                .padding(horizontal = 15.dp, vertical = 15.dp)
             ) {
-                Text(
+                Image(
+                    painter = painterResource(person.image), "Dog",
                     modifier = Modifier
-                        .padding(5.dp),
-                    style = TextStyle(
-                        fontSize = 20.sp
-                    ),
-                    text = person.name
+                        .size(84.dp)
+                        .clip(CircleShape)                       // clip to the circle shape
+                        .border(1.dp, MaterialTheme.colorScheme.secondary, CircleShape),
+                    contentScale = ContentScale.Crop,
                 )
-
-                Text(
+                Column(
                     modifier = Modifier
-                        .padding(5.dp),
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    text = person.role
+                        .padding(horizontal = 15.dp)
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(5.dp),
+                        style = TextStyle(
+                            fontSize = 20.sp
+                        ),
+                        text = person.name
+                    )
 
-                )
-
+                    Text(
+                        modifier = Modifier
+                            .padding(5.dp),
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        text = person.role
+                    )
+                }
             }
-
-
-        }
             Row(modifier = Modifier
                 .padding(horizontal = 15.dp)
             ) {
@@ -85,7 +78,5 @@ fun AboutCard(person: AboutData) {
                 )
             }
         }
-
-
     }
 }
