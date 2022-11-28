@@ -119,9 +119,9 @@ fun Template(
                             "edit_event" to Screen.EditEvent
                         )
                         var name = objectMap[currentRoute]?.name
-                        if(name == null) name = stringResource(id = R.string.company_name)
+                        if(name == null) name = R.string.company_name
                         Text(
-                            name,
+                            stringResource(id = name),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )

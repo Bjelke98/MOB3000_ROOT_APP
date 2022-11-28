@@ -17,12 +17,7 @@ import com.example.mob3000_root_app.data.apiResponse.ResponseStatus
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel(){
-//    var loginStatusResponse:LoginStatus by remember {
-//        mutableStateOf(LoginStatus(user = null))
-//    }
     var loginStatusResponse: LoginStatus by mutableStateOf(LoginStatus(user = null))
-
-    var registerStatusResponse: String by mutableStateOf("")
 
     var errorMessage: String by mutableStateOf("")
     fun getLoginStatus() {

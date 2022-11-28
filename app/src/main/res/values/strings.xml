@@ -39,6 +39,9 @@
     <string name="post_article_button">Publiser Artikkel!</string>
     <string name="recent_articles">Nylige Artikkler</string>
     <string name="read_more">LES MER</string>
+    <string name="single_article">Artikkel</string>
+    <string name="article_admin">Artikkel Admin</string>
+    <string name="edit_article">Rediger Artikkel</string>
 
     <!-- Events -->
     <string name="join">Bli med</string>
@@ -53,6 +56,9 @@
     <string name="edit_event_lead_text">Rediger Arrangement</string>
     <string name="details_event">DETALJER</string>
     <string name="address">Adresse</string>
+    <string name="single_event">Arrangement</string>
+    <string name="event_admin">Arrangement Admin</string>
+    <string name="edit_event">Rediger Arrangement</string>
 
     <!-- Toast -->
     <string name="toast_name_changed">Navn endret</string>
