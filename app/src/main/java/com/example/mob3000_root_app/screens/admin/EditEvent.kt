@@ -147,8 +147,10 @@ fun EditEvent(appVM: AppViewModel) {
         dateTimeFrom.minute,
         true
     )
+// Kode for å prøve å legge til overskrift når man setter inn tid. (Fra/Til tid)
+// venter på at det kommer til compose :)
 
-//    val timeFrom = MaterialTimePicker.Builder() venter på at det kommer til compose :)
+//    val timeFrom = MaterialTimePicker.Builder()
 //        .setTimeFormat(CLOCK_24H)
 //        .setHour(dateTimeFrom.hour)
 //        .setMinute(dateTimeFrom.minute)
