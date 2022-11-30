@@ -59,6 +59,7 @@
     <string name="single_event">Arrangement</string>
     <string name="event_admin">Arrangement Admin</string>
     <string name="edit_event">Rediger Arrangement</string>
+    <string name="join_event_login">Logg inn for påmelding</string>
 
     <!-- Toast -->
     <string name="toast_name_changed">Navn endret</string>

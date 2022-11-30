@@ -59,6 +59,7 @@
     <string name="single_event">Event</string>
     <string name="event_admin">Event Admin</string>
     <string name="edit_event">Edit Event</string>
+    <string name="join_event_login">Login to join</string>
 
     <!-- Toast -->
     <string name="toast_name_changed">Navn endret</string>

@@ -3,6 +3,7 @@ import android.content.pm.*
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -79,6 +80,7 @@ fun EventFull(
     var count by remember {
         mutableStateOf(eventData.participants.size)
     }
+    val notLoggedInToast = Toast.makeText(LocalContext.current, stringResource(id = R.string.join_event_login), Toast.LENGTH_LONG)
     Surface(
         Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -185,14 +187,18 @@ fun EventFull(
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp),
                 onClick = {
-                        eventJoined = if(!eventJoined) {
-                            count++
-                            eventVM.joinEvent(appVM.eventVM.focusedEvent._id)
-                            true
+                        if(appVM.loginVM.loginStatusResponse.loginStatus){
+                            eventJoined = if(!eventJoined) {
+                                count++
+                                eventVM.joinEvent(appVM.eventVM.focusedEvent._id)
+                                true
+                            } else {
+                                count--
+                                eventVM.leaveEvent(appVM.eventVM.focusedEvent._id)
+                                false
+                            }
                         } else {
-                            count--
-                            eventVM.leaveEvent(appVM.eventVM.focusedEvent._id)
-                            false
+                            notLoggedInToast.show()
                         }
                 },
                 shape = RoundedCornerShape(25.dp),
